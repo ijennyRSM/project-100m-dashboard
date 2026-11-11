@@ -68,7 +68,7 @@ button{touch-action:manipulation}
 .next-card p{color:#66796d;font-size:13px;line-height:1.8;margin:0 0 13px}
 .next-meta{display:flex;gap:16px;flex-wrap:wrap;color:#6d7f71;font-size:11px;margin:8px 0 17px}
 .next-meta span{display:inline-flex;align-items:center;gap:7px}
-.next-photo{width:32%;min-width:145px;background-image:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.0) 31%),url("https://images.unsplash.com/photo-1758922769578-68c5ba000d87?auto=format&fit=crop&w=850&q=78");background-position:center;background-size:cover}
+.next-photo{width:32%;min-width:145px;background-image:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.0) 31%),url("https://images.unsplash.com/photo-1776705865344-90040e059b04?auto=format&fit=crop&w=850&q=78");background-position:center;background-size:cover}
 .next-card .btn{margin-top:auto}
 .finish-card{background:linear-gradient(130deg,#e7f3e7,#fff 95%)}
 .finish-card h2{font-size:27px}
@@ -229,7 +229,7 @@ footer a{color:#749281}
  .greeting-hand{font-size:22px}
  .welcome-photo{min-height:143px}
  .next-card{position:relative;min-height:255px}
- .next-photo{position:absolute;right:0;top:0;bottom:0;width:30%;min-width:90px;opacity:.24;background-image:url("https://images.unsplash.com/photo-1758922769578-68c5ba000d87?auto=format&fit=crop&w=430&q=70")}
+ .next-photo{position:absolute;right:0;top:0;bottom:0;width:30%;min-width:90px;opacity:.24;background-image:url("https://images.unsplash.com/photo-1776705865344-90040e059b04?auto=format&fit=crop&w=430&q=70")}
  .next-text{padding:19px 18px;width:100%;max-width:100%;padding-right:56px}
  .next-card h2{font-size:25px;margin-top:15px}
  .next-card p{font-size:12px}
