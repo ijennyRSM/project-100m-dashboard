@@ -1,42 +1,56 @@
-# PROJECT 100M V2 — Cloud setup
+# PROJECT 100M — Cloud connection
 
-The website is already functional in **local mode**. Training plans, profiles, session completion, quick/detailed workout logging, recovery, history and JSON export work without Supabase. Local mode saves data only in that browser. It does NOT automatically sync between phones.
+**Supabase project:** project-100m (Singapore)
+**Project ID:** rbryddekjwytcoqqgcgu
+**Website:** https://ijennyrsm.github.io/project-100m-dashboard/
 
-## Enable real cross-device sync (user action required)
-1. Create a Supabase project in your own Supabase account at https://supabase.com/dashboard .
-2. In **SQL Editor**, run the entire content of [supabase-schema.sql](./supabase-schema.sql).
-3. In Supabase **Authentication → URL Configuration**, set Site URL to:
-   https://ijennyrsm.github.io/project-100m-dashboard/
-   and add that same address to **Redirect URLs**.
-4. Find your **Project URL** and **publishable key** (sb_publishable_...) in Supabase project settings. Edit [cloud-config.js](./cloud-config.js), adding the URL and *publishable* key only. NEVER upload a service_role key, secret key, private token or password.
-5. Commit/push cloud-config.js; refresh the website. On each iPhone, open Settings → send email magic-link. Use a different email account for each person.
-6. Check that both accounts see only their own data. Test by recording one workout on phone A, logging into the SAME account on another device and checking sync. The two users' different accounts should remain isolated.
+## Connected and verified
+- Supabase project created and ACTIVE_HEALTHY.
+- Database migration applied: public.training_states and public.save_training_state.
+- RLS active with per-account select, insert and update policies.
+- Unauthenticated role has no table SELECT or RPC EXECUTE privilege.
+- Supabase security/performance advisors returned no notices at setup time.
+- Only Supabase Project URL and public **publishable key** were committed to cloud-config.js. No private/secret keys were added.
 
-## Training experience
-- Each program is a sequence of training blocks and workouts, **not a calendar**.
-- Opening the site after several days continues from the same next session.
-- Completed advances; Partial stays on same step; Skipped advances deliberately but does not count as completed.
-- Safety messages remind you to respect recovery; they cannot diagnose your health.
-- Each account can create multiple named profiles and each profile can have its own plans.
-- Change profile via the selector. For separate users on separate phones, use separate Supabase auth accounts.
-- Export JSON backup before changing devices or restoring data.
-- When you first open V2 on the same browser as V1, existing V1 workout records are copied into **Previous V1 History**; the original V1 key remains untouched.
+## One-time setting required in Supabase Dashboard
+The available integration cannot edit Supabase Auth URL Configuration. Before using email Magic Link, the project owner must open:
+https://supabase.com/dashboard/project/rbryddekjwytcoqqgcgu/auth/url-configuration
 
-## Limits / privacy
-- GitHub Pages serves static public files; it is not a backend, database or private storage.
-- Supabase Auth + Postgres RLS provide authentication and per-account private data, once set up.
-- V2 **can manually import Apple Health export.xml/export.zip** from Settings, extracting selected workouts, resting HR, HRV, sleep and body weight on the device. Raw export files are not uploaded. Imported workouts do NOT automatically mark training sessions complete. Automatic Apple Watch/HealthKit sync still needs an iOS bridge and explicit permissions. Imported/derived data will sync to Supabase when the account is connected and the user approves importing.
-- Cloud sync uses a revision check; if two devices update the same account concurrently, the newer state is not silently overwritten. Export backup and manually resolve a reported conflict.
-- Safari private browsing, clearing site storage, or using another browser may lose locally stored data until cloud sync is configured.
-- HR and HRV are wellness/training indicators and not medical diagnosis.
-- No supabase account, project or credentials were created by the GitHub deployment process.
+Set:
+- **Site URL:** https://ijennyrsm.github.io/project-100m-dashboard/
+- **Redirect URLs:** add https://ijennyrsm.github.io/project-100m-dashboard/
 
-## Files
-- index.html → V2 entrypoint
-- v2-data.js → training templates, profile state, persistence, optional cloud auth/sync
-- v2-ui.js → pages, forms, user interaction
-- v2-health.js → local Apple Health XML/ZIP importer
-- v2.css → responsive styles
-- cloud-config.js → public Supabase project configuration (empty by default)
-- supabase-schema.sql → SQL you must run inside your Supabase project
-- Old V1 files are still in the repository for rollback if needed.
+Then press Save.
+
+## Login and synchronization test
+1. Open the website using Safari (avoid private browsing).
+2. Open **Settings → Cloud Login & Sync**, enter your email, and select **Send login link**. Check email and open the Magic Link **on the same iPhone** in Safari.
+3. The Cloud status should change to "synced" once data is available, or "ready" on a new account.
+4. Record a test workout and press **Sync now**. Check that Cloud status is "synced".
+5. Open the website from a second device with **the same** email. Verify the test workout is visible there.
+6. Your partner should log in with a **different email**. They should not see your training history; they can choose their own preset plan.
+
+If login email sends you to localhost or another wrong URL, check the Auth URL Configuration above.
+
+## How cloud data is stored
+- training_states contains one JSON document per Supabase auth user ID, plus an integer revision.
+- Public GitHub Pages code cannot read other accounts because authenticated requests are protected by per-user RLS policies.
+- On saving, the browser sends a changed document with optimistic revision checking (preventing silent overwrite by a stale device).
+- If two devices write concurrently and you see "conflict", download a JSON backup on both devices before proceeding.
+- Default local profiles in the same browser do not by themselves sync; the website syncs the account associated with the current authenticated email.
+- When first signing into an empty account, the app offers to copy the **selected local profile** up to that account, only after confirmation.
+- Imported Apple Health XML/ZIP is processed locally, but the selected extracted health metrics can be included in cloud sync after sign-in.
+- Apple Watch automatic HealthKit sync is not implemented. You must export Apple Health to a file and import it manually.
+
+## Important safety notes
+- GitHub Pages is public, but data stored in the Supabase table is private under RLS. Do not commit personal health files into the GitHub repository.
+- **Never** use an sb_secret, service_role or any private token in cloud-config.js.
+- Magic Link authentication requires the redirect setting above; until this is saved, end-to-end login has **not** been verified.
+- A published frontend and database do not guarantee successful two-device sync until a real user tests email login and a saved workout on both phones.
+
+## Source files
+- supabase-schema.sql — migration code (already applied)
+- cloud-config.js — connected public Project URL and publishable key
+- v2-data.js — cloud auth and revision-checked sync logic
+- v2-ui.js — login, progress, recovery, logs
+- v2-health.js — manual Apple Health import
