@@ -14,8 +14,7 @@ Mobile-first training tracker hosted on GitHub Pages.
 - JSON backup and restore; V1 is preserved at [v1.html](./v1.html). Older V1 workouts and recovery can migrate from the same browser.
 
 ### Important: local vs cloud
-Default is **Local Mode**. Data stays in the current browser. Separate phones do not sync until Supabase is configured.
-To enable real login and cross-device sync, see [CLOUD_SETUP.md](./CLOUD_SETUP.md) and run [supabase-schema.sql](./supabase-schema.sql) in your own Supabase project. Do **not** place private keys or Apple Health exports in GitHub.
+The Supabase project, protected database and public client configuration have now been created and pushed. **The owner must still add the GitHub Pages URL in Supabase Auth URL Configuration before Magic Link sign-in can be tested.** See [CLOUD_SETUP.md](./CLOUD_SETUP.md). Do **not** place secret keys or Apple Health exports in GitHub.
 Each person should sign in with a different email. Account data is isolated with database RLS.
 
 ## How to use
