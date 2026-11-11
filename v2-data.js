@@ -78,7 +78,29 @@ function readiness(session){const messages=[];if(!session)return messages;
 const recent=profile().recovery[0];if(recent&&((recent.fatigue||0)>=4||(recent.soreness||0)>=4)&&((Date.now()-Date.parse(recent.date+"T12:00:00"))/86400000)<3)messages.push("Daily Check-in ล่าสุดระบุความล้าหรือปวดเมื่อยสูง ควรพักหรือปรับลดความหนัก");
 if(session.kind==="sprint"){const prev=lastHardSprint();if(prev&&Date.now()-Date.parse(prev.at)<48*3600000)messages.push("คุณเพิ่งบันทึก Sprint ภายใน 48 ชั่วโมง ควรพักให้เพียงพอก่อนซ้อมความเร็วสูง");}
 return messages}
-function importLegacy(force=false){const p=profile();if(!force&&localStorage.getItem(PREFIX+"legacy-migrated"))return false;try{const old=JSON.parse(localStorage.getItem(LEGACY)||"null");if(!old)return false;const known=new Set((p.legacyWorkouts||[]).map(x=>x.id));for(const x of (Array.isArray(old.sessions)?old.sessions:[]))if(!known.has(x.id)){p.legacyWorkouts.push(x);known.add(x.id)}p.legacyHealth={...p.legacyHealth,...(old.health||{})};localStorage.setItem(PREFIX+"legacy-migrated","1");store();return true}catch(e){console.warn(e);return false}}
+function importLegacy(force=false){
+ const p=profile();if(!force&&localStorage.getItem(PREFIX+"legacy-migrated"))return false;
+ try{
+  const old=JSON.parse(localStorage.getItem(LEGACY)||"null");if(!old)return false;
+  p.legacyWorkouts=p.legacyWorkouts||[];
+  const known=new Set(p.legacyWorkouts.map(x=>x.id));
+  for(const x of (Array.isArray(old.sessions)?old.sessions:[])){if(!known.has(x.id)){p.legacyWorkouts.push(x);known.add(x.id)}}
+  p.legacyHealth={...p.legacyHealth,...(old.health||{})};
+  const days=new Set([...Object.keys(old.health||{}),...Object.keys(old.manual||{})]);
+  p.recovery=p.recovery||[];
+  for(const date of days){
+   const oldVal={...(old.health?.[date]||{}),...(old.manual?.[date]||{})};
+   let row=p.recovery.find(x=>x.date===date);
+   if(!row){row={date,source:"legacy-v1",updatedAt:iso()};p.recovery.push(row)}
+   for(const key of ["sleep","rhr","hrv","weight","fatigue","soreness"]){
+     if((row[key]===undefined||row[key]===null)&&oldVal[key]!==undefined&&oldVal[key]!==null&&oldVal[key]!=="")row[key]=num(oldVal[key]);
+   }
+   if(!row.notes&&oldVal.notes)row.notes=String(oldVal.notes).slice(0,1000);
+  }
+  p.recovery.sort((a,b)=>b.date.localeCompare(a.date));
+  localStorage.setItem(PREFIX+"legacy-migrated","1");store();return true
+ }catch(e){console.warn(e);return false}
+}
 function backup(){return JSON.stringify(state,null,2)}
 function restore(json){const data=typeof json==="string"?JSON.parse(json):json;if(!data||data.version!==2||!Array.isArray(data.profiles)||!data.profiles.length)throw Error("ไฟล์สำรองไม่ใช่ PROJECT 100M V2");state=data;store()}
 function coachReport(){const p=profile(),pl=activePlan(),ov=planOverview(pl),rows=history().slice(0,100),r=p.recovery.slice(0,40),lines=["# PROJECT 100M — Coach Report","Generated: "+iso(),"Profile: "+p.name,"Plan: "+(planTemplate(pl)?.name||"None"),"Completed: "+(ov?.completed||0)+"/"+(ov?.total||0),"Next: "+(ov?.next?.title||"None"),"","## Workouts"];for(const x of rows)lines.push("- "+x.date+" | "+x.title+" | "+x.status+" | RPE "+(x.rpe??"?")+" | "+(x.duration??"?")+" min | "+(x.distanceKm??"?")+" km | HR "+(x.avgHr??"?")+" bpm | 100m "+(x.sprintSeconds??"?")+" s | "+x.notes.replace(/\n/g," "));lines.push("","## Apple Health workouts (Imported; not proof of plan completion)");for(const x of (p.appleWorkouts||[]).slice(0,50))lines.push("- "+x.date+" | "+x.kind+" | "+(x.duration??"?")+" min | "+(x.distanceKm??"?")+" km | HR avg "+(x.avgHr??"?")+" bpm, max "+(x.maxHr??"?")+" bpm");lines.push("","## Recovery");for(const x of r)lines.push("- "+x.date+": sleep "+(x.sleep??"?")+"h RHR "+(x.rhr??"?")+" HRV "+(x.hrv??"?")+" fatigue "+(x.fatigue??"?")+" soreness "+(x.soreness??"?")+" "+x.notes.replace(/\n/g," "));lines.push("","Review training quality, sprint exposure, recovery and next safe progression. Do not diagnose heart conditions.");return lines.join("\n")}
