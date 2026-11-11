@@ -104,7 +104,7 @@ final class HealthKitService: ObservableObject {
                 .quantity.doubleValue(for: bpmUnit)
             let latestHRV = (hrv.first as? HKQuantitySample)?
                 .quantity.doubleValue(for: hrvUnit)
-            let workoutItems: [WorkoutPreview] = workouts.compactMap { item in
+            let workoutItems: [WorkoutPreview] = workouts.compactMap { item -> WorkoutPreview? in
                 guard let workout = item as? HKWorkout else { return nil }
                 let label: String
                 switch workout.workoutActivityType {
