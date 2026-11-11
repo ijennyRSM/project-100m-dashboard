@@ -41,6 +41,7 @@ enum WellnessState {
 struct HealthRing: View {
     let metric: WellnessMetric
     let state: WellnessState
+    @ScaledMetric(relativeTo: .title2) private var scaledDiameter: CGFloat = 88
     var body: some View {
         VStack(spacing: 8) {
             ZStack {
@@ -53,7 +54,7 @@ struct HealthRing: View {
                     Image(systemName: metric.symbol).font(.caption).foregroundStyle(metric.color)
                     Text(state.value.map { String(format: "%.0f", $0) } ?? "—").font(.title2.bold()).monospacedDigit()
                 }
-            }.frame(width: 88, height: 88)
+            }.frame(width: min(160, scaledDiameter), height: min(160, scaledDiameter))
             Text(metric.rawValue).font(.subheadline.bold())
             Text(state.caption).font(.caption).foregroundStyle(.secondary).multilineTextAlignment(.center)
         }
