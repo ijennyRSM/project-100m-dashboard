@@ -43,11 +43,13 @@ def validate(tasks, root):
             continue
         if not isinstance(tid, str) or not re.fullmatch(r"P100-[A-Z0-9]+-\d{3}", tid):
             errors.append(prefix + "invalid task ID")
+            continue
         if tid in seen:
             errors.append(prefix + "duplicate ID")
         seen.add(tid)
-        if task["status"] not in STATES:
+        if not isinstance(task["status"], str) or task["status"] not in STATES:
             errors.append(prefix + "invalid status")
+            continue
         if not re.fullmatch(r"M[0-7]", str(task["milestone"])):
             errors.append(prefix + "invalid milestone")
         for key in ("owner", "branch", "commit"):
@@ -95,9 +97,12 @@ def validate(tasks, root):
         review = task["review"]
         if not isinstance(review, dict) or not {"reviewer", "commit", "decision", "evidence"} <= review.keys():
             errors.append(prefix + "review fields required")
+        elif not all(isinstance(review[k], str) for k in ("reviewer", "commit", "decision", "evidence")):
+            errors.append(prefix + "review fields must be text")
         elif task["status"] in {"VERIFIED", "ACCEPTED"}:
-            if (not review["reviewer"] or review["reviewer"] == task["owner"]
-                    or review["commit"] != sha or not review["evidence"]
+            owner = str(task["owner"]).strip().casefold()
+            if (not review["reviewer"].strip() or review["reviewer"].strip().casefold() == owner
+                    or review["commit"] != sha or not review["evidence"].strip()
                     or review["decision"] not in ({"ACCEPTED"} if task["status"] == "ACCEPTED"
                                                   else {"VERIFIED", "ACCEPTED"})):
                 errors.append(prefix + "reviewer evidence for exact commit required; no self-acceptance")

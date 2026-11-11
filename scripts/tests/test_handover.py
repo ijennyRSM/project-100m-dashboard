@@ -43,6 +43,14 @@ class LedgerTests(unittest.TestCase):
         del self.task["owner"]
         self.assertTrue(self.errors())
 
+    def test_malformed_record_is_reported_without_crashing(self):
+        for key, value in [("id", []), ("status", []), ("review", {"reviewer": [], "commit": "", "decision": "", "evidence": ""})]:
+            with self.subTest(key=key):
+                original = copy.deepcopy(self.task)
+                self.task[key] = value
+                self.assertTrue(self.errors())
+                self.task = original
+
     def test_invalid_commit_branch_file_requirement(self):
         for key, value in [("commit", "0" * 40), ("branch", "missing"),
                            ("modified_files", ["../outside"]), ("requirements", ["FAKE-01"])]:
@@ -73,6 +81,8 @@ class LedgerTests(unittest.TestCase):
         self.task["review"]["commit"] = "0" * 40
         self.assertTrue(self.errors())
         self.task["review"].update(commit=self.task["commit"], reviewer="Codex")
+        self.assertTrue(self.errors())
+        self.task["review"]["reviewer"] = " codex "
         self.assertTrue(self.errors())
 
     def test_prepare_does_not_mutate_status(self):

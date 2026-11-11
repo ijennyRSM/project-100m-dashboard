@@ -4,6 +4,12 @@ Mobile-first training companion hosted on GitHub Pages. V4 uses a warm, accessib
 
 **Website:** https://ijennyrsm.github.io/project-100m-dashboard/
 
+## Native iPhone development
+
+The companion SwiftUI app lives in [native-ios](native-ios/README.md). The approved [Product Blueprint](docs/product/PRODUCT_BLUEPRINT.md), [feature requirements](docs/product/FEATURE_REQUIREMENTS.md), [architecture audit](docs/architecture/REPOSITORY_AUDIT.md) and [current Claude/Codex handover](docs/handover/CURRENT.md) track development. M0 adds a five-tab design foundation with labeled sample content; it does not yet provide native accounts, workout logging or social posting. The web dashboard and existing training history remain available.
+
+Run `python scripts/handover.py status` and `python scripts/handover.py validate` on Windows to inspect handover records. macOS CI builds an unsigned iOS Simulator app; signed physical-device acceptance is separately tracked in M7.
+
 ## What works now (no login required)
 - **Live Workout Mode**: tick off prescribed sprint repeats, strength sets, warm-up and cooldown; rest timer, elapsed timer and resume after leaving the page. Completing the whole prescription advances the plan; a partial session does not.
 - **Sleep Insights**: Apple Health Core/Deep/REM sleep-stage import, sleep target and 7-night average. Percent shown is goal attainment, not a clinical or WHOOP score.

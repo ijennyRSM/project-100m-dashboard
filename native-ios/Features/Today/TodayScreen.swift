@@ -20,8 +20,8 @@ struct TodayScreen: View {
             }
             P100Card {
                 SectionHeading(title: "เส้นทางของคุณ", subtitle: "100M — The Comeback · ตัวอย่างความคืบหน้า")
-                ProgressView(value: 8, total: 60).accessibilityLabel("ตัวอย่าง ฝึกครบ 8 จาก 60 sessions")
-                Text("8 / 60 sessions · ตัวอย่าง").font(.subheadline.bold())
+                ProgressView(value: 0, total: 60).accessibilityLabel("ตัวอย่าง ฝึกครบ 0 จาก 60 sessions")
+                Text("0 / 60 sessions · ตัวอย่าง").font(.subheadline.bold())
                 Text("ฝึกครบแล้วจึงไปต่อ ทำบางส่วนยังกลับมาทำครั้งเดิมได้").font(.subheadline).foregroundStyle(.secondary)
             }
             P100Card {

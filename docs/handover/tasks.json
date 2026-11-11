@@ -179,5 +179,369 @@
     },
     "blocker": "M0 Claude review and P0 security hardening outstanding",
     "unblock_condition": "M0 review accepted; P100-SEC-001 verified with safe evidence"
+  },
+  {
+    "id": "P100-M2-001",
+    "milestone": "M2",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "HK-01",
+      "HEALTH-01",
+      "SCORE-01",
+      "SCORE-02",
+      "SCORE-03"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Inject mockable Health repository; test interval union, source selection, stale/missing data and DST",
+      "Implement persistent anchors/deletions and authorized HR/steps/energy reads",
+      "Review scoring research and baseline/missing-component policies before algorithms"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Direct authorized reading with provenance and foreground refresh",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Persistent anchors and deduplication/deletion tests",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Original score and missing-data tests; simulator/device evidence separate",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M3-001",
+    "milestone": "M3",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "TRAIN-01",
+      "TRAIN-02",
+      "LIVE-01",
+      "RUN-01"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Port versioned ordered prescriptions including reviewed 10K program",
+      "Implement component attempts, explicit skip confirmation and offline workout continuation",
+      "Test Completed/Partial/Skipped and concurrent sync preservation"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Five independent programs usable with low-friction logging",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Partial component persistence and explicit confirmed skipping",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Live timers/pause/resume/offline relaunch and conflict tests",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M4-001",
+    "milestone": "M4",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "FEED-01",
+      "PRIV-01",
+      "ME-01"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Add separate safe public projection and moderation/blocking policies",
+      "Implement paginated Feed, compose/like/comment/profile/report/block",
+      "Verify media EXIF stripping and route redaction before publish preview"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Functioning public feed and social interactions",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Private default; explicit publish; blocked/private access negative tests",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Pagination/loading/empty/error states and route privacy verified",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M5-001",
+    "milestone": "M5",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "COACH-01",
+      "AI-01"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Port explainable rules with evidence, baseline sufficiency and uncertainty",
+      "Require approval for every suggested plan change",
+      "Review future secure AI function architecture without enabling health transfer"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Working conservative history and recovery analysis",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "No unapproved plan mutation or health AI transfer",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Deterministic baseline/rule tests and future chat boundary",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M6-001",
+    "milestone": "M6",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "UX-01",
+      "QA-01",
+      "DATA-01",
+      "PRIV-01"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Complete accessibility/small-screen/error/offline and performance audit",
+      "Run integration and RLS security suite with disposable staging identities",
+      "Resolve reviewer findings and document release readiness"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Accessibility and responsive evidence",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Integration/performance/RLS/security CI passes",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Reviewer accepts release criteria and risk disposition",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M7-001",
+    "milestone": "M7",
+    "owner": "Codex",
+    "status": "BLOCKED",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "QA-01",
+      "HK-01",
+      "RUN-01",
+      "DATA-01"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Obtain a supported signed build route without assuming paid membership",
+      "Install on owner iPhone; verify real Watch samples and denied permissions",
+      "Record actual GPS/background and two-account/two-device cloud behavior"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Actual signed physical iPhone launch evidence",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Real HealthKit/Watch/GPS/background results with limitations",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "End-to-end account/sync and privacy acceptance recorded",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "No signed physical iPhone/Watch execution access or verified signing path in this Windows session",
+    "unblock_condition": "Owner-supported signing environment and physical device access; prerequisites reviewed"
   }
 ]
