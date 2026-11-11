@@ -165,13 +165,14 @@ async function parseZip(file,days,progress){
 }
 async function importAppleHealth(file,days,progress=()=>{}){
  if(!file||!file.name)throw Error("กรุณาเลือกไฟล์ Apple Health");
+ const targetProfileId=A.profile()?.id, targetNamespace=A.namespace;
  const extension=file.name.toLowerCase();
  const res=extension.endsWith(".zip")?await parseZip(file,days,progress):
    extension.endsWith(".xml")?await parseXml(file,days,progress):
    (()=>{throw Error("รองรับเฉพาะ export.zip หรือ export.xml จาก Apple Health")})();
  if(!res.found)throw Error("ไม่พบข้อมูลสุขภาพที่รองรับในช่วงวันที่เลือก กรุณาลองเลือกช่วง 365 วัน");
- // Read active profile only AFTER asynchronous processing, so switching profiles mid-import
- // never silently writes one user's health export into another person's profile.
+ // Do not write one person's health archive into another profile when the user navigates away.
+ if(A.profile()?.id!==targetProfileId||A.namespace!==targetNamespace)throw Error("โปรไฟล์หรือบัญชีเปลี่ยนระหว่างนำเข้า กรุณาเลือกโปรไฟล์ให้ถูกต้องแล้วลองอีกครั้ง");
  const p=A.profile();p.appleWorkouts=p.appleWorkouts||[];
  const known=new Set(p.appleWorkouts.map(x=>x.id)),newer=res.workouts.filter(x=>!known.has(x.id));
  p.appleWorkouts.push(...newer);p.appleWorkouts.sort((a,b)=>b.date.localeCompare(a.date));
