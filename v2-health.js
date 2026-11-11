@@ -29,9 +29,13 @@ function record(tag){
  if(type==="HKQuantityTypeIdentifierRestingHeartRate"&&v!==null){add(date,"rhr",v);count++}
  else if(type==="HKQuantityTypeIdentifierHeartRateVariabilitySDNN"&&v!==null){add(date,"hrv",a.unit==="s"?v*1000:v);count++}
  else if(type==="HKQuantityTypeIdentifierBodyMass"&&v!==null){add(date,"weight",a.unit==="lb"?v*.453592:v);count++}
- else if(type==="HKCategoryTypeIdentifierSleepAnalysis"&&String(a.value||"").includes("Asleep")){
-   const start=when(a.startDate),end=when(a.endDate);
-   if(Number.isFinite(start)&&Number.isFinite(end)&&end>start&&end-start<24*3600000){(sleep[date]??=[]).push([start,end]);count++}
+ else if(type==="HKCategoryTypeIdentifierSleepAnalysis"){
+   const start=when(a.startDate),end=when(a.endDate),value=String(a.value||"");
+   if(Number.isFinite(start)&&Number.isFinite(end)&&end>start&&end-start<24*3600000){
+     const stages=(sleep[date]??={total:[],core:[],deep:[],rem:[],awake:[],inBed:[],unspecified:[]});
+     const stage=value.includes("AsleepCore")?"core":value.includes("AsleepDeep")?"deep":value.includes("AsleepREM")?"rem":value.includes("Asleep")?"unspecified":value.includes("Awake")?"awake":value.includes("InBed")?"inBed":null;
+     if(stage){stages[stage].push([start,end]);if(["core","deep","rem","unspecified"].includes(stage))stages.total.push([start,end]);count++}
+   }
  }else if(type==="HKQuantityTypeIdentifierHeartRate"&&v!==null&&heartSamples.length<200000){
     const ts=when(a.startDate);if(Number.isFinite(ts)&&v>35&&v<240){heartSamples.push([ts,v]);count++}
  }
@@ -72,11 +76,27 @@ while(true){const {value,done}=await reader.read();if(done)break;bytes+=value.by
 carry+=decoder.decode();consume();
 const recovery={};
 for(const [date,kv] of Object.entries(sums)){recovery[date]??={date};for(const [k,[sum,n]] of Object.entries(kv))recovery[date][k]=Math.round(sum/n*10)/10}
-for(const [date,ranges] of Object.entries(sleep)){
- ranges.sort((a,b)=>a[0]-b[0]);let duration=0,head=null;
- for(const [start,end] of ranges){if(!head)head=[start,end];else if(start<=head[1])head[1]=Math.max(head[1],end);else{duration+=head[1]-head[0];head=[start,end]}}
- if(head)duration+=head[1]-head[0];
- recovery[date]??={date};recovery[date].sleep=Math.round(duration/360000)/10;
+function unionIntervals(ranges){
+ if(!ranges||!ranges.length)return {duration:0,start:null,end:null};
+ const sorted=ranges.slice().sort((a,b)=>a[0]-b[0]);let start=sorted[0][0],end=sorted[0][1],ms=0;
+ for(let i=1;i<sorted.length;i++){const [a,b]=sorted[i];if(a<=end)end=Math.max(end,b);else{ms+=end-start;start=a;end=b}}
+ ms+=end-start;
+ return {duration:ms,start:sorted[0][0],end:Math.max(...sorted.map(x=>x[1]))};
+}
+for(const [date,stages] of Object.entries(sleep)){
+ const all=unionIntervals(stages.total);if(!all.duration)continue;
+ const h=ms=>Math.round(ms/360000)/10;
+ const deep=h(unionIntervals(stages.deep).duration),rem=h(unionIntervals(stages.rem).duration),core=h(unionIntervals(stages.core).duration),
+ unspecified=h(unionIntervals(stages.unspecified).duration),awake=h(unionIntervals(stages.awake).duration),inBed=h(unionIntervals(stages.inBed).duration);
+ recovery[date]??={date};
+ const row=recovery[date];row.sleep=h(all.duration);
+ row.sleepStages={deep,rem,core,unspecified};
+ row.sleepStageCoverage=Math.round(Math.min(100,(deep+rem+core)/Math.max(row.sleep,.01)*100));
+ row.sleepAwake=awake;
+ row.sleepInBed=inBed||null;
+ row.sleepEfficiency=inBed?Math.round(Math.min(100,all.duration/unionIntervals(stages.inBed).duration*100)):null;
+ row.sleepStart=Number.isFinite(all.start)?new Date(all.start).toISOString():null;
+ row.sleepEnd=Number.isFinite(all.end)?new Date(all.end).toISOString():null;
 }
 heartSamples.sort((a,b)=>a[0]-b[0]);
 for(const w of workouts){if(w.avgHr===null&&Number.isFinite(w.start)&&Number.isFinite(w.end)){
@@ -100,7 +120,7 @@ let count=0;
 for(const [date,incoming] of Object.entries(r.recovery)){
  let existing=p.recovery.find(x=>x.date===date);
  if(!existing){existing={date,updatedAt:A.iso(),source:"apple-health"};p.recovery.push(existing)}
- for(const key of ["sleep","rhr","hrv","weight"]){if(incoming[key]!==undefined&&(existing[key]===undefined||existing[key]===null||existing.source==="apple-health"))existing[key]=incoming[key]}
+ for(const key of ["sleep","rhr","hrv","weight","sleepStages","sleepStageCoverage","sleepAwake","sleepInBed","sleepEfficiency","sleepStart","sleepEnd"]){if(incoming[key]!==undefined&&(existing[key]===undefined||existing[key]===null||existing.source==="apple-health"))existing[key]=incoming[key]}
  if(existing.source==="apple-health")existing.updatedAt=A.iso();
  count++;
 }
