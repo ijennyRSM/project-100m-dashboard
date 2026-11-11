@@ -14,6 +14,11 @@ final class HealthKitService: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var message: String?
 
+    private enum HealthDataError: LocalizedError {
+        case sleepTypeUnavailable
+        var errorDescription: String? { "ไม่รองรับข้อมูลการนอนบนอุปกรณ์นี้" }
+    }
+
     private let healthStore = HKHealthStore()
     private var observers: [HKObserverQuery] = []
     private let requestedKey = "project100m.healthkit.permissionRequested"
@@ -21,10 +26,10 @@ final class HealthKitService: ObservableObject {
     var hasRequestedAccess: Bool { UserDefaults.standard.bool(forKey: requestedKey) }
 
     private var readTypes: Set<HKObjectType> {
-        var types: [HKObjectType] = [
-            HKObjectType.categoryType(forIdentifier: .sleepAnalysis),
-            HKObjectType.workoutType()
-        ]
+        var types: [HKObjectType] = [HKObjectType.workoutType()]
+        if let sleep = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) {
+            types.append(sleep)
+        }
         let quantities: [HKQuantityTypeIdentifier] = [
             .restingHeartRate, .heartRateVariabilitySDNN, .heartRate, .stepCount
         ]
@@ -79,7 +84,9 @@ final class HealthKitService: ObservableObject {
             let since = Calendar.current.date(byAdding: .day, value: -21, to: Date()) ?? Date()
             let rhrType = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
             let hrvType = HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
-            let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)
+            guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
+                throw HealthDataError.sleepTypeUnavailable
+            }
             let workoutType = HKObjectType.workoutType()
 
             async let rhrSamples = fetchSamples(rhrType, since: since, limit: 128)
