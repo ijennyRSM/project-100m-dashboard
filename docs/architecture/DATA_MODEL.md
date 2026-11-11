@@ -6,6 +6,8 @@
 
 **P0 schema drift:** live authenticated grants also include DELETE, TRUNCATE, REFERENCES and TRIGGER, beyond repository SQL's SELECT/INSERT/UPDATE. RLS does not scope TRUNCATE. Do not exercise this grant against production. Separate reviewed hardening task must revoke unnecessary privileges, verify function/table grants and default privileges, and test isolation in disposable local/staging data. No production change performed in M0.
 
+This is a privilege-audit finding, not evidence of a successful remote attack or data loss. No public truncate RPC was observed; current Data API exploitability was not tested. Remove unnecessary privileges before expanding the cloud surface.
+
 Legacy payload v2 nests profiles, plans (`templateId`, ordered generated session keys `wN-slot`, append-only records), recovery, imported workouts, sleep fields and `activeLive` draft. Several local named profiles can belong to one cloud account; a local profile ID is not an auth identity. Import migration must retain both identifiers and plan context.
 
 ## Proposed normalized schema (design only; no migration applied)

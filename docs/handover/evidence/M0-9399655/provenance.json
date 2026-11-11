@@ -1,0 +1,36 @@
+{
+  "head_commit": "939965577a38032dedca2ae75955a23a83402529",
+  "tested_pr_merge_commit": "cbfa8db1c55f84913cc44f370295f812e0944813",
+  "run": "https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638314",
+  "artifact_id": 13882250468,
+  "device": "iPhone 17 Pro / iOS 26.4 Simulator",
+  "dimensions": "1206x2622",
+  "note": "Original unedited simulator screenshots; sample or missing data only. Run superseded before last test completed; do not infer full suite PASS.",
+  "files": [
+    {
+      "name": "M0-Me-light.png",
+      "sha256": "557f7bd5a7556b7a84730f3f5ed0ca88dea008f2c4d2b32b0fd19f5ea5bdc217",
+      "original": "082CF559-FB3C-4FF7-A453-DEED4283F8BB.png"
+    },
+    {
+      "name": "M0-Health-light.png",
+      "sha256": "cf996f46c54a391616ab6a682314382c98cb21c40ae8bd0fd49ff5e099d6805d",
+      "original": "54D1E5BD-82EB-42CB-92A3-B8D62C7142EA.png"
+    },
+    {
+      "name": "M0-Train-light.png",
+      "sha256": "e5a6e9f9b40d798261fc1cec884ef220870646e1cfda8ea631ebec2274270cdb",
+      "original": "ABF6AAA9-FCF7-43B9-971F-2C6A54061836.png"
+    },
+    {
+      "name": "M0-Today-light.png",
+      "sha256": "af7320df2a530a06c4930451882d0e54a238a514677e8a824c8a2c074f555cdd",
+      "original": "07F23F1A-29CC-4E83-A7A0-6FAB6FBB100A.png"
+    },
+    {
+      "name": "M0-Feed-light.png",
+      "sha256": "0ddcd6663dbe085afa27304d5c86067ea61bbffc04f8ad83c49aaab24fe67f55",
+      "original": "33ADE89A-FC16-4025-8BC5-DB04987F41D7.png"
+    }
+  ]
+}

@@ -3,9 +3,9 @@
     "id": "P100-M0-001",
     "milestone": "M0",
     "owner": "Codex",
-    "status": "IN_PROGRESS",
+    "status": "READY_FOR_REVIEW",
     "branch": "codex/m0-foundation-handover",
-    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "commit": "52cc51ab5ba0799425a0788d8b9766e0e440ef71",
     "requirements": [
       "NAV-01",
       "UX-01",
@@ -14,49 +14,107 @@
       "QA-01"
     ],
     "implemented_changes": [
-      "Repository audit and approved specification committed"
+      "Audited both branch histories, web/native code and live Supabase metadata; persisted approved specification before features",
+      "Added portable status/next/prepare/validate/archive commands and Windows/Linux CI with no self-acceptance",
+      "Implemented five native tabs, independent stacks, persisted selected tab, adaptive shared components and labeled fixtures",
+      "Added Health-only interactive missing-score rings and retained on-device HealthKit controls; no production writes",
+      "Added macOS unsigned simulator build, UI acceptance suite and screenshot export; fixed missing launch-screen declaration and test safe-area bounds",
+      "Inspected full-resolution simulator screenshots; added adaptive ring sizing and earlier vertical layout for large text"
     ],
     "modified_files": [
+      ".github/workflows/handover.yml",
+      ".github/workflows/ios-native-compile.yml",
+      ".gitignore",
+      "AGENTS.md",
+      "README.md",
+      "docs/architecture/DATA_MODEL.md",
+      "docs/architecture/DECISIONS.md",
+      "docs/architecture/REPOSITORY_AUDIT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md",
+      "docs/handover/CURRENT.md",
+      "docs/handover/REVIEW.md",
+      "docs/handover/TASKS.md",
+      "docs/handover/evidence/M0-9399655/M0-Feed-light.png",
+      "docs/handover/evidence/M0-9399655/M0-Health-light.png",
+      "docs/handover/evidence/M0-9399655/M0-Me-light.png",
+      "docs/handover/evidence/M0-9399655/M0-Today-light.png",
+      "docs/handover/evidence/M0-9399655/M0-Train-light.png",
+      "docs/handover/evidence/M0-9399655/README.md",
+      "docs/handover/evidence/M0-9399655/provenance.json",
+      "docs/handover/history/README.md",
+      "docs/handover/tasks.json",
+      "docs/product/DESIGN_SYSTEM.md",
+      "docs/product/FEATURE_REQUIREMENTS.md",
       "docs/product/PRODUCT_BLUEPRINT.md",
-      "docs/architecture/REPOSITORY_AUDIT.md"
+      "native-ios/App/PROJECT100MApp.swift",
+      "native-ios/DesignSystem/Components.swift",
+      "native-ios/DesignSystem/HealthRing.swift",
+      "native-ios/Features/Feed/FeedScreen.swift",
+      "native-ios/Features/Health/HealthScreen.swift",
+      "native-ios/Features/Me/MeScreen.swift",
+      "native-ios/Features/PreviewContent.swift",
+      "native-ios/Features/RootView.swift",
+      "native-ios/Features/Today/TodayScreen.swift",
+      "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/README.md",
+      "native-ios/ROADMAP.md",
+      "native-ios/UITests/FoundationUITests.swift",
+      "native-ios/project.yml",
+      "scripts/handover.py",
+      "scripts/tests/test_handover.py"
     ],
     "test_results": [
-      "8 portable handover unit tests PASS on Windows/Python 3.14.5; native checks pending"
+      "PASS: nine portable unit tests on local Windows/Python 3.14.5",
+      "PASS: Windows/Linux handover CI at head 9399655; script unchanged since then; https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638436",
+      "PASS: local ledger/status/next/prepare and archive rejection; git diff --check; unchanged web JS syntax checks",
+      "Initial native compile PASS / UI 3 of 4 PASS, navigation failure corrected: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43071252125",
+      "Corrected compile PASS / first three UI tests PASS, superseded during last relaunch: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638314",
+      "Later head 6437d8d native run FAILURE; job/log APIs returned Server Error/ReadTimeout, exact failure cause unknown: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43075144693",
+      "BLOCKED: latest head 52cc51a native run queued with no jobs at last observation: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095669281",
+      "Latest handover remote run queued: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095669277; no latest remote PASS claimed"
     ],
     "known_issues": [
-      "No native accounts/training/social/scoring implementation; physical-device acceptance pending"
+      "Final native build/UI verification BLOCKED by queued Actions jobs and unavailable prior failure diagnostics; P100-M0-002",
+      "Claude review pending; no accepted milestone",
+      "Feed/Today/Train/Me contain labeled sample content; native accounts/training/social/scoring/coach not implemented",
+      "Physical signing/iPhone/Watch/GPS/background/cloud acceptance unverified; M7 blocked",
+      "P0 live grant drift tracked in P100-SEC-001; production unchanged",
+      "Mobbin screens and Mobbin/Flownato MCP unavailable; detailed reference review pending",
+      "Existing HealthKit source/stage/timezone/anchor gaps documented for M2"
     ],
     "reviewer_findings": [
       "Claude review not received"
     ],
     "next_actions": [
-      "Implement M0 shell; run CI; prepare Claude review"
+      "Resolve P100-M0-002: diagnose final CI failure and obtain exact-source simulator build/UI PASS with updated screenshot inspection",
+      "Claude reviews exact implementation SHA 52cc51ab5ba0799425a0788d8b9766e0e440ef71 using REVIEW.md; no acceptance before unresolved criteria pass",
+      "Codex resolves findings and resubmits; resolve P100-SEC-001 before M1 expansion"
     ],
     "acceptance_criteria": [
       {
         "description": "Five tabs in required order; independent stacks and restored selection",
         "passed": false,
-        "evidence": "Pending implementation/review"
+        "evidence": "Order and partial stack retention observed at 9399655; final relaunch check remains unverified"
       },
       {
         "description": "Reusable adaptive components and clearly labeled fixture screens",
         "passed": false,
-        "evidence": "Pending implementation/review"
+        "evidence": "Implemented and prior light screenshots inspected; latest large-text ring geometry awaits final runtime evidence"
       },
       {
         "description": "Three interactive Health-only rings; no invented scores",
         "passed": false,
-        "evidence": "Pending implementation/review"
+        "evidence": "Prior Health/Me UI test passed at 9399655; latest source still requires final CI"
       },
       {
-        "description": "Windows handover tests/validation and macOS simulator build pass",
+        "description": "Windows handover tests/validation and exact-source macOS simulator build/UI pass",
         "passed": false,
-        "evidence": "Pending implementation/review"
+        "evidence": "Local/earlier portable CI passes; latest native compile/UI verification BLOCKED in P100-M0-002"
       },
       {
         "description": "Claude reviews documented criteria and UX evidence",
         "passed": false,
-        "evidence": "Pending implementation/review"
+        "evidence": "Pending: no Claude review received"
       }
     ],
     "review": {
@@ -67,6 +125,68 @@
     },
     "blocker": "",
     "unblock_condition": ""
+  },
+  {
+    "id": "P100-M0-002",
+    "milestone": "M0",
+    "owner": "Codex",
+    "status": "BLOCKED",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "52cc51ab5ba0799425a0788d8b9766e0e440ef71",
+    "requirements": [
+      "QA-01",
+      "UX-01"
+    ],
+    "implemented_changes": [
+      "Added explicit boot, UI test time limits, runtime diagnostics and artifact export",
+      "Attempted supported macOS 15 / Xcode 16.4 / iOS 18.5 fallback; latest jobs still queued"
+    ],
+    "modified_files": [
+      ".github/workflows/ios-native-compile.yml",
+      "docs/handover/CURRENT.md"
+    ],
+    "test_results": [
+      "PASS: nine portable unit tests on local Windows/Python 3.14.5",
+      "PASS: Windows/Linux handover CI at head 9399655; script unchanged since then; https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638436",
+      "PASS: local ledger/status/next/prepare and archive rejection; git diff --check; unchanged web JS syntax checks",
+      "Initial native compile PASS / UI 3 of 4 PASS, navigation failure corrected: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43071252125",
+      "Corrected compile PASS / first three UI tests PASS, superseded during last relaunch: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638314",
+      "Later head 6437d8d native run FAILURE; job/log APIs returned Server Error/ReadTimeout, exact failure cause unknown: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43075144693",
+      "BLOCKED: latest head 52cc51a native run queued with no jobs at last observation: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095669281",
+      "Latest handover remote run queued: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095669277; no latest remote PASS claimed"
+    ],
+    "known_issues": [
+      "Latest exact-source simulator compile/UI suite and updated large-text geometry unverified",
+      "Prior run failure root cause unknown because job/log APIs failed"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "When Actions jobs/logs are available, inspect run 43075144693 failure diagnostics",
+      "Run pinned workflow on latest reviewed source; resolve actual failures; inspect screenshot artifacts",
+      "Record run/source SHA and observed results, then resubmit M0 to Claude"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Diagnose actual failure logs; final exact-source unsigned simulator build and all four UI tests pass",
+        "passed": false,
+        "evidence": "Blocked: queued Actions runs and inaccessible diagnostics"
+      },
+      {
+        "description": "Inspect current light/dark/AX5 screenshots and record provenance",
+        "passed": false,
+        "evidence": "Earlier light screenshots preserved; updated geometry runtime evidence pending"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "GitHub Actions latest macOS and handover runs queued without jobs; prior job API returned Server Error and log connector ReadTimeout",
+    "unblock_condition": "Actions assigns runners and exposes logs; exact latest source simulator build/UI verification succeeds"
   },
   {
     "id": "P100-SEC-001",
@@ -87,7 +207,8 @@
       "docs/architecture/REPOSITORY_AUDIT.md"
     ],
     "test_results": [
-      "8 portable handover unit tests PASS on Windows/Python 3.14.5; native checks pending"
+      "Read-only live metadata verified table columns, RLS policies, grants and security-invoker revision RPC; no user payloads read",
+      "No destructive test or production write performed; anon/two-user isolation tests await disposable staging"
     ],
     "known_issues": [
       "P0: authenticated has TRUNCATE plus DELETE/REFERENCES/TRIGGER grants; production unchanged"
@@ -143,7 +264,7 @@
       "docs/architecture/DATA_MODEL.md"
     ],
     "test_results": [
-      "8 portable handover unit tests PASS on Windows/Python 3.14.5; native checks pending"
+      "Not run: native account/persistence implementation has not started"
     ],
     "known_issues": [
       "No native auth implemented"
