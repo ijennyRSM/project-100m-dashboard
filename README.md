@@ -14,7 +14,7 @@ Mobile-first training companion hosted on GitHub Pages. V4 uses a warm, accessib
 - Sessions **do not expire and are not bound to weekdays**. Completed advances, Partial stays on that session, Skipped advances but remains counted as skipped.
 - Named profiles, separate plans, quick/detailed workout logs, progress and history.
 - Sprint time trial trend, RHR trend, sleep trend, daily recovery and Coach Report export.
-- Apple Health manual import from export.xml/export.zip in **Settings** (selected data only, processed in your browser).
+- Apple Health manual import from export.xml/export.zip in **Settings** (selected data only, processed in your browser). **Large ZIPs are streamed** with fflate: a 36MB compressed archive may contain a 250MB+ XML file. The original archive is never uploaded. Keep Safari open until import finishes.
 - JSON backup and restore; V1 is preserved at [v1.html](./v1.html). Older V1 workouts and recovery can migrate from the same browser.
 
 ### Important: local vs cloud
@@ -53,3 +53,7 @@ Each person should sign in with a different email. Account data is isolated with
 - Google Fonts: Plus Jakarta Sans and Noto Sans Thai, with platform font fallbacks.
 
 Design-only changes do not reset workouts, profiles, or Supabase cloud data.
+
+## Streaming ZIP dependency
+- [fflate 0.8.2](https://github.com/101arrowz/fflate) (MIT) powers incremental ZIP decompression. The page loads the version-pinned UMD build from jsDelivr. No ZIP data is sent to the CDN.
+- iOS Safari can suspend long imports if you leave the app; do not switch tabs or lock the phone during a large first import.
