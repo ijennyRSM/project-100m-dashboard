@@ -1,10 +1,14 @@
-# PROJECT 100M — Move at Your Pace (Wellbeing Edition V3)
+# PROJECT 100M — Move at Your Pace (Wellbeing Edition V4)
 
-Mobile-first training companion hosted on GitHub Pages. V3 uses a warm, accessible fitness design with clearer Thai navigation, large touch targets and a one-tap quick logging experience.
+Mobile-first training companion hosted on GitHub Pages. V4 uses a warm, accessible fitness design with clearer Thai navigation, large touch targets and a one-tap quick logging experience.
 
 **Website:** https://ijennyrsm.github.io/project-100m-dashboard/
 
 ## What works now (no login required)
+- **Live Workout Mode**: tick off prescribed sprint repeats, strength sets, warm-up and cooldown; rest timer, elapsed timer and resume after leaving the page. Completing the whole prescription advances the plan; a partial session does not.
+- **Sleep Insights**: Apple Health Core/Deep/REM sleep-stage import, sleep target and 7-night average. Percent shown is goal attainment, not a clinical or WHOOP score.
+- **Coach Insights (beta)**: transparent rule-based observations using the athlete’s own sleep/recovery/training records. Not a generative AI provider; no data is silently sent to a model.
+
 - Default **100M — The Comeback** program: 12 training blocks, 60 sessions.
 - Choose preset programs: **5K Foundation, Strength Foundation, Active Wellness**.
 - Sessions **do not expire and are not bound to weekdays**. Completed advances, Partial stays on that session, Skipped advances but remains counted as skipped.
@@ -24,6 +28,10 @@ Each person should sign in with a different email. Account data is isolated with
 4. Use **Recovery** to log sleep, resting HR, HRV and fatigue; use **Settings** for Apple Health import and backups.
 5. Use **History → Export Coach Report** to share a training summary for coaching review.
 
+## NOOP research and future integrations
+- Read [NOOP_INTEGRATION_ROADMAP.md](./NOOP_INTEGRATION_ROADMAP.md) for a source-level review of NOOP Forge, its noncommercial license, the required iOS HealthKit companion and a secure generative-AI coaching backend.
+- Neither direct Apple Watch HealthKit sync nor a generative AI provider is enabled by this static GitHub Pages app. These require separate native and secure server components.
+
 ## Notes
 - Not a medical device.
 - Apple Health imports are not automatic Apple Watch sync, and Watch workouts do not automatically prove the prescribed sprint session was completed.
@@ -32,7 +40,7 @@ Each person should sign in with a different email. Account data is isolated with
 - Edits to main branch auto-deploy via GitHub Pages.
 
 ## Source
-- index.html, v3.css, icon.svg, v2-data.js, v2-ui.js, v2-health.js — V3 wellbeing UI with V2 data engine.
+- index.html, v3.css, live-wellness.css, icon.svg, v2-data.js, v2-ui.js, v2-health.js, live-workout.js, wellness-insights.js — V4 wellbeing UI with live sessions and sleep summaries.
 - v2.css — previous dark-theme stylesheet retained in Git history.
 - cloud-config.js — public cloud settings (empty by default).
 - supabase-schema.sql — private account data with RLS.
