@@ -19,6 +19,7 @@ targets:
       - path: App
       - path: Health
       - path: Features
+      - path: DesignSystem
     info:
       path: App/Info.plist
       properties:
@@ -36,3 +37,25 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.project100m.ios
         GENERATE_INFOPLIST_FILE: "NO"
         SUPPORTS_MACCATALYST: "NO"
+  PROJECT100MUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: UITests
+    dependencies:
+      - target: PROJECT100M
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: "YES"
+        PRODUCT_BUNDLE_IDENTIFIER: com.project100m.ios.uitests
+        TEST_TARGET_NAME: PROJECT100M
+
+schemes:
+  PROJECT100M:
+    build:
+      targets:
+        PROJECT100M: all
+        PROJECT100MUITests: [test]
+    test:
+      targets:
+        - PROJECT100MUITests

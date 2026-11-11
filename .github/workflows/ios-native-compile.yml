@@ -4,10 +4,18 @@ on:
   push:
     branches:
       - feat/ios-native-foundation
+      - 'codex/**'
+    paths:
+      - native-ios/**
+      - .github/workflows/ios-native-compile.yml
+  pull_request:
     paths:
       - native-ios/**
       - .github/workflows/ios-native-compile.yml
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build-simulator:
@@ -23,6 +31,8 @@ jobs:
       - name: Build iPhone simulator app (no signing)
         working-directory: native-ios
         run: |
+          set -o pipefail
+          mkdir -p build
           xcodebuild \
             -project PROJECT100M.xcodeproj \
             -scheme PROJECT100M \
@@ -30,4 +40,40 @@ jobs:
             -sdk iphonesimulator \
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO \
-            build
+            build 2>&1 | tee build/build.log
+      - name: Select available iPhone simulator
+        working-directory: native-ios
+        run: |
+          xcrun simctl list devices available -j > build/devices.json
+          python3 - <<'PY'
+          import json, os
+          devices = json.load(open('build/devices.json'))['devices']
+          candidates = [d for runtime, rows in devices.items() if 'iOS' in runtime
+                        for d in rows if d['name'].startswith('iPhone') and d['isAvailable']]
+          if not candidates:
+              raise SystemExit('No available iPhone simulator')
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('SIMULATOR_ID=' + candidates[0]['udid'] + '\n')
+          print(candidates[0]['name'], candidates[0]['udid'])
+          PY
+      - name: Run simulator UI acceptance checks and capture screenshots
+        working-directory: native-ios
+        run: |
+          set -o pipefail
+          xcodebuild -project PROJECT100M.xcodeproj -scheme PROJECT100M \
+            -configuration Debug -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
+            -parallel-testing-enabled NO -resultBundlePath build/TestResults.xcresult \
+            CODE_SIGNING_ALLOWED=NO test 2>&1 | tee build/tests.log
+      - name: Export screenshot attachments
+        if: always()
+        working-directory: native-ios
+        run: |
+          if [ -d build/TestResults.xcresult ]; then
+            xcrun xcresulttool export attachments --path build/TestResults.xcresult --output-path build/screenshots
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-simulator-evidence-${{ github.sha }}
+          path: native-ios/build/
+          retention-days: 14

@@ -2,11 +2,14 @@
 
 This is the **new SwiftUI iPhone app** started alongside the existing PROJECT 100M GitHub Pages website. The web app and its Supabase data are unchanged.
 
-**Status:** source scaffold committed; NOT YET compiled, code signed, or installed on a real iPhone.
+**Status:** M0 five-tab design foundation; see [current handover](../docs/handover/CURRENT.md) for exact commit/build evidence. Not signed or installed on a physical iPhone. Feed/training/profile content is explicitly labeled fictional preview data; accounts, social interactions, native workout logging and scores are not implemented.
 
-## Milestone 0 — HealthKit first
+## M0 — Foundation and design
 
-- SwiftUI Today / Health / Training / Account screens with the warm fitness design direction.
+The approved [Product Blueprint](../docs/product/PRODUCT_BLUEPRINT.md) and [requirements](../docs/product/FEATURE_REQUIREMENTS.md) supersede the old milestone numbering. M7 separately tracks physical-device acceptance.
+
+- Exactly Feed / Today / Train / Health / Me using native TabView, independent stacks and restored selected tab.
+- Adaptive shared design tokens/cards/banners/activity previews; Thai-first copy and Dynamic Type. Health begins with interactive Sleep/Recovery/Strain rings showing no invented scores; Me has none.
 - User explicitly taps **อนุญาตการอ่านข้อมูล** to request read-only HealthKit access.
 - Read the last 21 days of permitted resting heart rate, HRV (SDNN), sleep stages and workouts from Apple Health, including samples already synced from the paired Apple Watch.
 - Refresh when the app comes to the foreground, and use HealthKit change observers while the app is alive.
@@ -41,9 +44,13 @@ The default bundle identifier com.project100m.ios is a placeholder; change it to
 - App/PROJECT100MApp.swift — SwiftUI app lifecycle
 - Health/HealthModels.swift — read-only native display data
 - Health/HealthKitService.swift — HealthKit authorization and queries
-- Features/RootView.swift — Today, Health, Training, Account screens
+- Features/ — five-tab shell and feature-specific views, explicitly labeled fixtures
+- DesignSystem/ — adaptive tokens, shared components and ring presentation states
+- UITests/ — simulator navigation, privacy placement, fixture labeling and screenshot checks
 - AGENTS.md — Codex + Claude guardrails
 - ROADMAP.md — phases and acceptance checks
+
+CI builds an unsigned simulator app and runs UI checks with screenshot attachments (including dark/AX5 scenarios). `--ui-testing` disables foreground HealthKit reads only for deterministic simulator UI checks; it does not simulate or prove HealthKit permission/device behavior. Actual health authorization is still user-initiated. UI tests do not send health data or call the cloud. See workflow artifacts and CURRENT for observed results; do not infer PASS from test source.
 
 ## Apple Watch without ZIP exports
 
