@@ -1,0 +1,38 @@
+name: PROJECT100M
+options:
+  bundleIdPrefix: com.project100m
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+    TARGETED_DEVICE_FAMILY: "1"
+
+targets:
+  PROJECT100M:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+      - path: Health
+      - path: Features
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: PROJECT 100M
+        NSHealthShareUsageDescription: PROJECT 100M reads your approved Apple Health sleep, heart and workouts to show your training and recovery. Data stays on this iPhone in this initial build.
+        UIRequiredDeviceCapabilities: [arm64]
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+    entitlements:
+      path: App/PROJECT100M.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.project100m.ios
+        GENERATE_INFOPLIST_FILE: "YES"
+        SUPPORTS_MACCATALYST: "NO"
