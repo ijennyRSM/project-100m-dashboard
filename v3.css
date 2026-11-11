@@ -257,3 +257,16 @@ footer a{color:#749281}
  .chartlabels{font-size:9px}.chartlabels b{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important;transition:none!important}}
+
+/* Quick log: large touch-friendly feeling choices */
+.quick-rpe{grid-column:1/-1;display:grid;gap:10px;min-width:0}
+.quick-rpe>label{color:#506d59;font-size:12px;font-weight:700}
+.feelings{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.feelings button{min-height:83px;border-radius:15px;background:#f7faf5;border:1px solid #e4eae2;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:9px 5px;color:#597264}
+.feelings button span{font-size:20px;display:grid;place-items:center;height:23px;width:25px;font-weight:600}
+.feelings button b{font-size:11px;font-weight:730;line-height:1.2;text-align:center}
+.feelings button small{font-size:10px;color:#8da196}
+.feelings button[aria-pressed="true"]{background:#e4f4e9;border-color:#4d9a70;box-shadow:0 0 0 1px #4d9a70;color:#215f42}
+.feelings button[aria-pressed="true"] small{color:#4d8563}
+.feelings button:hover{border-color:#81bd96}
+@media(max-width:490px){.feelings{gap:6px}.feelings button{min-height:80px;padding:7px 2px;border-radius:12px}.feelings button b{font-size:10px}.feelings button small{font-size:9px}}
