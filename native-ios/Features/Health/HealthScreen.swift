@@ -13,7 +13,7 @@ struct HealthScreen: View {
     var body: some View {
         P100Screen {
             // First content in Health; never duplicated on Me.
-            if typeSize.isAccessibilitySize {
+            if typeSize >= .xxLarge {
                 VStack(spacing: 16) { rings }
             } else {
                 HStack(alignment: .top, spacing: 8) { rings }
@@ -30,7 +30,7 @@ struct HealthScreen: View {
                 Text("อ่านล่าสุด \(date.formatted(date: .abbreviated, time: .shortened)) · ค่าที่แสดงอาจเป็นข้อมูลจากครั้งก่อน")
                     .font(.caption).foregroundStyle(.secondary)
             }
-            if typeSize.isAccessibilitySize {
+            if typeSize >= .xxLarge {
                 VStack { heartMetrics }
             } else {
                 HStack { heartMetrics }
