@@ -21,28 +21,97 @@ function trendChart(items,key,unit,digits=0){
 }
 function button(text,act,cls,other){return '<button type="button" class="btn '+(cls||"")+'" data-action="'+esc(act)+'" '+(other||"")+'>'+text+'</button>'}
 function allPlansMenu(){const p=A.profile();return p.plans.map(x=>{const tmpl=A.planTemplate(x);const ov=A.planOverview(x);return '<option value="'+esc(x.id)+'" '+(p.activePlanId===x.id?"selected":"")+'>'+esc(tmpl?.name||x.templateId)+" · "+ov.completed+"/"+ov.total+"</option>"}).join("")}
-function nav(){const navs=[["home","Dashboard","◈"],["plans","My Plans","▤"],["history","History","↗"],["recovery","Recovery","♡"],["settings","Settings","⚙"]];return navs.map(([id,label,ic])=>'<button data-page="'+id+'" class="'+(page===id?"active":"")+'"><span>'+ic+'</span><b>'+label+'</b></button>').join("")}
-function header(){const p=A.profile(),user=A.cloudUser,cloud=A.cloudStatus;return '<aside class="sidebar"><div class="brand"><div class="mark">100<span>M</span></div><div>PROJECT 100M<small>YOUR TRAINING JOURNEY</small></div></div><div class="sidebar-note">TRAIN THE ATHLETE.<br>TRACK THE PROGRESS.</div><nav>'+nav()+'</nav><div class="sidebar-bottom">SESSION BASED · NO DEADLINES</div></aside>'+
-'<main class="main"><header class="top"><div><small class="eyebrow">ATHLETE TRAINING HUB · V2</small><div class="top-title">PROJECT <em>100M</em></div></div><div class="account"><label class="sr-only" for="switchProfile">เลือกโปรไฟล์</label><select id="switchProfile" aria-label="เลือกโปรไฟล์">'+A.profiles().map(x=>'<option value="'+esc(x.id)+'" '+(x.id===p.id?"selected":"")+'>'+esc(x.name)+'</option>').join("")+'</select><span class="cloud-dot '+(cloud==="synced"?"ok":"")+'" title="'+esc(cloud)+'"></span><span class="cloud-label">'+esc(user?"Cloud: "+(user.email||"Signed in"):"Local Mode")+'</span></div></header>'+banner()+'<div class="content">'+content()+'</div><footer>PROJECT 100M · TRAINING LOGS ARE SELF-REPORTED UNLESS LABELED OTHERWISE</footer></main>'+
-'<nav class="bottom-nav">'+nav()+'</nav>';
+function ico(name,size=20){
+const paths={
+home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
+plans:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M7 2v4M17 2v4M3 9h18M8 14h3M14 14h3M8 18h3"/>',
+history:'<path d="M3 3v18h18"/><path d="m7 16 5-6 4 3 5-7"/>',
+recovery:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>',
+settings:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',
+arrow:'<path d="M5 12h14m-6-6 6 6-6 6"/>',
+check:'<path d="m5 12 4 4L19 6"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+calendar:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4m8-4v4M3 9h18"/>',
+activity:'<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+spark:'<path d="m12 2 1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8zM19 17l.8 1.7L22 19.5l-2.2.8L19 22l-.8-1.7-2.2-.8 2.2-.8z"/>',
+cloud:'<path d="M20 17a4 4 0 0 0-2-7.5A6.5 6.5 0 0 0 5.8 11 4 4 0 0 0 6 19h12"/><path d="m9 15 3 3 3-3"/>',
+chevron:'<path d="m9 18 6-6-6-6"/>',
+shoe:'<path d="M2 14c3 0 6-1 8-5 1 2 4 5 9 6 2 1 3 2 3 4v1H2z"/><path d="m12 12-2 3m6 0-2 2"/>',
+book:'<path d="M4 4h15v16H4a2 2 0 0 1 0-4h15M4 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2"/>'
+};
+return '<svg class="ui-icon" aria-hidden="true" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">'+(paths[name]||paths.spark)+'</svg>';
 }
-function summary(){const p=A.profile(),pl=A.activePlan();if(!pl){return '<div class="hero"><small class="eyebrow">WELCOME BACK</small><h1>เริ่มเส้นทางของคุณ</h1><p>เลือกโปรแกรมจาก Training Library แล้วระบบจะแนะนำการฝึกครั้งถัดไปตามลำดับ โดยไม่กำหนดวันตายตัว</p>'+button('เลือกโปรแกรมฝึก →','openPlans','primary')+'</div>'}
-const tmpl=A.planTemplate(pl),o=A.planOverview(pl),last=A.history()[0],next=o.next;
-return '<div class="hero"><div class="row space"><div><small class="eyebrow">CURRENT TRAINING JOURNEY</small><h1>'+esc(tmpl.name)+'</h1><p>ทำไปแล้ว '+o.completed+' จาก '+o.total+' Sessions · ไม่จำกัดวันที่ต้องฝึก</p></div>'+chip("BLOCK "+(next?next.block:tmpl.blocks)+" / "+tmpl.blocks,"lime")+'</div><div class="row space"><b>Progress</b><strong>'+o.percent+'%</strong></div>'+pctBar(o.percent)+'<div class="row small-muted space"><span>Completed '+o.completed+'</span><span>Skipped '+o.skipped+'</span><span>Remaining '+(o.total-o.completed-o.skipped)+'</span></div></div>'+
-'<div class="section-title"><h2>Next Workout</h2><span>ทำเมื่อคุณพร้อม</span></div>'+
-(next?'<article class="next-card"><div class="row space">'+chip("NEXT UP","lime")+'<small>Block '+next.block+' · Session '+next.slot+'</small></div><h2>'+esc(next.title)+'</h2><p>'+esc(next.summary)+'</p><div class="row wrap"><span>◷ '+next.minutes+' min (ประมาณ)</span><span>◎ '+esc(next.kind.toUpperCase())+'</span></div>'+button('ดูรายละเอียดและเริ่มบันทึก →','openWorkout','primary','data-key="'+esc(next.key)+'"')+'</article>':'<article class="panel"><h2>ครบโปรแกรมแล้ว!</h2><p>คุณทำตามลำดับ Session ครบแล้ว สามารถดูผลย้อนหลังหรือเลือกแผนอื่นได้</p>'+button('ดูผลของฉัน','openHistory','secondary')+'</article>')+
-'<div class="section-title"><h2>My Journey</h2>'+button('View full plan →','openPlans','link')+'</div>'+
-'<div class="stats">'+stat("COMPLETED",o.completed+" / "+o.total,"Sessions ที่ทำครบ")+stat("WORKOUT LOGS",A.history().length,"รายการบันทึกทั้งหมด")+stat("MOST RECENT",last?new Date(last.at).toLocaleDateString("th-TH",{day:"numeric",month:"short"}):"—",last?last.title:"ยังไม่มีการบันทึก")+'</div>'+
-'<div class="panel tip"><b>ยืดหยุ่นตามเวลาของคุณ</b><p>หยุดไปหลายวันก็ไม่ข้าม Session ระบบแนะนำรายการเดิมจนกว่าคุณจะบันทึกว่าเสร็จหรือเลือกข้ามอย่างชัดเจน</p></div>';
+function hello(){
+ const h=new Date().getHours();return h<11?"อรุณสวัสดิ์":h<17?"สวัสดีตอนบ่าย":"สวัสดีตอนเย็น";
 }
-function planCard(t){const current=A.profile().plans.some(p=>p.templateId===t.id);return '<article class="template-card"><div class="row space"><span class="template-icon">'+esc(t.icon)+'</span>'+chip(t.blocks+" BLOCKS")+'</div><h3>'+esc(t.name)+'</h3><p>'+esc(t.description)+'</p>'+button(current?'เริ่มรอบใหม่':'เลือกโปรแกรมนี้','startPlan','secondary','data-template="'+esc(t.id)+'"')+'</article>'}
-function plans(){const p=A.profile(),pl=A.activePlan(),o=A.planOverview(pl),tmpl=A.planTemplate(pl);let html='<div class="page-head"><small class="eyebrow">MY TRAINING JOURNEY</small><h1>My Plans</h1><p>โปรแกรมเดินตามจำนวน Session ไม่ได้เดินตามวันปฏิทิน</p></div>';
-if(p.plans.length){html+='<article class="panel"><div class="row space wrap"><div><small class="eyebrow">ACTIVE PLAN</small><h2>'+esc(tmpl?.name||"Training Plan")+'</h2></div><label>สลับแผน <select id="planSelect">'+allPlansMenu()+'</select></label></div><div class="row space"><span>ฝึกครบ '+o.completed+'/'+o.total+'</span><strong>'+o.percent+'%</strong></div>'+pctBar(o.percent)+'</article>'+
-'<div class="section-title"><h2>Training Blocks</h2><span>เลือกดู Block ได้ทุกช่วง</span></div><div class="blocks">'+Array.from({length:tmpl.blocks},(_,i)=>'<button class="'+(chosenBlock===i+1?'active':'')+'" data-block="'+(i+1)+'">B'+String(i+1).padStart(2,"0")+'</button>').join("")+'</div>'+
-'<div class="panel"><div class="row space"><h2>Block '+String(chosenBlock).padStart(2,"0")+'</h2>'+chip((o.sessions.filter(s=>s.block===chosenBlock&&o.marked.get(s.key)?.status==="completed").length)+"/"+o.sessions.filter(s=>s.block===chosenBlock).length+" done","lime")+'</div>';
-for(const s of o.sessions.filter(s=>s.block===chosenBlock)){const mark=o.marked.get(s.key),status=mark?.status||"upcoming";html+='<button class="session-row" data-action="openWorkout" data-key="'+esc(s.key)+'"><span class="session-number">'+s.slot+'</span><span class="session-text"><b>'+esc(s.title)+'</b><small>'+esc(s.summary)+'</small></span>'+chip(status,status==="completed"?"green":status==="partial"?"amber":"")+'</button>'}html+='</div>'}
-else html+='<article class="panel"><h2>ยังไม่มีโปรแกรมที่เลือก</h2><p>เริ่มจากโปรแกรมที่เหมาะกับเป้าหมายของคุณ</p></article>';
-html+='<div class="section-title"><h2>Training Program Library</h2><span>เลือกได้แยกกันแต่ละโปรไฟล์</span></div><div class="template-grid">'+A.templates.map(planCard).join("")+'</div>';return html}
+function nav(){
+ const navs=[["home","หน้าหลัก","home"],["plans","แผนฝึก","plans"],["history","บันทึก","history"],["recovery","สุขภาพ","recovery"],["settings","บัญชี","settings"]];
+ return navs.map(([id,label,ic])=>'<button type="button" aria-label="'+label+'" data-page="'+id+'" class="'+(page===id?"active":"")+'">'+ico(ic,21)+'<b>'+label+'</b></button>').join("");
+}
+function header(){
+ const p=A.profile(),user=A.cloudUser,cloud=A.cloudStatus;
+ const accountLabel=user?"ซิงก์ข้อมูลกับบัญชีแล้ว":"ข้อมูลในเครื่องนี้";
+ return '<aside class="sidebar"><div class="brand">'+
+ '<div class="brand-mark">'+ico("activity",24)+'</div><div><span class="brand-name">PROJECT 100M</span><small>MOVE AT YOUR PACE</small></div></div>'+
+ '<div class="sidebar-caption">เส้นทางที่ดี<br>เริ่มจากก้าวของเราเอง</div><nav aria-label="เมนูหลัก">'+nav()+'</nav>'+
+ '<div class="sidebar-note">'+ico("spark",18)+' <span>ไม่ต้องซ้อมตามวัน<br>กลับมาเมื่อพร้อม แล้วไปต่อได้เลย</span></div></aside>'+
+ '<main class="main"><header class="top"><button type="button" class="top-brand" data-page="home"><span class="top-logo">'+ico("activity",20)+'</span><span>PROJECT <b>100M</b></span></button>'+
+ '<div class="account"><div class="account-meta"><span class="cloud-dot '+(cloud==="synced"?"ok":"")+'" title="'+esc(cloud)+'"></span><span class="cloud-label">'+esc(accountLabel)+'</span></div>'+
+ '<label class="sr-only" for="switchProfile">เลือกโปรไฟล์</label><span class="avatar">'+esc(p.name?.slice(0,1).toUpperCase()||"A")+'</span>'+
+ '<select id="switchProfile" aria-label="เลือกโปรไฟล์">'+A.profiles().map(x=>'<option value="'+esc(x.id)+'" '+(x.id===p.id?"selected":"")+'>'+esc(x.name)+'</option>').join("")+'</select></div></header>'+
+ banner()+'<div class="content">'+content()+'</div>'+
+ '<footer><span>Made for progress, at your pace.</span><a href="https://unsplash.com/photos/a-person-running-through-a-field-at-sunrise-d6mx781xnvM" target="_blank" rel="noopener">ภาพ: Uran Wang</a> · <a href="https://unsplash.com/photos/a-male-runner-in-starting-blocks-on-a-track-P-UYSWGKilA" target="_blank" rel="noopener">Peter Zhan / Unsplash</a></footer></main>'+
+ '<nav class="bottom-nav" aria-label="เมนูมือถือ">'+nav()+'</nav>';
+}
+function summary(){
+ const p=A.profile(),pl=A.activePlan(),name=esc(p.name);
+ if(!pl)return '<section class="welcome-wrap"><div class="welcome-copy"><span class="eyebrow">YOUR SPACE TO GROW</span><h1>'+hello()+', '+name+' <span class="greeting-hand">✳</span></h1><p>มาเริ่มด้วยแผนฝึกที่เหมาะกับคุณกัน</p></div><div class="welcome-photo" role="img" aria-label="บรรยากาศธรรมชาติสำหรับการออกกำลังกาย"></div></section><article class="intro-empty"><div class="empty-symbol">'+ico("spark",28)+'</div><h2>ทุกก้าวเริ่มต้นที่นี่</h2><p>เลือกแผนที่อยากฝึก แล้วแอปจะคอยบอกว่าครั้งต่อไปต้องทำอะไร</p>'+button('เลือกแผนฝึก '+ico("arrow",18),'openPlans','primary')+'</article>';
+ const tmpl=A.planTemplate(pl),o=A.planOverview(pl),last=A.history()[0],next=o.next,percent=o.percent;
+ return '<section class="welcome-wrap"><div class="welcome-copy"><span class="eyebrow">WELCOME BACK</span><h1>'+hello()+', '+name+' <span class="greeting-hand">✳</span></h1><p>ไม่จำเป็นต้องรีบ — เราค่อย ๆ เก่งขึ้นทีละ Session</p></div><div class="welcome-photo" role="img" aria-label="บรรยากาศอบอุ่นของคนวิ่งตอนเช้า"></div></section>'+
+ '<div class="dash-grid"><section class="training-primary"><div class="section-title"><h2>ครั้งต่อไปของคุณ</h2><span>Next up</span></div>'+
+ (next?'<article class="next-card"><div class="next-text">'+
+ '<div class="next-label"><span class="pulse-dot"></span> พร้อมเมื่อคุณพร้อม <span class="next-separator">·</span> Block '+next.block+' / '+tmpl.blocks+'</div>'+
+ '<h2>'+esc(next.title)+'</h2><p>'+esc(next.summary)+'</p>'+
+ '<div class="next-meta"><span>'+ico("clock",16)+' ประมาณ '+next.minutes+' นาที</span><span>'+ico("activity",16)+' '+esc(next.kind.toUpperCase())+'</span></div>'+
+ button('ดูวิธีฝึก '+ico("arrow",18),'openWorkout','primary','data-key="'+esc(next.key)+'"')+'</div><div class="next-photo" aria-hidden="true"></div></article>':
+ '<article class="next-card finish-card"><div class="next-text"><span class="eyebrow">WELL DONE</span><h2>คุณทำครบทุก Session แล้ว!</h2><p>กลับไปดูความก้าวหน้า หรือเลือกแผนใหม่ได้เลย</p>'+button('ดูความก้าวหน้า '+ico("arrow",18),'openHistory','primary')+'</div></article>')+
+ '<div class="quick-links"><button type="button" data-page="plans">'+ico("book",22)+'<span><b>ดูแผนทั้งหมด</b><small>รายละเอียดทุกช่วงการฝึก</small></span>'+ico("chevron",17)+'</button>'+
+ '<button type="button" data-page="recovery">'+ico("recovery",22)+'<span><b>วันนี้รู้สึกอย่างไร?</b><small>เช็กการพักฟื้นและการนอน</small></span>'+ico("chevron",17)+'</button></div></section>'+
+ '<aside class="progress-panel"><div class="section-title"><h2>เส้นทางของคุณ</h2><span>My journey</span></div><div class="journey-card"><div class="journey-header"><div><span class="tiny-label">CURRENT PROGRAM</span><h3>'+esc(tmpl.name)+'</h3></div>'+ico("spark",24)+'</div>'+
+ '<div class="progress-ring" style="--percent:'+percent+'"><div><strong>'+percent+'%</strong><small>ความคืบหน้า</small></div></div>'+
+ '<div class="journey-count"><span>'+ico("check",17)+' ฝึกครบ <b>'+o.completed+'</b> Sessions</span><span>ทั้งหมด '+o.total+'</span></div>'+
+ '<p class="journey-note">ไม่มีวันหมดอายุของแผน หยุดพักแล้วกลับมาฝึกต่อได้เสมอ</p>'+button('ดูเส้นทางทั้งหมด '+ico("arrow",17),'openPlans','subtle')+'</div></aside></div>'+
+ '<div class="section-title section-title-lower"><h2>ภาพรวมของคุณ</h2>'+button('ดูประวัติ '+ico("arrow",16),'openHistory','link')+'</div>'+
+ '<div class="stats stats-home">'+stat("ฝึกสำเร็จ",o.completed+" / "+o.total,"Sessions")+stat("บันทึกการฝึก",A.history().length,"รายการทั้งหมด")+stat("ครั้งล่าสุด",last?new Date(last.at).toLocaleDateString("th-TH",{day:"numeric",month:"short"}):"—",last?last.title:"ยังไม่มีบันทึก")+'</div>';
+}
+function planCard(t){
+ const current=A.profile().plans.some(p=>p.templateId===t.id);
+ const titles={sprint100:"วิ่งเร็ว 100 เมตร",run5k:"เริ่มต้นวิ่ง 5K",strength:"สร้างความแข็งแรง",wellness:"ขยับร่างกายให้สดใส"};
+ const cat={sprint100:"SPEED",run5k:"RUNNING",strength:"STRENGTH",wellness:"WELLNESS"};
+ return '<article class="template-card template-'+esc(t.id)+'"><div class="template-card-top"><span class="template-art">'+ico(t.id==="sprint100"?"activity":t.id==="wellness"?"recovery":t.id==="strength"?"spark":"shoe",25)+'</span><span class="template-tag">'+esc(cat[t.id]||"FITNESS")+'</span></div><h3>'+esc(titles[t.id]||t.name)+'</h3><p>'+esc(t.description)+'</p><div class="template-bottom"><small>'+t.blocks+' ช่วงการฝึก</small>'+button(current?'เริ่มรอบใหม่ '+ico("arrow",16):'เลือกแผนนี้ '+ico("arrow",16),'startPlan','secondary','data-template="'+esc(t.id)+'"')+'</div></article>';
+}
+function plans(){
+ const p=A.profile(),pl=A.activePlan(),o=A.planOverview(pl),tmpl=A.planTemplate(pl);
+ let html='<div class="page-head"><span class="eyebrow">YOUR JOURNEY</span><h1>แผนฝึกของคุณ</h1><p>ฝึกตามลำดับ ไม่จำเป็นต้องฝึกตรงวัน เลือกดูได้ทุกช่วงของโปรแกรม</p></div>';
+ if(p.plans.length){
+  const next=o.next;
+  html+='<article class="panel plan-overview"><div class="row space wrap"><div><span class="tiny-label">กำลังฝึกอยู่</span><h2>'+esc(tmpl?.name||"Training Plan")+'</h2></div><label class="plan-switch">เปลี่ยนโปรแกรม <select id="planSelect">'+allPlansMenu()+'</select></label></div>'+
+  '<div class="row space"><span>ความคืบหน้าของโปรแกรม</span><strong>'+o.percent+'%</strong></div>'+pctBar(o.percent)+
+  '<div class="plan-overview-foot"><span>'+ico("check",16)+' ทำครบ '+o.completed+' ครั้ง</span><span>ทั้งหมด '+o.total+' Sessions</span></div>'+
+  (next?'<button class="plan-next-cta" type="button" data-action="openWorkout" data-key="'+esc(next.key)+'"><span><small>ครั้งต่อไป</small><b>'+esc(next.title)+'</b></span>'+ico("arrow",20)+'</button>':'')+'</article>'+
+  '<div class="section-title"><h2>แต่ละช่วงการฝึก</h2><span>เลือกดู Blocks</span></div>'+
+  '<div class="blocks" role="group" aria-label="เลือกช่วงการฝึก">'+Array.from({length:tmpl.blocks},(_,i)=>{const count=o.sessions.filter(s=>s.block===i+1&&o.marked.get(s.key)?.status==="completed").length,total=o.sessions.filter(s=>s.block===i+1).length;return '<button type="button" aria-label="Block '+(i+1)+'" class="'+(chosenBlock===i+1?'active':'')+'" data-block="'+(i+1)+'"><b>'+(i+1)+'</b><small>'+count+'/'+total+'</small></button>'}).join("")+'</div>'+
+  '<div class="panel session-list"><div class="row space"><div><span class="tiny-label">TRAINING BLOCK</span><h2>ช่วงที่ '+String(chosenBlock).padStart(2,"0")+'</h2></div><span class="session-count">'+(o.sessions.filter(s=>s.block===chosenBlock&&o.marked.get(s.key)?.status==="completed").length)+' / '+o.sessions.filter(s=>s.block===chosenBlock).length+' เสร็จแล้ว</span></div>';
+  for(const s of o.sessions.filter(s=>s.block===chosenBlock)){
+   const mark=o.marked.get(s.key),status=mark?.status||"upcoming";
+   const statusLabel={completed:"เสร็จแล้ว",skipped:"ข้าม",partial:"ทำบางส่วน",upcoming:"ยังไม่เริ่ม"};
+   html+='<button class="session-row '+(next?.key===s.key?'is-next':'')+'" data-action="openWorkout" data-key="'+esc(s.key)+'"><span class="session-number">'+(status==="completed"?ico("check",18):s.slot)+'</span><span class="session-text"><b>'+esc(s.title)+'</b><small>'+esc(s.summary)+'</small></span><span class="session-badge '+esc(status)+'">'+(next?.key===s.key?'ถัดไป':statusLabel[status])+'</span>'+ico("chevron",17)+'</button>';
+  }
+  html+='</div>';
+ }else html+='<div class="intro-empty"><h2>เลือกเส้นทางของคุณ</h2><p>เริ่มแผนฝึกแบบที่เหมาะกับตัวเองได้จากด้านล่าง</p></div>';
+ html+='<div class="section-title"><h2>แผนอื่น ๆ ที่น่าสนใจ</h2><span>Training library</span></div><div class="template-grid">'+A.templates.map(planCard).join("")+'</div>';
+ return html;
+}
 function exerciseContent(s){if(!s)return"";const e=s.exercises||{},parts=[];if(e.sprint)parts.push('<div class="exercise"><b>Sprint: '+e.sprint.reps+' × '+e.sprint.meters+'m</b><small>Effort '+esc(e.sprint.effort)+' · พักจนฟื้นตัว</small></div>');if(e.duration)parts.push('<div class="exercise"><b>Time target: '+e.duration+' นาที</b><small>เน้นความสบายก่อนความเร็ว</small></div>');if(e.strength)for(let i=0;i<e.strength.length;i++){const x=e.strength[i];parts.push('<div class="exercise"><b>'+esc(x.name)+'</b><small>'+x.sets+' sets × '+esc(x.reps)+'</small></div>')}return parts.join("")}
 function workout(){const s=A.sessionByKey(chosenKey)||A.planOverview(A.activePlan())?.next;if(!s)return '<div class="page-head"><h1>ยังไม่มี Workout</h1></div>'+button('เลือกแผน','openPlans','primary');chosenKey=s.key;const warnings=A.readiness(s),logged=A.planOverview(A.activePlan()).marked.get(s.key);
 return '<div class="page-head"><small class="eyebrow">BLOCK '+s.block+' / SESSION '+s.slot+'</small><h1>'+esc(s.title)+'</h1><p>'+esc(s.summary)+'</p></div><div class="row wrap">'+chip(s.kind.toUpperCase())+chip("EST. "+s.minutes+" MIN")+(logged?chip("ล่าสุด: "+logged.status):"")+'</div>'+
@@ -84,9 +153,11 @@ function settings(){const user=A.cloudUser,c=A.cloudStatus,p=A.profile(),configu
 '<div class="panel form"><h2>Apple Health Import (XML / ZIP)</h2><p>นำเข้า Workout ที่บันทึกจาก Apple Watch รวมทั้ง Resting HR, HRV, Sleep และ Weight โดยระบบจะอ่านไฟล์ในเบราว์เซอร์และเก็บเฉพาะข้อมูลที่เกี่ยวข้อง</p><label>ช่วงข้อมูลที่ต้องการนำเข้า <select id="healthDaysV2"><option value="30">30 วัน</option><option value="90" selected>90 วัน</option><option value="180">180 วัน</option><option value="365">365 วัน</option></select></label><label>เลือกไฟล์ export.xml หรือ export.zip จากแอป Health<input id="healthFileV2" type="file" accept=".xml,.zip,application/xml,application/zip"></label><p id="healthImportStatus" class="help">ยังไม่ได้เลือกไฟล์ · สามารถส่งออกได้จาก Apple Health → โปรไฟล์ → Export All Health Data</p><p class="help">ไม่นำเข้าข้อมูลสุขภาพทั้งหมด และไม่อัปโหลดไฟล์ต้นฉบับขึ้น GitHub หากคุณเปิด Cloud Sync ข้อมูลที่สกัดแล้วของโปรไฟล์นี้จะซิงก์ไปยังบัญชี Supabase ตามที่คุณยินยอม Apple Health ไม่สามารถซิงก์อัตโนมัติจาก Safari อย่างเดียว</p><div class="row wrap"><button type="button" class="btn secondary" data-action="openV1">ดูหน้า V1 เดิม</button><button type="button" class="btn secondary" data-action="importLegacy">นำประวัติ V1 เข้ามาอีกครั้ง</button><span class="help">กรณีคุณยังนำเข้าไฟล์ผ่านเว็บ V1</span></div></div>'+
 '<div class="panel"><h2>Privacy</h2><p>เว็บไซต์นี้เผยแพร่โค้ดผ่าน GitHub Pages แต่ข้อมูลสุขภาพไม่ถูก commit ลง GitHub เมื่อเปิด Cloud Sync ข้อมูลจะถูกเก็บใน Supabase ภายใต้ Row Level Security ตามบัญชีผู้ใช้</p></div>';
 }
-function content(){switch(page){case "plans":return plans();case "workout":return workout();case "history":return history();case "recovery":return recovery();case "settings":return settings();default:return '<div class="page-head"><small class="eyebrow">HELLO, '+esc(A.profile().name.toUpperCase())+'</small><h1>Welcome back, '+esc(A.profile().name)+'</h1><p>วันนี้คุณอยากกลับมาฝึกต่อจากจุดไหน?</p></div>'+summary()}}
+function content(){
+ switch(page){case "plans":return plans();case "workout":return workout();case "history":return history();case "recovery":return recovery();case "settings":return settings();default:return summary()}
+}
 function render(){app.innerHTML=header();document.title="PROJECT 100M — "+(page==="home"?"Dashboard":page)}
-function show(t){page=t;notice="";render();window.scrollTo({top:0,behavior:"instant"})}
+function show(t){if(t==="plans"&&page!==t){chosenBlock=A.planOverview(A.activePlan())?.next?.block||1}page=t;notice="";render();window.scrollTo({top:0,behavior:"instant"})}
 function info(message){notice=message;render();window.scrollTo({top:0,behavior:"smooth"})}
 async function handleAction(el){const a=el.dataset.action;try{
 if(a==="openPlans")show("plans");
