@@ -1,27 +1,39 @@
-# PROJECT 100M — Athlete Dashboard
+# PROJECT 100M — Athlete Training Journey (V2)
 
-Sprint-first 12-week training dashboard for running, strength, recovery and Apple Health exports.
+Mobile-first training tracker hosted on GitHub Pages.
 
-## Publish with GitHub Pages
+**Website:** https://ijennyrsm.github.io/project-100m-dashboard/
 
-Open **Settings → Pages → Build and deployment** and choose:
-- **Source:** Deploy from a branch
-- **Branch:** main
-- **Folder:** /(root)
-- Click **Save**
+## What works now (no login required)
+- Default **100M — The Comeback** program: 12 training blocks, 60 sessions.
+- Choose preset programs: **5K Foundation, Strength Foundation, Active Wellness**.
+- Sessions **do not expire and are not bound to weekdays**. Completed advances, Partial stays on that session, Skipped advances but remains counted as skipped.
+- Named profiles, separate plans, quick/detailed workout logs, progress and history.
+- Sprint time trial trend, RHR trend, sleep trend, daily recovery and Coach Report export.
+- Apple Health manual import from export.xml/export.zip in **Settings** (selected data only, processed in your browser).
+- JSON backup and restore; V1 is preserved at [v1.html](./v1.html). Older V1 workouts and recovery can migrate from the same browser.
 
-Once enabled, open: https://ijennyrsm.github.io/project-100m-dashboard/
+### Important: local vs cloud
+Default is **Local Mode**. Data stays in the current browser. Separate phones do not sync until Supabase is configured.
+To enable real login and cross-device sync, see [CLOUD_SETUP.md](./CLOUD_SETUP.md) and run [supabase-schema.sql](./supabase-schema.sql) in your own Supabase project. Do **not** place private keys or Apple Health exports in GitHub.
+Each person should sign in with a different email. Account data is isolated with database RLS.
 
-## Privacy and backups
+## How to use
+1. Open the site in iPhone Safari and optionally Share → Add to Home Screen.
+2. On Dashboard tap **Next Workout**, view exercises, and log Completed, Partial or Skipped.
+3. Tap **My Plans** to see all 12 blocks or start another program.
+4. Use **Recovery** to log sleep, resting HR, HRV and fatigue; use **Settings** for Apple Health import and backups.
+5. Use **History → Export Coach Report** to share a training summary for coaching review.
 
-This is a static, local-first website. Workout logs, Apple Health summaries and recovery entries remain in **this browser's localStorage**. No Apple Health file is uploaded to GitHub. There is no account-based sync across devices.
+## Notes
+- Not a medical device.
+- Apple Health imports are not automatic Apple Watch sync, and Watch workouts do not automatically prove the prescribed sprint session was completed.
+- Track 100m time with a consistent timing method, not Watch GPS.
+- Build sprint fitness gradually and avoid high-intensity exercise during illness.
+- Edits to main branch auto-deploy via GitHub Pages.
 
-Regularly choose **Data & Settings → Download full backup**. The **Create coach report** feature exports a Markdown training summary the user can choose to share.
-
-Apple Health ZIP imports use JSZip from cdnjs; the ZIP/XML itself is processed locally in-browser. Modern Safari is required for the static application loader.
-
-The 100m sprint timing must be entered manually. Apple Watch GPS pace is not an accurate substitute for track timing.
-
-## Application source
-
-The original JavaScript application was losslessly gzip-packaged in 4 text chunks under `payload/` to support the GitHub upload process; `app.js` reconstructs and loads it in the browser. These chunks contain **source code only**, not personal data.
+## Source
+- index.html, v2.css, v2-data.js, v2-ui.js, v2-health.js — V2.
+- cloud-config.js — public cloud settings (empty by default).
+- supabase-schema.sql — private account data with RLS.
+- v1.html, app.js, style.css, payload/ — V1 fallback.
