@@ -50,7 +50,9 @@ The default bundle identifier com.project100m.ios is a placeholder; change it to
 - AGENTS.md — Codex + Claude guardrails
 - ROADMAP.md — phases and acceptance checks
 
-CI builds an unsigned simulator app and runs UI checks with screenshot attachments (including dark/AX5 scenarios). `--ui-testing` disables foreground HealthKit reads only for deterministic simulator UI checks; it does not simulate or prove HealthKit permission/device behavior. Actual health authorization is still user-initiated. UI tests do not send health data or call the cloud. See workflow artifacts and CURRENT for observed results; do not infer PASS from test source.
+CI builds an unsigned simulator app and runs four UI tests on pinned iPhone 16 and iPhone SE (3rd generation), iOS 18.5. Light/dark/default/xLarge/AX5 captures assert actual presentation, ring/tile bounds and hittability; a 320pt hosted container covers narrow content without claiming Display Zoom. Provenance includes head/tested SHA, native/.github trees, device/runtime and run/event IDs. Push/PR concurrency groups are separate and running evidence is never auto-cancelled by later commits.
+
+DEBUG-only `--ui-testing` uses a Health stub that never constructs HealthKit. `--ui-health-state=notRequested|unavailable|failed|missing|loading|stale`, `--ui-theme=light|dark`, `--ui-text-size=large|xLarge|AX5` and optional `--ui-content-width=320` support deterministic checks. `--ui-reset` removes only saved tab selection; tests remove it for restoration relaunch. These overrides are inactive in Release builds. Fixtures are labeled and never uploaded/persisted. Production still reads only authorized HealthKit types, with sample measurement dates separate from query time and explicit connection states. UI tests prove no real HealthKit permissions/device behavior. See CURRENT for actual observed test results, not just test definitions.
 
 ## Apple Watch without ZIP exports
 

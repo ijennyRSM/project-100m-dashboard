@@ -55,10 +55,10 @@ struct HealthRing: View {
                     Text(state.value.map { String(format: "%.0f", $0) } ?? "—").font(.title2.bold()).monospacedDigit()
                 }
             }.frame(width: min(160, scaledDiameter), height: min(160, scaledDiameter))
-            Text(metric.rawValue).font(.subheadline.bold())
-            Text(state.caption).font(.caption).foregroundStyle(.secondary).multilineTextAlignment(.center)
+            Text(metric.rawValue).font(.subheadline.bold()).fixedSize(horizontal: false, vertical: true)
+            Text(state.caption).font(.caption).foregroundStyle(.secondary).multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.vertical, 8).frame(maxWidth: .infinity, minHeight: 44).contentShape(Rectangle())
+        .padding(8).frame(maxWidth: .infinity, minHeight: 44).contentShape(Rectangle())
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(metric.rawValue), \(state.caption)")
         .accessibilityValue(state.value.map { String(format: "%.0f จาก 100", $0) } ?? "ยังไม่คำนวณ")

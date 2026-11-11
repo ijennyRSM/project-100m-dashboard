@@ -18,17 +18,25 @@ permissions:
   contents: read
 
 concurrency:
-  group: ios-${{ github.head_ref || github.ref_name }}
-  cancel-in-progress: true
+  group: ios-${{ github.workflow }}-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   build-simulator:
+    strategy:
+      fail-fast: false
+      matrix:
+        device: ['iPhone 16', 'iPhone SE (3rd generation)']
     runs-on: macos-15
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
       DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+      SIMULATOR_DEVICE: ${{ matrix.device }}
+      SOURCE_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Install XcodeGen
         run: brew install xcodegen
       - name: Generate Xcode project
@@ -52,29 +60,45 @@ jobs:
         run: |
           xcrun simctl list devices available -j > build/devices.json
           python3 - <<'PY'
-          import json, os
+          import json, os, subprocess
           devices = json.load(open('build/devices.json'))['devices']
           candidates = [d for runtime, rows in devices.items() if runtime.endswith('iOS-18-5')
-                        for d in rows if d['name'].startswith('iPhone') and d['isAvailable']]
+                        for d in rows if d['name'] == os.environ['SIMULATOR_DEVICE'] and d['isAvailable']]
           if not candidates:
-              raise SystemExit('No available iOS 18.5 iPhone simulator for pinned Xcode 16.4')
+              types = json.loads(subprocess.check_output(['xcrun','simctl','list','devicetypes','-j'], text=True))['devicetypes']
+              device_type = next((t for t in types if t['name'] == os.environ['SIMULATOR_DEVICE']), None)
+              runtimes = json.loads(subprocess.check_output(['xcrun','simctl','list','runtimes','-j'], text=True))['runtimes']
+              runtime = next((r for r in runtimes if r['identifier'].endswith('iOS-18-5') and r['isAvailable']), None)
+              if not device_type or not runtime:
+                  raise SystemExit('Required named device type / iOS 18.5 runtime unavailable')
+              udid = subprocess.check_output(['xcrun','simctl','create',os.environ['SIMULATOR_DEVICE'],device_type['identifier'],runtime['identifier']],text=True).strip()
+              candidates = [dict(name=os.environ['SIMULATOR_DEVICE'],udid=udid)]
           with open(os.environ['GITHUB_ENV'], 'a') as output:
               output.write('SIMULATOR_ID=' + candidates[0]['udid'] + '\n')
           print(candidates[0]['name'], candidates[0]['udid'])
+          def git(*args): return subprocess.check_output(['git', *args], text=True).strip()
+          head = os.environ['SOURCE_HEAD_SHA']
+          metadata = dict(head_sha=head, tested_sha=git('rev-parse', 'HEAD'),
+                          native_tree=git('rev-parse', 'HEAD:native-ios'), github_tree=git('rev-parse', 'HEAD:.github'),
+                          head_native_tree=git('rev-parse', head + ':native-ios'), head_github_tree=git('rev-parse', head + ':.github'),
+                          device=candidates[0]['name'], simulator_id=candidates[0]['udid'], runtime='iOS 18.5',
+                          run_id=os.environ['GITHUB_RUN_ID'], event=os.environ['GITHUB_EVENT_NAME'],
+                          xcode=subprocess.check_output(['xcodebuild', '-version'], text=True))
+          json.dump(metadata, open('build/provenance.json', 'w'), indent=2)
           PY
       - name: Boot selected simulator
         timeout-minutes: 5
         run: xcrun simctl bootstatus "$SIMULATOR_ID" -b
       - name: Run simulator UI acceptance checks and capture screenshots
-        timeout-minutes: 10
+        timeout-minutes: 15
         working-directory: native-ios
         run: |
           set -o pipefail
           xcodebuild -project PROJECT100M.xcodeproj -scheme PROJECT100M \
             -configuration Debug -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
             -parallel-testing-enabled NO -resultBundlePath build/TestResults.xcresult \
-            -test-timeouts-enabled YES -default-test-execution-time-allowance 90 \
-            -maximum-test-execution-time-allowance 120 \
+            -test-timeouts-enabled YES -default-test-execution-time-allowance 240 \
+            -maximum-test-execution-time-allowance 300 \
             CODE_SIGNING_ALLOWED=NO test 2>&1 | tee build/tests.log
       - name: Capture simulator diagnostics
         if: always()
@@ -96,6 +120,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ios-simulator-evidence-${{ github.sha }}
+          name: ios-simulator-evidence-${{ github.sha }}-${{ github.event_name }}-${{ matrix.device }}
           path: native-ios/build/
           retention-days: 14

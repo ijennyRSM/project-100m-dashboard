@@ -19,11 +19,35 @@ final class HealthKitService: ObservableObject {
         var errorDescription: String? { "ไม่รองรับข้อมูลการนอนบนอุปกรณ์นี้" }
     }
 
-    private let healthStore = HKHealthStore()
+    private let healthStore: HKHealthStore?
+    private var testRequestedAccess: Bool?
     private var observers: [HKObserverQuery] = []
     private let requestedKey = "project100m.healthkit.permissionRequested"
 
-    var hasRequestedAccess: Bool { UserDefaults.standard.bool(forKey: requestedKey) }
+    var hasRequestedAccess: Bool { testRequestedAccess ?? UserDefaults.standard.bool(forKey: requestedKey) }
+
+    init() { healthStore = HKHealthStore() }
+
+    #if DEBUG
+    /// A separate initializer never constructs or queries HKHealthStore for UI fixtures.
+    init(testState: HealthTestState) {
+        healthStore = nil
+        testRequestedAccess = ![.notRequested, .unavailable].contains(testState)
+        switch testState {
+        case .notRequested: connection = .notRequested
+        case .unavailable: connection = .unavailable
+        case .failed: connection = .failed("คำขอสิทธิ์ไม่สำเร็จ · ข้อมูลทดสอบ")
+        case .loading: connection = .requested; isLoading = true
+        case .missing: connection = .requested
+        case .stale:
+            connection = .requested
+            snapshot = HealthSnapshot(
+                lastRead: Date(timeIntervalSince1970: 1794402000),
+                restingHeartRateBPM: 58, restingHeartRateDate: Date(timeIntervalSince1970: 1792760400),
+                heartRateVariabilityMS: 42, heartRateVariabilityDate: Date(timeIntervalSince1970: 1792846800))
+        }
+    }
+    #endif
 
     private var readTypes: Set<HKObjectType> {
         var types: [HKObjectType] = [HKObjectType.workoutType()]
@@ -39,17 +63,19 @@ final class HealthKitService: ObservableObject {
 
     /// The app may call this on every launch. Do not reprompt before the user first opts in.
     func restoreOnLaunch() async {
-        guard hasRequestedAccess else { return }
+        guard healthStore != nil else { return }
         guard HKHealthStore.isHealthDataAvailable() else {
             connection = .unavailable
             return
         }
+        guard hasRequestedAccess else { return }
         connection = .requested
         await refresh()
         startForegroundObservers()
     }
 
     func connect() async {
+        guard let healthStore else { return }
         guard HKHealthStore.isHealthDataAvailable() else {
             connection = .unavailable
             message = "HealthKit ไม่พร้อมใช้งานบนอุปกรณ์นี้"
@@ -76,7 +102,9 @@ final class HealthKitService: ObservableObject {
     }
 
     func refresh() async {
-        guard HKHealthStore.isHealthDataAvailable(), !isLoading else { return }
+        guard healthStore != nil else { return }
+        guard HKHealthStore.isHealthDataAvailable() else { connection = .unavailable; return }
+        guard !isLoading else { return }
         isLoading = true
         defer { isLoading = false }
 
@@ -128,13 +156,17 @@ final class HealthKitService: ObservableObject {
             snapshot = HealthSnapshot(
                 lastRead: Date(),
                 restingHeartRateBPM: latestRHR,
+                restingHeartRateDate: rhr.first?.endDate,
                 heartRateVariabilityMS: latestHRV,
+                heartRateVariabilityDate: hrv.first?.endDate,
                 lastSleep: Self.latestSleepNight(sleep.compactMap { $0 as? HKCategorySample }),
                 recentWorkouts: workoutItems
             )
             message = nil
+            connection = .requested
         } catch {
             message = "อ่านข้อมูลสุขภาพไม่สำเร็จ: \(error.localizedDescription)"
+            connection = .failed(message ?? error.localizedDescription)
         }
     }
 
@@ -142,7 +174,8 @@ final class HealthKitService: ObservableObject {
     private func fetchSamples(
         _ type: HKSampleType, since: Date, limit: Int
     ) async throws -> [HKSample] {
-        try await withCheckedThrowingContinuation { continuation in
+        guard let healthStore else { return [] }
+        return try await withCheckedThrowingContinuation { continuation in
             let predicate = HKQuery.predicateForSamples(
                 withStart: since, end: Date(), options: []
             )
@@ -164,6 +197,7 @@ final class HealthKitService: ObservableObject {
     }
 
     private func startForegroundObservers() {
+        guard let healthStore else { return }
         guard observers.isEmpty else { return }
         for type in readTypes.compactMap({ $0 as? HKSampleType }) {
             let observer = HKObserverQuery(sampleType: type, predicate: nil) {

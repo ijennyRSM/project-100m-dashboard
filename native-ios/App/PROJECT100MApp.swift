@@ -1,22 +1,28 @@
 import SwiftUI
 
 @main
+@MainActor
 struct PROJECT100MApp: App {
-    @StateObject private var health = HealthKitService()
+    @StateObject private var health: HealthKitService
     @Environment(\.scenePhase) private var scenePhase
+
+    init() {
+        UITestConfiguration.resetIfRequested()
+        _health = StateObject(wrappedValue: UITestConfiguration.makeHealthService())
+    }
 
     var body: some Scene {
         WindowGroup {
             RootView()
-                .preferredColorScheme(ProcessInfo.processInfo.arguments.contains("--ui-testing") && ProcessInfo.processInfo.arguments.contains("--ui-dark") ? .dark : nil)
+                .modifier(UITestPresentation())
                 .environmentObject(health)
                 .task {
-                    if !ProcessInfo.processInfo.arguments.contains("--ui-testing") {
+                    if !UITestConfiguration.enabled {
                         await health.restoreOnLaunch()
                     }
                 }
                 .onChange(of: scenePhase) { _, phase in
-                    if phase == .active && !ProcessInfo.processInfo.arguments.contains("--ui-testing") {
+                    if phase == .active && !UITestConfiguration.enabled {
                         Task { await health.refreshIfEnabled() }
                     }
                 }

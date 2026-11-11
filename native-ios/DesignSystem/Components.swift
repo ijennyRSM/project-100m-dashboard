@@ -75,12 +75,20 @@ struct MetricTile: View {
     let title: String
     let value: String
     let unit: String
+    var measuredAt: Date? = nil
+    var metricID: String = ""
     var body: some View {
         P100Card {
             Text(title).font(.caption).foregroundStyle(.secondary)
             Text(value).font(.title2.bold()).monospacedDigit()
             Text(unit).font(.caption).foregroundStyle(.secondary)
+            Text("ค่าล่าสุดภายใน 21 วัน").font(.caption).foregroundStyle(.secondary)
+            if let date = measuredAt {
+                Text("วัดเมื่อ \(date.formatted(date: .abbreviated, time: .shortened))")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
         }.accessibilityElement(children: .combine)
+            .accessibilityIdentifier("metric-\(metricID)")
     }
 }
 

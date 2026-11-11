@@ -3,9 +3,10 @@ import XCTest
 final class FoundationUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
-    private func launch(extra: [String] = []) -> XCUIApplication {
+    private func launch(state: String = "missing", theme: String = "light", size: String = "large", width: Int? = nil) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["--ui-testing"] + extra
+        app.launchArguments = ["--ui-testing", "--ui-reset", "--ui-health-state=\(state)", "--ui-theme=\(theme)", "--ui-text-size=\(size)"]
+        if let width { app.launchArguments.append("--ui-content-width=\(width)") }
         app.launch()
         XCTAssertTrue(app.tabBars.buttons["Today"].waitForExistence(timeout: 15))
         return app
@@ -20,7 +21,7 @@ final class FoundationUITests: XCTestCase {
 
     private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
         let scroll = app.scrollViews.firstMatch
-        for _ in 0..<12 {
+        for _ in 0..<24 {
             let top = app.navigationBars.firstMatch.frame.maxY + 12
             let bottom = app.tabBars.firstMatch.frame.minY - 12
             if element.exists && element.isHittable && element.frame.midY > top && element.frame.midY < bottom { return }
@@ -29,7 +30,16 @@ final class FoundationUITests: XCTestCase {
             let end = scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: movingUp ? 0.40 : 0.60))
             start.press(forDuration: 0.05, thenDragTo: end)
         }
+        XCTAssertTrue(element.isHittable, "Could not reveal \(element.identifier)")
+    }
+
+    private func assertInBounds(_ element: XCUIElement, app: XCUIApplication) {
+        reveal(element, in: app)
         XCTAssertTrue(element.isHittable)
+        let bounds = app.scrollViews.firstMatch.frame
+        XCTAssertGreaterThanOrEqual(element.frame.minX, bounds.minX - 1)
+        XCTAssertLessThanOrEqual(element.frame.maxX, bounds.maxX + 1)
+        XCTAssertGreaterThan(element.frame.width, 0)
     }
 
     func testFiveTabsAndLabeledExamples() {
@@ -51,6 +61,16 @@ final class FoundationUITests: XCTestCase {
     }
 
     func testHealthDetailsAndNoRingsInMe() {
+        for state in ["notRequested", "unavailable", "failed", "missing", "loading"] {
+            let fixture = launch(state: state)
+            fixture.tabBars.buttons["Health"].tap()
+            let stateView = fixture.descendants(matching: .any).matching(identifier: "health-state-\(state)").firstMatch
+            reveal(stateView, in: fixture)
+            XCTAssertTrue(stateView.exists)
+            if state == "unavailable" { XCTAssertFalse(fixture.buttons["health-connection"].exists) }
+            capture(fixture, "M0-Health-state-\(state)")
+            fixture.terminate()
+        }
         let app = launch()
         app.tabBars.buttons["Health"].tap()
         for (id, title) in [("sleep", "Sleep"), ("recovery", "Recovery"), ("strain", "Strain")] {
@@ -83,6 +103,7 @@ final class FoundationUITests: XCTestCase {
         app.tabBars.buttons["Health"].tap()
         XCTAssertTrue(app.navigationBars["Sleep"].exists)
         app.tabBars.buttons["Me"].tap()
+        app.launchArguments.removeAll { $0 == "--ui-reset" }
         app.terminate()
         app.launch()
         XCTAssertTrue(app.tabBars.buttons["Me"].waitForExistence(timeout: 10))
@@ -90,17 +111,39 @@ final class FoundationUITests: XCTestCase {
     }
 
     func testDarkModeAndAccessibilityText() {
-        let app = launch(extra: ["--ui-dark",
-                                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"])
-        for name in ["Feed", "Today", "Train", "Health", "Me"] {
-            app.tabBars.buttons[name].tap()
-            XCTAssertTrue(app.navigationBars[name].waitForExistence(timeout: 5))
-            capture(app, "M0-\(name)-dark-AX5")
+        let device = ProcessInfo.processInfo.environment["SIMULATOR_DEVICE_NAME"] ?? ""
+        let expectedWidth: CGFloat = device.contains("iPhone SE (3rd generation)") ? 375 : 393
+        XCTAssertTrue(device.contains("iPhone SE (3rd generation)") || device.contains("iPhone 16"), "Unexpected simulator: \(device)")
+        for theme in ["light", "dark"] {
+            for size in ["large", "xLarge", "AX5"] {
+                let app = launch(state: "stale", theme: theme, size: size)
+                XCTAssertEqual(app.windows.firstMatch.frame.width, expectedWidth, accuracy: 1)
+                verifyHealthLayout(app, theme: theme, size: size, name: "\(device)-\(theme)-\(size)")
+                app.terminate()
+            }
         }
+        // A hosted 320pt content container, not a claim of Display Zoom/device simulation.
+        let hosted = launch(state: "stale", size: "xLarge", width: 320)
+        verifyHealthLayout(hosted, theme: "light", size: "xLarge", name: "hosted-320-xLarge")
+        XCTAssertEqual(hosted.scrollViews.firstMatch.frame.width, 320, accuracy: 1)
+    }
+
+    private func verifyHealthLayout(_ app: XCUIApplication, theme: String, size: String, name: String) {
         app.tabBars.buttons["Health"].tap()
-        let sleep = app.buttons["ring-sleep"]
-        XCTAssertTrue(sleep.exists)
-        sleep.tap()
-        XCTAssertTrue(app.navigationBars["Sleep"].exists)
+        let probe = app.descendants(matching: .any).matching(identifier: "health-presentation").firstMatch
+        reveal(probe, in: app)
+        XCTAssertEqual(probe.value as? String, "\(theme)|\(size)", "Actual SwiftUI color scheme and Dynamic Type must match")
+        for id in ["sleep", "recovery", "strain"] {
+            let ring = app.buttons["ring-\(id)"]
+            assertInBounds(ring, app: app)
+            capture(app, "M0-Health-\(name)-\(id)")
+        }
+        for id in ["rhr", "hrv"] {
+            let tile = app.descendants(matching: .any).matching(identifier: "metric-\(id)").firstMatch
+            assertInBounds(tile, app: app)
+            XCTAssertTrue(tile.label.contains("ค่าล่าสุดภายใน 21 วัน"))
+            XCTAssertTrue(tile.label.contains("วัดเมื่อ"))
+            capture(app, "M0-Health-\(name)-\(id)")
+        }
     }
 }

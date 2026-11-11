@@ -35,17 +35,21 @@ struct HealthConnectionScreen: View {
     var body: some View {
         Form {
             Section("Apple Health · สถานะจริงบนเครื่องนี้") {
-                LabeledContent("คำขอสิทธิ์", value: health.hasRequestedAccess ? "เคยขอแล้ว" : "ยังไม่ได้ขอ")
+                LabeledContent("การเชื่อมต่อ", value: health.connection.title)
                 Text("การขอสิทธิ์สำเร็จไม่ได้ยืนยันว่าอ่านได้ทุกประเภท หากข้อมูลไม่มี แอปจะเว้นค่าไว้").font(.caption).foregroundStyle(.secondary)
                 if let date = health.snapshot.lastRead {
                     LabeledContent("อ่านล่าสุด", value: date.formatted(date: .abbreviated, time: .shortened))
                 }
                 if health.isLoading { ProgressView("กำลังอ่านข้อมูล…") }
-                Button(health.hasRequestedAccess ? "ขอสิทธิ์อ่าน Apple Health อีกครั้ง" : "อนุญาตการอ่าน Apple Health") {
-                    Task { await health.connect() }
-                }.disabled(health.isLoading)
-                Button("อ่านข้อมูลใหม่") { Task { await health.refreshIfEnabled() } }
-                    .disabled(!health.hasRequestedAccess || health.isLoading)
+                if health.connection == .unavailable {
+                    Text("HealthKit ไม่พร้อมใช้งานบนอุปกรณ์นี้")
+                } else {
+                    Button(health.hasRequestedAccess ? "ขอสิทธิ์อ่าน Apple Health อีกครั้ง" : "อนุญาตการอ่าน Apple Health") {
+                        Task { await health.connect() }
+                    }.disabled(health.isLoading)
+                    Button("อ่านข้อมูลใหม่") { Task { await health.refreshIfEnabled() } }
+                        .disabled(!health.hasRequestedAccess || health.isLoading)
+                }
                 if let message = health.message { Text(message).foregroundStyle(.red) }
             }
             Section("ข้อมูลและอุปกรณ์") {
