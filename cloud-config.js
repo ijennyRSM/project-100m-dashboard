@@ -1,7 +1,5 @@
-/* PUBLIC client configuration. Never put Supabase service_role / secret keys here.
-To enable cloud sync: fill these from Supabase > Project Settings > Data API and API Keys.
-The publishable/anon key is intended to be public; privacy depends on RLS in supabase-schema.sql. */
+/* PROJECT 100M V2 — Public Supabase client settings; never commit secret/service_role keys. */
 window.PROJECT100M_CONFIG = {
-  url: "",
-  publishableKey: ""
+  "url": "https://rbryddekjwytcoqqgcgu.supabase.co",
+  "publishableKey": "sb_publishable_WU-Pmqr6a8DIcPvGZC3yBw_QT-lvasj"
 };
