@@ -64,16 +64,16 @@ function header(){
  '<nav class="bottom-nav" aria-label="เมนูมือถือ">'+nav()+'</nav>';
 }
 function summary(){
- const p=A.profile(),pl=A.activePlan(),name=esc(p.name);
+ const p=A.profile(),pl=A.activePlan(),name=esc(p.name),live=p.activeLive&&p.activeLive.planId===pl?.id?'<button class="live-resume" type="button" data-action="resumeLive">กำลังซ้อมค้างอยู่ · '+esc(p.activeLive.title)+' &nbsp; → กลับไปซ้อมต่อ</button>':"";
  if(!pl)return '<section class="welcome-wrap"><div class="welcome-copy"><span class="eyebrow">YOUR SPACE TO GROW</span><h1>'+hello()+', '+name+' <span class="greeting-hand">✳</span></h1><p>มาเริ่มด้วยแผนฝึกที่เหมาะกับคุณกัน</p></div><div class="welcome-photo" role="img" aria-label="บรรยากาศธรรมชาติสำหรับการออกกำลังกาย"></div></section><article class="intro-empty"><div class="empty-symbol">'+ico("spark",28)+'</div><h2>ทุกก้าวเริ่มต้นที่นี่</h2><p>เลือกแผนที่อยากฝึก แล้วแอปจะคอยบอกว่าครั้งต่อไปต้องทำอะไร</p>'+button('เลือกแผนฝึก '+ico("arrow",18),'openPlans','primary')+'</article>';
  const tmpl=A.planTemplate(pl),o=A.planOverview(pl),last=A.history()[0],next=o.next,percent=o.percent;
  return '<section class="welcome-wrap"><div class="welcome-copy"><span class="eyebrow">WELCOME BACK</span><h1>'+hello()+', '+name+' <span class="greeting-hand">✳</span></h1><p>ไม่จำเป็นต้องรีบ — เราค่อย ๆ เก่งขึ้นทีละ Session</p></div><div class="welcome-photo" role="img" aria-label="บรรยากาศอบอุ่นของคนวิ่งตอนเช้า"></div></section>'+
- '<div class="dash-grid"><section class="training-primary"><div class="section-title"><h2>ครั้งต่อไปของคุณ</h2><span>Next up</span></div>'+
+ live+'<div class="dash-grid"><section class="training-primary"><div class="section-title"><h2>ครั้งต่อไปของคุณ</h2><span>Next up</span></div>'+
  (next?'<article class="next-card"><div class="next-text">'+
  '<div class="next-label"><span class="pulse-dot"></span> พร้อมเมื่อคุณพร้อม <span class="next-separator">·</span> Block '+next.block+' / '+tmpl.blocks+'</div>'+
  '<h2>'+esc(next.title)+'</h2><p>'+esc(next.summary)+'</p>'+
  '<div class="next-meta"><span>'+ico("clock",16)+' ประมาณ '+next.minutes+' นาที</span><span>'+ico("activity",16)+' '+esc(next.kind.toUpperCase())+'</span></div>'+
- button('ดูวิธีฝึก '+ico("arrow",18),'openWorkout','primary','data-key="'+esc(next.key)+'"')+'</div><div class="next-photo" aria-hidden="true"></div></article>':
+ button('เริ่มฝึกเลย '+ico("arrow",18),'openLive','primary','data-key="'+esc(next.key)+'"')+button('ดูรายละเอียด','openWorkout','link','data-key="'+esc(next.key)+'"')+'</div><div class="next-photo" aria-hidden="true"></div></article>':
  '<article class="next-card finish-card"><div class="next-text"><span class="eyebrow">WELL DONE</span><h2>คุณทำครบทุก Session แล้ว!</h2><p>กลับไปดูความก้าวหน้า หรือเลือกแผนใหม่ได้เลย</p>'+button('ดูความก้าวหน้า '+ico("arrow",18),'openHistory','primary')+'</div></article>')+
  '<div class="quick-links"><button type="button" data-page="plans">'+ico("book",22)+'<span><b>ดูแผนทั้งหมด</b><small>รายละเอียดทุกช่วงการฝึก</small></span>'+ico("chevron",17)+'</button>'+
  '<button type="button" data-page="recovery">'+ico("recovery",22)+'<span><b>วันนี้รู้สึกอย่างไร?</b><small>เช็กการพักฟื้นและการนอน</small></span>'+ico("chevron",17)+'</button></div></section>'+
@@ -116,7 +116,7 @@ function exerciseContent(s){if(!s)return"";const e=s.exercises||{},parts=[];if(e
 function workout(){const s=A.sessionByKey(chosenKey)||A.planOverview(A.activePlan())?.next;if(!s)return '<div class="page-head"><h1>ยังไม่มี Workout</h1></div>'+button('เลือกแผน','openPlans','primary');chosenKey=s.key;const warnings=A.readiness(s),logged=A.planOverview(A.activePlan()).marked.get(s.key);
 return '<div class="page-head"><span class="eyebrow">ช่วงฝึกที่ '+s.block+' · ครั้งที่ '+s.slot+'</span><h1>'+esc(s.title)+'</h1><p>'+esc(s.summary)+'</p></div><div class="row wrap">'+chip(s.kind.toUpperCase())+chip("EST. "+s.minutes+" MIN")+(logged?chip("ล่าสุด: "+logged.status):"")+'</div>'+
 (warnings.length?'<div class="warning"><b>Recovery Check</b>'+warnings.map(w=>'<p>'+esc(w)+'</p>').join("")+'<p>หากมีอาการเจ็บหรืออาการผิดปกติขณะออกแรง ควรหยุดและประเมินความพร้อมก่อน</p></div>':"")+
-'<div class="panel"><h2>วิธีฝึกครั้งนี้</h2><p>'+esc(s.details)+'</p><div class="exercise-list">'+exerciseContent(s)+'</div></div>'+
+'<div class="live-intro"><div><strong>พร้อมเริ่มฝึกแล้วหรือยัง?</strong><p>นับเที่ยว นับเซต และจับเวลาพักได้ในหน้าเดียว</p></div>'+button('เริ่ม Live Workout '+ico('arrow',18),'openLive','primary','data-key="'+esc(s.key)+'"')+'</div><div class="panel"><h2>วิธีฝึกครั้งนี้</h2><p>'+esc(s.details)+'</p><div class="exercise-list">'+exerciseContent(s)+'</div></div>'+
 '<div class="section-title"><h2>บันทึกผลหลังซ้อม</h2><span>ตามที่คุณทำจริง</span></div>'+
 '<div class="segmented"><button data-mode="quick" class="'+(mode==="quick"?"active":"")+'">บันทึกแบบเร็ว</button><button data-mode="detailed" class="'+(mode==="detailed"?"active":"")+'">บันทึกละเอียด</button></div>'+
 '<form id="workoutForm" class="panel form"><input type="hidden" name="key" value="'+esc(s.key)+'"><input type="hidden" name="mode" value="'+mode+'"><div class="grid-2">'+
@@ -155,7 +155,7 @@ function settings(){const user=A.cloudUser,c=A.cloudStatus,p=A.profile(),configu
 '<div class="panel"><h2>ความเป็นส่วนตัว</h2><p>เว็บไซต์นี้เผยแพร่โค้ดผ่าน GitHub Pages แต่ข้อมูลสุขภาพไม่ถูก commit ลง GitHub เมื่อเปิด Cloud Sync ข้อมูลจะถูกเก็บใน Supabase ภายใต้ Row Level Security ตามบัญชีผู้ใช้</p></div>';
 }
 function content(){
- switch(page){case "plans":return plans();case "workout":return workout();case "history":return history();case "recovery":return recovery();case "settings":return settings();default:return summary()}
+ switch(page){case "plans":return plans();case "workout":return workout();case "live":return window.P100Live?.render()||'<div class="warning">Live Workout unavailable</div>';case "history":return history();case "recovery":return recovery();case "settings":return settings();default:return summary()}
 }
 function render(){app.innerHTML=header();document.title="PROJECT 100M — "+(page==="home"?"หน้าหลัก":page);if(page==="workout"&&Object.keys(draftWorkout).length){const f=document.getElementById("workoutForm");if(f)for(const [name,value] of Object.entries(draftWorkout)){const input=f.elements.namedItem(name);if(input&&["INPUT","TEXTAREA","SELECT"].includes(input.tagName)&&name!=="mode"&&name!=="key")input.value=value}if(draftWorkout.rpe){app.querySelectorAll("[data-rpe]").forEach(el=>el.setAttribute("aria-pressed",String(el.dataset.rpe===String(draftWorkout.rpe))))}}}
 function captureWorkout(){const f=document.getElementById("workoutForm");if(f)draftWorkout=Object.fromEntries(new FormData(f))}
@@ -164,6 +164,8 @@ function show(t){if(t==="plans"&&page!==t){chosenBlock=A.planOverview(A.activePl
 function info(message){notice=message;render();window.scrollTo({top:0,behavior:"smooth"})}
 async function handleAction(el){const a=el.dataset.action;try{
 if(a==="openPlans"){draftWorkout={};show("plans")}
+else if(a==="resumeLive"){const l=window.P100Live?.get();if(!l)return;show("live");}
+else if(a==="openLive"){const L=window.P100Live;if(!L)throw Error("Live Workout ยังโหลดไม่สำเร็จ");L.start(el.dataset.key);show("live")}
 else if(a==="openHistory")show("history");
 else if(a==="openWorkout"){chosenKey=el.dataset.key||A.planOverview(A.activePlan())?.next?.key;mode="quick";draftWorkout={};show("workout")}
 else if(a==="startPlan"){const id=el.dataset.template;if(A.activePlan()&&!confirm("เริ่มโปรแกรมใหม่? โปรแกรมเดิมยังเก็บไว้ในรายการ Plans สามารถสลับกลับได้"))return;A.startPlan(id);chosenBlock=1;show("plans");info("เริ่มโปรแกรมใหม่แล้ว เลือก Session เพื่อดูรายละเอียดได้เลย")}
@@ -176,7 +178,29 @@ else if(a==="openV1"){window.open("v1.html","_blank","noopener")}
 else if(a==="importLegacy"){const ok=A.importLegacy(true);info(ok?"ดึงข้อมูลจาก V1 เข้ามาแล้ว":"ยังไม่พบข้อมูล V1 บนอุปกรณ์นี้")}
 else if(a==="signOut"){await A.signOut();show("home")}
 }catch(e){alert(e.message||String(e))}}
-app.addEventListener("click",e=>{const el=e.target.closest("[data-page],[data-action],[data-mode],[data-block],[data-rpe]");if(!el)return;if(el.dataset.page){show(el.dataset.page);return}if(el.dataset.mode){captureWorkout();mode=el.dataset.mode;render();return}if(el.dataset.rpe){const f=document.getElementById("workoutForm");const inp=f?.elements.namedItem("rpe");if(inp){inp.value=el.dataset.rpe;app.querySelectorAll("[data-rpe]").forEach(x=>x.setAttribute("aria-pressed",String(x===el)))}return}if(el.dataset.block){chosenBlock=Number(el.dataset.block);render();return}if(el.dataset.action)void handleAction(el)});
+function handleLive(el){
+ const L=window.P100Live;if(!L)return;
+ const action=el.dataset.live;
+ try{
+  if(action==="mark")L.mark();
+  else if(action==="undo")L.undo();
+  else if(action==="next")L.next();
+  else if(action==="previous")L.previous();
+  else if(action==="goto"){const l=L.get(),idx=Number(el.dataset.index);if(l&&Number.isInteger(idx)&&idx>=0&&idx<l.steps.length){l.index=idx;l.restUntil=null;window.P100.store()}}
+  else if(action==="pause")L.togglePause();
+  else if(action==="rest")L.setRest(Number(el.dataset.seconds)||90);
+  else if(action==="skiprest")L.skipRest();
+  else if(action==="cancel"){if(!confirm("ยกเลิก Live Workout นี้? รายการที่เช็กไว้จะถูกลบ แต่ประวัติการฝึกเดิมไม่ถูกลบ"))return;L.cancel();show("home")}
+  else if(action==="finish"){
+    const l=L.get();if(!l)return;const full=l.steps.every(s=>s.done>=s.total);
+    if(!full&&!confirm("ยังทำไม่ครบทุกขั้นตอน ระบบจะบันทึกเป็น Partial และไม่ข้าม Session นี้ ต้องการบันทึกหรือไม่?"))return;
+    const rpe=document.getElementById("liveRpe")?.value||"";
+    if(rpe&&(!Number.isInteger(Number(rpe))||Number(rpe)<1||Number(rpe)>10)){alert("RPE ต้องเป็นตัวเลข 1–10");return}
+    const summary=L.finish(rpe);show("home");info(summary.complete?"เยี่ยมเลย! บันทึกสำเร็จ และ Session ถัดไปรอคุณอยู่":"บันทึกการฝึกบางส่วนแล้ว Session เดิมยังรอให้กลับมาทำต่อ");
+  }
+ }catch(e){alert(e.message||String(e))}
+}
+app.addEventListener("click",e=>{const el=e.target.closest("[data-page],[data-action],[data-mode],[data-block],[data-rpe],[data-live]");if(!el)return;if(el.dataset.live){handleLive(el);return}if(el.dataset.page){show(el.dataset.page);return}if(el.dataset.mode){captureWorkout();mode=el.dataset.mode;render();return}if(el.dataset.rpe){const f=document.getElementById("workoutForm");const inp=f?.elements.namedItem("rpe");if(inp){inp.value=el.dataset.rpe;app.querySelectorAll("[data-rpe]").forEach(x=>x.setAttribute("aria-pressed",String(x===el)))}return}if(el.dataset.block){chosenBlock=Number(el.dataset.block);render();return}if(el.dataset.action)void handleAction(el)});
 app.addEventListener("change",e=>{if(e.target.id==="healthFileV2"){const file=e.target.files?.[0];if(!file)return;const input=e.target,days=document.getElementById("healthDaysV2")?.value||90;const status=document.getElementById("healthImportStatus");if(A.cloudUser&&!confirm("ข้อมูลที่นำเข้าจาก Apple Health จะเก็บในโปรไฟล์และซิงก์ไปยัง Supabase ของคุณ ต้องการทำต่อไหม?")){input.value="";return}input.disabled=true;if(status)status.textContent="กำลังอ่านไฟล์...";A.importAppleHealth(file,days,pct=>{const el=document.getElementById("healthImportStatus");if(el)el.textContent="กำลังนำเข้า "+pct+"%"}).then(res=>{info("นำเข้า Apple Health สำเร็จ: Workout ใหม่ "+res.workouts+" รายการ และข้อมูลพักฟื้น "+res.recoveryDays+" วัน")}).catch(err=>{const el=document.getElementById("healthImportStatus");if(el)el.textContent="นำเข้าไม่สำเร็จ: "+err.message;else alert(err.message)}).finally(()=>{input.disabled=false;input.value=""});return}
 if(e.target.id==="switchProfile"){A.selectProfile(e.target.value);chosenKey=null;chosenBlock=1;show("home")}else if(e.target.id==="planSelect"){A.selectPlan(e.target.value);chosenBlock=1;render()}else if(e.target.id==="restoreFile"){const file=e.target.files?.[0];if(!file)return;if(!confirm("Restore จะแทนข้อมูลในโปรไฟล์ทั้งหมด ต้องการทำต่อหรือไม่?"))return;file.text().then(t=>{A.restore(t);show("home");info("กู้คืนข้อมูล V2 สำเร็จ")}).catch(err=>alert("Restore ไม่สำเร็จ: "+err.message))}});
 app.addEventListener("submit",async e=>{e.preventDefault();const form=e.target,values=Object.fromEntries(new FormData(form));try{
