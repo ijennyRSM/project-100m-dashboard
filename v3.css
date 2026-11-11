@@ -90,7 +90,7 @@ button{touch-action:manipulation}
 .journey-card{min-height:370px;background:#eaf3eb;border:1px solid #dfece1;border-radius:24px;padding:22px 22px 17px;box-shadow:0 7px 18px #2d513408}
 .journey-header{display:flex;align-items:start;justify-content:space-between;gap:10px;color:#477c60}
 .journey-header h3{margin:5px 0;color:#214737;line-height:1.5;font-size:15px}
-.progress-ring{width:160px;height:160px;margin:18px auto 16px;border-radius:50%;background:conic-gradient(#4b9b77 calc(var(--percent)*1%),#d3e5d8 0);display:grid;place-items:center;box-shadow:0 4px 14px #42724d10}
+.progress-ring{width:160px;height:160px;margin:18px auto 16px;border-radius:50%;background:conic-gradient(#4b9b77 var(--percent),#d3e5d8 0);display:grid;place-items:center;box-shadow:0 4px 14px #42724d10}
 .progress-ring>div{width:130px;height:130px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#eaf3eb}
 .progress-ring strong{font-size:36px;letter-spacing:-1.2px;font-weight:800;color:#1e5941}
 .progress-ring small{font-size:11px;color:#779383}
