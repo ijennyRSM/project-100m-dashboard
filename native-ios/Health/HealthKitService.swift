@@ -119,8 +119,9 @@ final class HealthKitService: ObservableObject {
                     date: workout.startDate,
                     kind: label,
                     durationMinutes: workout.duration / 60,
-                    distanceKilometers: workout.totalDistance?
-                        .doubleValue(for: .meter()).map { $0 / 1000 }
+                    distanceKilometers: workout.totalDistance.map {
+                        $0.doubleValue(for: .meter()) / 1000
+                    }
                 )
             }
 
