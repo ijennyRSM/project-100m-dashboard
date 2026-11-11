@@ -78,7 +78,7 @@ function summary(){
  '<div class="quick-links"><button type="button" data-page="plans">'+ico("book",22)+'<span><b>ดูแผนทั้งหมด</b><small>รายละเอียดทุกช่วงการฝึก</small></span>'+ico("chevron",17)+'</button>'+
  '<button type="button" data-page="recovery">'+ico("recovery",22)+'<span><b>วันนี้รู้สึกอย่างไร?</b><small>เช็กการพักฟื้นและการนอน</small></span>'+ico("chevron",17)+'</button></div></section>'+
  '<aside class="progress-panel"><div class="section-title"><h2>เส้นทางของคุณ</h2><span>My journey</span></div><div class="journey-card"><div class="journey-header"><div><span class="tiny-label">CURRENT PROGRAM</span><h3>'+esc(tmpl.name)+'</h3></div>'+ico("spark",24)+'</div>'+
- '<div class="progress-ring" style="--percent:'+percent+'"><div><strong>'+percent+'%</strong><small>ความคืบหน้า</small></div></div>'+
+ '<div class="progress-ring" style="--percent:'+percent+'%"><div><strong>'+percent+'%</strong><small>ความคืบหน้า</small></div></div>'+
  '<div class="journey-count"><span>'+ico("check",17)+' ฝึกครบ <b>'+o.completed+'</b> Sessions</span><span>ทั้งหมด '+o.total+'</span></div>'+
  '<p class="journey-note">ไม่มีวันหมดอายุของแผน หยุดพักแล้วกลับมาฝึกต่อได้เสมอ</p>'+button('ดูเส้นทางทั้งหมด '+ico("arrow",17),'openPlans','subtle')+'</div></aside></div>'+
  '<div class="section-title section-title-lower"><h2>ภาพรวมของคุณ</h2>'+button('ดูประวัติ '+ico("arrow",16),'openHistory','link')+'</div>'+
