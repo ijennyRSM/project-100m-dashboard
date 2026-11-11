@@ -98,7 +98,7 @@ jobs:
             -configuration Debug -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
             -parallel-testing-enabled NO -resultBundlePath build/TestResults.xcresult \
             -test-timeouts-enabled YES -default-test-execution-time-allowance 240 \
-            -maximum-test-execution-time-allowance 300 \
+            -maximum-test-execution-time-allowance 420 \
             CODE_SIGNING_ALLOWED=NO test 2>&1 | tee build/tests.log
       - name: Capture simulator diagnostics
         if: always()

@@ -111,6 +111,9 @@ final class FoundationUITests: XCTestCase {
     }
 
     func testDarkModeAndAccessibilityText() {
+        // Seven cold launches plus AX5 scrolling/captures measured ~273s on the SE runner.
+        // Keep every assertion; give this matrix test six minutes, other tests stay bounded.
+        executionTimeAllowance = 360
         let device = ProcessInfo.processInfo.environment["SIMULATOR_DEVICE_NAME"] ?? ""
         let expectedWidth: CGFloat = device.contains("iPhone SE (3rd generation)") ? 375 : 393
         XCTAssertTrue(device.contains("iPhone SE (3rd generation)") || device.contains("iPhone 16"), "Unexpected simulator: \(device)")
