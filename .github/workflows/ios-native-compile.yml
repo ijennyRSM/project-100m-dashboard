@@ -1,0 +1,33 @@
+name: Native iOS Build (PROJECT 100M)
+
+on:
+  push:
+    branches:
+      - feat/ios-native-foundation
+    paths:
+      - native-ios/**
+      - .github/workflows/ios-native-compile.yml
+  workflow_dispatch:
+
+jobs:
+  build-simulator:
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        working-directory: native-ios
+        run: xcodegen generate
+      - name: Build iPhone simulator app (no signing)
+        working-directory: native-ios
+        run: |
+          xcodebuild \
+            -project PROJECT100M.xcodeproj \
+            -scheme PROJECT100M \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
