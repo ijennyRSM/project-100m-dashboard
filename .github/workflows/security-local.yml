@@ -1,0 +1,36 @@
+name: Disposable database security tests
+on:
+  push:
+    branches: ['codex/**']
+    paths: ['supabase/**', 'supabase-schema.sql', 'scripts/test_security.py', 'scripts/check_sql_grants.py', '.github/workflows/security-local.yml']
+  pull_request:
+    paths: ['supabase/**', 'supabase-schema.sql', 'scripts/test_security.py', 'scripts/check_sql_grants.py', '.github/workflows/security-local.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: security-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: false
+jobs:
+  pgtap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        postgres: ['16','17']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/check_sql_grants.py
+      - run: python scripts/test_security.py --pg-version ${{ matrix.postgres }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: disposable-pgtap-pg${{ matrix.postgres }}-${{ github.sha }}
+          path: .local-evidence/security-pg${{ matrix.postgres }}/
+          include-hidden-files: true
