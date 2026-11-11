@@ -7,3 +7,4 @@ native-ios/build/
 *.xcresult/
 docs/handover/prepared/
 .local-evidence/
+supabase/.temp/

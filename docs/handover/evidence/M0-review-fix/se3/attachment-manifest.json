@@ -1,0 +1,452 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "B2C0746C-0B03-416D-A2C1-CCDFA178EF9C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-hosted-320-xLarge-hrv_0_BBB56040-BFC6-4260-8C77-7E98A6B3062D.png",
+        "timestamp" : 1794434644.4
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "BAB39AEE-984F-4B47-AF21-AC969C1AAF46.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-hosted-320-xLarge-rhr_0_84994F28-825A-44DA-A3F2-A26308C23D86.png",
+        "timestamp" : 1794434638.835
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "2E5D36CA-DEB8-46AF-BF26-13D1C1593297.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-hosted-320-xLarge-strain_0_66A1BF2C-EA28-4346-923D-A88190D0ACE0.png",
+        "timestamp" : 1794434630.548
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "7C0847A3-015B-4A88-A4FF-A7690CAD6C4D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-hosted-320-xLarge-recovery_0_08969AC9-124A-4842-BC01-893A003408A4.png",
+        "timestamp" : 1794434629.97
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "E061DF2A-D5A8-4938-9B6C-41B24D2CC72A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-hosted-320-xLarge-sleep_0_1895EA8D-5062-42CA-80BA-41046D6E201B.png",
+        "timestamp" : 1794434629.407
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "33B71A78-6141-4018-8556-93AB0E4BDDA6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-AX5-hrv_0_B0445D99-89E3-4269-AB3B-CBE87D61B0E6.png",
+        "timestamp" : 1794434614.823
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "EC862B2B-295C-4CE4-831E-8037342C1F3F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-AX5-rhr_0_891D3A84-0E6D-4CE5-B38A-ED1FA679F228.png",
+        "timestamp" : 1794434609.857
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "55FE7F48-855F-45C3-BDC0-30D156D60640.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-AX5-strain_0_F491346D-C8C7-415B-9F19-777A1023FA88.png",
+        "timestamp" : 1794434585.385
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "DF327608-401D-4BA3-BCBA-6E1F38F797C3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-AX5-recovery_0_998EAC37-B21B-44B1-945B-A026D7E2ED36.png",
+        "timestamp" : 1794434584.756
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "E79CFA88-0CD1-423F-A354-CD2128C855D4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-AX5-sleep_0_E80D65A2-28A2-4BB1-8BB0-A98F1C80F3D6.png",
+        "timestamp" : 1794434581.109
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "7D2DF560-8326-4134-A8CC-B36E714A1891.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-xLarge-hrv_0_03AD2DC9-BBAB-441C-A026-C97832FE31FE.png",
+        "timestamp" : 1794434554.652
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "B81642D1-A06E-4BA7-8B7B-2FDEF36F26A6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-xLarge-rhr_0_23B97C55-A241-4E4E-9799-FF3370D6B711.png",
+        "timestamp" : 1794434553.261
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "09FD5D80-758F-4482-A911-D0B90ADB5212.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-xLarge-strain_0_33A4F87D-5C2A-46B3-8B0E-DD54DA58331E.png",
+        "timestamp" : 1794434545.574
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "E93ACDD1-88E8-43C4-AA80-1E86DC1CCADB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-xLarge-recovery_0_D3A673EB-2B17-4531-B421-DDC5B389EB57.png",
+        "timestamp" : 1794434545.094
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "97477180-E57E-4CFA-9E11-72B281203BB9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-xLarge-sleep_0_4B1BB2DC-672E-4328-9B83-538751776303.png",
+        "timestamp" : 1794434544.571
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "92B95C11-1AF1-4928-AA01-87767838D5FC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-large-hrv_0_DF616003-EB2F-424D-8BC8-2BC308916C0B.png",
+        "timestamp" : 1794434529.09
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "AC7E414E-4DCC-47C1-96AE-5E3F7FB390FC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-large-rhr_0_78982C83-0695-47BE-B82E-FE34400AC39A.png",
+        "timestamp" : 1794434527.506
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "76CD4E14-39D1-480F-99B8-F1966A77FA41.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-large-strain_0_B448E255-547A-4A80-849D-0B94DA3FE98A.png",
+        "timestamp" : 1794434521.955
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "C85B48E7-FA16-42A0-B5A6-77378085FA58.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-large-recovery_0_EAF9AA7C-14C4-4EA7-A630-398A4ED8DD88.png",
+        "timestamp" : 1794434521.5
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "EACEB2E3-20AA-47A5-A297-FBF6CECC0795.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-dark-large-sleep_0_FBE8CE70-AC6A-45E6-8812-F78B5B6BAE68.png",
+        "timestamp" : 1794434521.033
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "6582F953-1649-4C42-85D9-46877DE52B2F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-AX5-hrv_0_5221DD32-44F6-4BE0-B454-FC6A5DFC590A.png",
+        "timestamp" : 1794434513.14
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "92556E8B-9D8D-420B-AD37-8E67E027586D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-AX5-rhr_0_DC594FB4-F1E7-4F26-9322-7E80E657A101.png",
+        "timestamp" : 1794434505.169
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "1F823633-9EA9-4544-812E-AB72F2CD6FA8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-AX5-strain_0_3A282433-0C1F-4B93-8E00-33FA4D9915E9.png",
+        "timestamp" : 1794434483.373
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "0F9C6A56-0C81-4F0D-ABF0-FCCA09956AEA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-AX5-recovery_0_6299D8BA-A285-4380-8EAB-79C1A6B4FF00.png",
+        "timestamp" : 1794434482.857
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "AA0908C3-6DA7-4CCC-B1CD-47E3162A306D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-AX5-sleep_0_03D02BCF-1DC1-4C84-BE12-490DD0B37FA7.png",
+        "timestamp" : 1794434479.352
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "04F16D1D-BF2B-4175-8CD9-AD6A9BD04546.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-xLarge-hrv_0_E902BB6C-FCB7-45DD-9F9E-0DBB3619A7F8.png",
+        "timestamp" : 1794434451.779
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "EF12A905-DA26-4748-86F3-8B91991169F1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-xLarge-rhr_0_0F0D3FFA-7619-4B66-9DC6-02EA47C9C5F6.png",
+        "timestamp" : 1794434450.018
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "C22B7EF0-A985-419D-958A-7EB570831589.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-xLarge-strain_0_C0E41DCA-BFBA-40E2-A402-DCAAD98C1296.png",
+        "timestamp" : 1794434440.279
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "1C3C091B-2F6A-4952-9A8F-83F060C34FF2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-xLarge-recovery_0_DDA87820-D733-433F-B1FA-40A1791B4098.png",
+        "timestamp" : 1794434439.457
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "BCF0DC1B-99F4-4CC9-867C-51D8C1CBD7AA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-xLarge-sleep_0_09F7347A-43E5-4FD4-A254-44E8B452738B.png",
+        "timestamp" : 1794434438.501
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "7A76C729-6BDA-4BF5-A207-7E94E9BEB0C9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-large-hrv_0_3FB6728E-F289-4C60-B2D4-D98EF28CCB91.png",
+        "timestamp" : 1794434424.189
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "8D60DF9A-9273-41FF-BCA2-F1545C65C318.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-large-rhr_0_F18095DB-64A9-47F1-89C1-EEEDDDBC6704.png",
+        "timestamp" : 1794434422.751
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "E995AB19-08D7-4586-B88E-F1B1AA990977.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-large-strain_0_DCADC8CD-1608-4D4B-85EF-8C11FAE8FC5E.png",
+        "timestamp" : 1794434417.913
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "091D60B5-AAC7-4406-A00E-8CC5C79CF298.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-large-recovery_0_3B1BACBF-B702-4F05-A864-4AB278201B2F.png",
+        "timestamp" : 1794434417.24
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "8CB5452B-C379-4698-81BD-BF0C5FC4508D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone SE (3rd generation)-light-large-sleep_0_E95FB292-21CA-470B-B37E-2857CAACA4AC.png",
+        "timestamp" : 1794434416.51
+      }
+    ],
+    "testIdentifier" : "FoundationUITests/testDarkModeAndAccessibilityText()",
+    "testIdentifierURL" : "test://com.apple.xcode/PROJECT100M/PROJECT100MUITests/FoundationUITests/testDarkModeAndAccessibilityText"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "60E79011-CAFB-498F-B45E-A84C53683E1D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Me-light_0_A81E8ADE-8C07-4EF8-BF76-1BF45A8165B7.png",
+        "timestamp" : 1794434661.781
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "220316F1-90F0-4290-BE42-4DEAA4DD85A4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-light_0_EAA39661-E571-44CF-956B-4ACDEDFFAF9A.png",
+        "timestamp" : 1794434659.521
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "C9AB2395-A2E5-46EA-AC67-61DB83222884.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Train-light_0_72CA7D3B-34F8-4443-B348-5F4CCE8DCA3C.png",
+        "timestamp" : 1794434657.268
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "EB0DB314-9DCF-4758-9AB7-594E82607C02.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Today-light_0_B6BF6F46-CF4A-440D-8CF1-A05C2E9E865C.png",
+        "timestamp" : 1794434654.931
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "ECF0B7DD-4D4A-4DB7-95CB-D0598A7CA12B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Feed-light_0_3BF36629-46CB-4B49-B343-0A6920A00FC9.png",
+        "timestamp" : 1794434652.765
+      }
+    ],
+    "testIdentifier" : "FoundationUITests/testFiveTabsAndLabeledExamples()",
+    "testIdentifierURL" : "test://com.apple.xcode/PROJECT100M/PROJECT100MUITests/FoundationUITests/testFiveTabsAndLabeledExamples"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "2D71EA24-742A-439A-9A25-1C3671DE12DA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Strain-detail-missing_0_651785C2-2938-43DB-A2FE-446C959E7193.png",
+        "timestamp" : 1794434715.419
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "B6D4D328-AD07-49D1-BA15-7269DE4A5315.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Recovery-detail-missing_0_0B7EA614-53D9-4326-88FF-F3C63B064F72.png",
+        "timestamp" : 1794434711.465
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "AD712496-920C-43FD-9530-6E7753A5DFA2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Sleep-detail-missing_0_3707D6FC-34DF-485D-B40F-87E97900A037.png",
+        "timestamp" : 1794434707.596
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "C6689AEC-2447-4524-AA45-3C8FEF0EAD1C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-state-loading_0_FDA21584-C4FF-4A01-9015-0254016E51A2.png",
+        "timestamp" : 1794434698.355
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "FF41B781-4BC3-4D30-BEFF-AB0F8FD6DEB3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-state-missing_0_C95066CF-E86E-4D4B-9C87-B683E4411652.png",
+        "timestamp" : 1794434691.074
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "92F3D622-99C5-413E-93B7-93E4279FBB08.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-state-failed_0_A18EC714-1FD0-41AA-BE79-A87332A1218D.png",
+        "timestamp" : 1794434683.957
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "D25F871C-F8E5-4E73-B32F-D6B6859C951A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-state-unavailable_0_356054D2-6E38-427A-8890-88AAF643E989.png",
+        "timestamp" : 1794434676.149
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName" : "iPhone SE (3rd generation)",
+        "exportedFileName" : "32CC90F8-771E-454C-BA39-6E1202DCBCB9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-state-notRequested_0_150583EE-5B20-4F40-A7B3-FBCC6196C114.png",
+        "timestamp" : 1794434669.239
+      }
+    ],
+    "testIdentifier" : "FoundationUITests/testHealthDetailsAndNoRingsInMe()",
+    "testIdentifierURL" : "test://com.apple.xcode/PROJECT100M/PROJECT100MUITests/FoundationUITests/testHealthDetailsAndNoRingsInMe"
+  }
+]

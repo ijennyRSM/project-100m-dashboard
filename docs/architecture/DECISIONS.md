@@ -9,3 +9,6 @@
 | ADR-005 | 2026-11-12 | Task JSON is canonical structured ledger; Markdown is human context/review. Portable Python validates schema, commits, files and gates; archives accepted records. Claude review cannot be executed by a Markdown file or inferred from CI. |
 | ADR-006 | 2026-11-12 | Legacy payload preserved; additive schema/adapters only after review. P0 excessive live grants tracked separately; audit is read-only. |
 | ADR-007 | 2026-11-12 | No NOOP code/assets copied. Independently implement Apple APIs. No paid service/signing assumption. |
+| ADR-008 | 2026-11-12 | Claude review fixes use width-driven ring/tile layouts, sample end dates separate from read time, and explicit connection states. DEBUG UI fixtures construct no HKHealthStore; Release ignores all test overrides. |
+| ADR-009 | 2026-11-12 | Security preparation is an independent commit. Migration A narrows existing ACLs only; B stays outside migrations pending review of global future-object scope for both inventoried creators. No production apply without owner approval; M1 stays blocked. |
+| ADR-010 | 2026-11-12 | Pin iPhone 16/SE3 iOS18.5 and assert bounds/theme/type, with a hosted 320pt container. Separate push/PR concurrency groups and preserve in-flight evidence. iOS17 runtime, real Display Zoom and full VoiceOver remain M6 review risks. |

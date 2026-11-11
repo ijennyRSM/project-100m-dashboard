@@ -1,60 +1,55 @@
-# Current handover
+# Current handover — M0 second review
 
-Date: 2026-11-12 (Asia/Bangkok). Branch: `codex/m0-foundation-handover` from native `15e10f0`. Owner: Codex. Reviewer: Claude (manual handoff, no integration configured). [Draft PR #1](https://github.com/ijennyRSM/project-100m-dashboard/pull/1), base `feat/ios-native-foundation`; no merge to main.
+2026-11-12 (Asia/Bangkok). Codex owns the fixes on `codex/m0-foundation-handover`. [Draft PR #1](https://github.com/ijennyRSM/project-100m-dashboard/pull/1) remains unmerged, base `feat/ios-native-foundation`. **M0 remains CHANGES_REQUESTED** per the owner's instruction; no self-acceptance/verification and no M1 development.
 
-## Scope and commit evidence
+## Synchronization and committed implementation
 
-- `ffada65b2674f6b9765d7bf21c493254c62179c4`: approved blueprint, architecture and audit, committed before substantial feature work.
-- `aad45de05e9d37cfb125c4c56ee6a399dbc6e7e1`: portable handover tooling and initial tests.
-- `adfa55c2e383c90a913d3936145549ac930d8598`: five-tab M0 views, components and simulator UI suite.
-- `db321c319ebb5a06fd928511d999ca7f05bec4cd`: stronger validation, milestone ledger and consistent sample progression.
-- `939965577a38032dedca2ae75955a23a83402529`: launch-screen declaration and safe-area-aware simulator interaction fixes.
-- `565e663cfea6c715199f4398875731956550125d`: explicit simulator boot, bounded tests and runtime diagnostics.
-- `437b760` and `6437d8dea86877b99341f61932d40b98b18617aa`: adaptive ring geometry and earlier vertical layout at large text sizes.
-- `52cc51ab5ba0799425a0788d8b9766e0e440ef71`: supported macOS 15 / Xcode 16.4 / iOS 18.5 CI environment, after latest-run queue/startup problems. Toolchain availability checked against [official runner documentation](https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md).
-- Implementation under review: `52cc51ab5ba0799425a0788d8b9766e0e440ef71` (includes earlier implementation/history). Handover-only documentation commits follow this SHA and do not imply another native build.
-- Modified areas: root agent/README links; docs/product, docs/architecture, docs/handover; scripts/handover.py and tests; GitHub handover/iOS workflows; native App lifecycle, DesignSystem, feature views, UITests, project.yml, README/ROADMAP. See PR file diff and tasks.json for exact paths.
-- Web application source, legacy Supabase schema/data, HealthKit query service and native agent instructions preserved. No production writes or permissions changes performed.
+Clean working tree at start; `git fetch` and `git merge --ff-only` confirmed local/remote already at Claude review `f2b370f79581b9009836f7e5a47da08fe566e1ea`. No uncommitted work was discarded. Read root/native instructions and review/ledger before edits.
 
-## Implemented M0 foundation (not complete product features)
+- Independent security implementation: `ed7b525e8ec1fe6f2d8a1babf764dfc976a2b402`. Migration A, authorized original-setup correction, separately scoped B proposal, disposable SQL tests/lint/CI and original local evidence.
+- Native/CI fixes: `3e864514b2687e44a603532040ebd448b17bd8b8`; measured test-budget correction: `713ead4126850b6a488943cfe5c511ee3983b3fa` (current implementation).
+- Exact native tree: `54462fa2bbd9b1a56ae46b02b8acd836f8f62ea3`; `.github` tree: `65567a9f07fe2630b099ed4c7e16443188510e95`.
+- Later handover-only changes must match these two trees before reusing native CI evidence. Tests captured before commit have source SHA256 maps; `P100-SEC-001/source-map.json` proves canonical committed SQL/test content matches tested input (universal-newline normalization for the original schema file).
 
-Five tabs in approved order, independent navigation stacks, persisted selected tab. Shared adaptive colors/surfaces/cards/banners/metric tiles/activity cards/rings, Thai-first content, Dynamic Type and labeled fictional Feed/Today/Train/Me previews. Health begins with three tappable missing-score rings and detailed explanations; Me has none. Existing real on-device HealthKit controls/read displays retained; raw readings remain separate from scores. No native accounts, workout logging, GPS, social interactions, scoring or coach engine implemented here.
+## Findings addressed in source
 
-`status`, `next`, `prepare`, `validate`, `archive` commands work through portable Python standard library. Validator checks required fields, IDs, lifecycle, tracked files, approved requirement IDs, existing branch/commit ancestry, blockers and exact reviewed SHA/criteria for acceptance. Archive refuses unaccepted records and preserves immutable history. No automatic Claude invocation or acceptance.
+| Review | Change / remaining evidence |
+|---|---|
+| H1 | Recovered historical job/artifact: 6437d8d compiled successfully; simulator boot timed out after 5 minutes, before UI tests. Exact matching head/merge trees and excerpt are saved in evidence/M0-review-fix. New-source full suite is tracked below. |
+| H2 / layout M1 | Width-driven ViewThatFits for scaled rings and tiles; named iPhone 16 (393pt) / SE3 (375pt), iOS18.5. Tests assert actual theme/type, ring/tile bounds/hittability at light/dark large/xLarge/AX5. A real hosted 320pt Health container at xLarge tests narrow content; no Display Zoom claim. |
+| Freshness M2 | Preserve RHR/HRV sample end dates. Show measurement date and latest-within-21-days window; query timestamp explicitly says it is not measurement time. |
+| Connection M3 | Explicit notRequested CTA, unavailable without retry, failure reason, loading and requested-empty ambiguity. DEBUG-only dated/stale/state fixtures construct no HKHealthStore. Release ignores test overrides. |
+| Concurrency M4 | Event/branch/workflow-specific groups; cancel-in-progress false. Push and PR runs execute without cancelling each other or docs-only evidence. |
+| Lifecycle M5 / L1 | Claude's review record preserved; M0 remains CHANGES_REQUESTED. --ui-reset removes only saved tab key; restore test removes reset on relaunch, with no argument-domain override. |
+| C1 | Prepared/tested ACL remediation; original setup no longer merely adds grants over platform ALL defaults. Live PostgreSQL17 inventory also finds MAINTAIN and both postgres/supabase_admin default ACLs. No production change. |
 
-## Verification
+Exactly five tabs/order and read-only HealthKit remain. No accounts, native training/social/scoring/AI features were added. Web JS/CSS/HTML and private training data unchanged. `supabase-schema.sql` is intentionally corrected under the owner's explicit security task, separately from native code.
 
-Local Windows: nine handover unit tests PASS, ten task records validate, status/next/prepare commands verified; archive correctly refuses P100-M0-001 because it is not accepted. `git diff --check` and Node syntax checks for unchanged v2-data/live-workout/wellness-insights/v2-health passed. These are not web behavior, RLS isolation or device tests.
+## Observed verification
 
-Initial [simulator run](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43071252125) at `adfa55c` compiled and ran four UI tests: three passed, navigation test failed. Examined actual screenshot attachments and app hierarchy: missing launch-screen declaration produced legacy 320×480 compatibility bounds; the test also scrolled its target under navigation chrome. `9399655` adds UILaunchScreen, safe-area-aware test scrolling and explicit test dark-mode override. Duplicate/newer-run cancellation is enabled for future CI runs. Do not count the initial failed/superseded runs as PASS.
+- Local Windows: all 15 handover/grant-lint unit tests PASS (9 original handover + 6 SQL lint); explicit-grant lint PASS; git diff/source checks PASS. Handover status/validation PASS for all10 staged records; prepared review instructions generated without status mutation.
+- Disposable local PG16 and PG17: **42 pgTAP assertions each PASS**, plus A/B idempotency, unchanged synthetic data/RPC/policies, and deliberately inherited dangerous privileges causing full transaction rollback. Fresh corrected setup tested separately. No remote DB URL or published container port; fixtures removed by label-checked cleanup.
+- [Remote security CI](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43105037594): completed SUCCESS on official PostgreSQL16/17 images, 42 assertions each. Logs/result/provenance committed under evidence/P100-SEC-001/ci. SQL-side web SELECT/RPC/new-save/stale-conflict contract passed; real Supabase Auth/JWT signature/PostgREST/browser Magic Link smoke NOT RUN.
+- [Remote handover CI](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43107212967): completed SUCCESS on Windows/Linux at 713ead4. [Latest security CI](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43107212947) also completed SUCCESS; security source unchanged from the archived 42+42 run above.
+- First native fix run [43105037599](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43105037599), head 3e86451: both builds PASS; iPhone16 all four tests PASS; SE3 layout method exceeded default four-minute execution limit (273 seconds), other three tests PASS. Overall run FAILURE. At 713ead4, only that expanded seven-launch matrix method receives six minutes (CLI maximum seven); scenarios/assertions retained. No application code was changed for the timeout.
+- Native evidence of record: [PR run 43107213059](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43107213059), head 713ead4. Both named simulator app builds PASS. Completed SUCCESS: iPhone16 and SE3 each build PASS and all four UI tests PASS with zero failures (288.828s / 331.438s). Tested merge `e6b0b764e2967118c6622800ec2b0c67e4ed846d` matches both trees above. Artifacts13894209678 / 13894484095 downloaded and SHA256-verified; 38 original selected PNGs, attachment maps, test excerpts and full provenance are committed under [review evidence](evidence/M0-review-fix/README.md). Representative current light/dark/xLarge/AX5, hosted320, dated metrics and connection-state images were inspected. No real-device or full VoiceOver acceptance implied.
 
-[Corrected screenshots](evidence/M0-9399655/README.md) at head `9399655` verify full 1206×2622 layout and dark appearance. That run passed the first three tests and exercised independent detail stacks, then was superseded during relaunch after slow simulator startup; it is not a complete PASS. Large-text ring geometry found during visual inspection is corrected in the later implementation SHA. PR workflows test a synthetic merge ref; each screenshot provenance file records head and tested merge SHA separately.
+## Infrastructure diagnosis
 
-### Final observed CI disposition
+Historical [43075144693](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43075144693), merge dcec212d44a3ddd73d2f3d7ba4b2d8cacb129600, exactly matches native/.github trees at head6437d8d. Recovered log says BUILD SUCCEEDED and Boot selected simulator timed out; no UI result bundle. This earlier boot failure is separate from the later GitHub incident.
 
-| Evidence | Observed result | Scope |
-|---|---|---|
-| [Initial native run](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43071252125) | Simulator compile PASS; UI 3/4 PASS, navigation test FAIL | Head adfa55c; failure corrected later |
-| [Corrected native run / screenshots](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638314) | Compile PASS; first three UI tests PASS; detail stacks retained; superseded during last relaunch check | Head 9399655; not a full-suite PASS |
-| [Windows/Linux handover CI](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638436) | PASS on both OS jobs | Nine portable tests and ledger validation; handover script unchanged since this run |
-| [Later native run](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43075144693) | Overall FAILURE; job/log APIs returned Server Error / ReadTimeout during investigation | Head 6437d8d; exact failure cause unverified, do not infer a compiler failure or PASS |
-| [Pinned native PR run](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095669281) / [push run](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095662201) | QUEUED, no jobs created at last observation | Head 52cc51a; final simulator compile/UI verification BLOCKED |
-| [Pinned handover PR run](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095669277) | QUEUED, no jobs created at last observation | Local validation remains available; do not claim latest remote run passed |
+[GitHub incident dvy0t3mvh1lg](https://www.githubstatus.com/incidents/dvy0t3mvh1lg) reported Actions major outage, started 2026-11-11 20:48 UTC and resolved 21:21 UTC. Public incident history and observed status snapshots are saved. Repository Actions enabled, allowed_actions=all, default workflow token read permissions sufficient; no permission/settings changed. Account billing-usage endpoint returned404, so account-wide quotas were not independently established. Current successful Windows/Linux/security jobs and named macOS builds show execution resumed. No empty trigger commits were pushed.
 
-The latest native source (including large-text ring changes) has **not** received a verified simulator PASS. M0 exit criteria are not all satisfied. P100-M0-002 tracks CI recovery and verification separately. Earlier unsigned simulator compilation is useful evidence but not verification of later source. No current run is assumed successful. Source screenshot gallery and provenance are preserved even though external Actions logs became unavailable. No real-device/signing evidence exists.
+## Security status and production gate
 
-## Known issues and blockers
+Read-only live catalog inspection only: PostgreSQL17.11, owner `postgres`, RLS on; authenticated ALL includes MAINTAIN; anon/PUBLIC absent from table ACL; public-schema defaults are broad for postgres and supabase_admin. No user payload read/export, hosted DDL or destructive probe.
 
-- P100-SEC-001: live authenticated extra grants include TRUNCATE; RLS does not protect truncation. No destructive test performed; no remote attack/data loss claimed. Review staged minimal-grant hardening before M1 cloud expansion.
-- Existing HealthKit service still lacks persistent anchors/deletions, source attribution in display models, active-energy queries, HR/steps results, mockable repository and deterministic sleep/source/DST tests. Stage sums may overlap and source selection favors longest union. Track in M2; do not interpret displayed raw samples as reviewed wellness scores.
-- Existing web skip is an explicit selection without dedicated confirmation; native training must implement the stronger approved confirmation rule. Native 10K is catalog preview only, with no reviewed prescription.
-- Mobbin screens inaccessible; no Mobbin/Flownato MCP configured. Flownato public flow inventory only; no invented transition/screen findings. Detailed design reference review remains open.
-- Claude M0 review received 2026-11-12 at `52cc51a`: **CHANGES_REQUESTED** (P100-M0-001), P100-SEC-001 rated Critical and moved to READY. Findings, migration proposal and Claude → Codex handover: [REVIEW.md](REVIEW.md). No signing identity or physical-device execution access in this Windows session. Simulator evidence proves no HealthKit/Watch/GPS/background/real sync acceptance and produces no installable iPhone release. No paid service/membership purchased.
-- Latest GitHub Actions runs are queued without jobs on both macOS and handover paths. Prior failure diagnostics are inaccessible through job API and connector; exact cause remains unknown. Pinned supported fallback was attempted; additional blind reruns were stopped. Unblock when Actions starts jobs and logs are accessible; inspect actual diagnostics and obtain a passing build/UI run for the exact implementation before M0 acceptance.
+Migration A narrows only existing table/RPC ACLs, including effective/inherited privilege assertions. B is outside migrations, with its **global future-object scope** explicitly proposed for both creators; per-schema revocation cannot undo built-in global PUBLIC EXECUTE. Full plan, catalog-only verification, backup and rollback: supabase/security/README.md. Production backup/PITR status is unknown. Owner approval and separate scope review are required; Critical live exposure is NOT closed. M1 remains BLOCKED.
 
-## Next actions and review gate
+## Required Claude re-review / next actions
 
-1. P100-M0-002: recover final CI evidence when Actions jobs/logs become available, diagnose the 6437d8d failure, verify exact latest source build/UI suite, and inspect updated large-text screenshots. No M0 acceptance until this passes.
-2. Done: Claude reviewed `52cc51a` → CHANGES_REQUESTED (see REVIEW.md handover block). Never self-accepted. Codex resolves findings and resubmits. Resolve P100-SEC-001 in a separate reviewed safe hardening task; test grants and anon/two-user access in disposable staging before production rollout.
-3. After M0/security gates, P100-M1-001 adds existing-identity auth/restoration/logout isolation, owner-partitioned persistence and a non-destructive legacy adapter with conflict/isolation tests.
-4. M2 then introduces mockable HealthKit boundaries, interval/source/timezone tests, anchors/deletions, missing-data-aware original scoring. M3–M7 remain separately scoped ledger records.
+1. Review source commit `713ead4` and independently review security commit `ed7b525`. Check UI tree/provenance equivalence and all four tests on both devices, new screenshots, hosted320 bounds and actual environment probes.
+2. Re-review Migration A, PG17 MAINTAIN/inheritance failure-atomicity, corrected setup and 42+42 evidence; review B's two creator roles/global scope before any production approval.
+3. Arrange hosted disposable staging Auth/PostgREST/web smoke, owner backup confirmation and an explicitly approved production window. No production SQL has been applied.
+4. Return findings/acceptance disposition; M0 remains CHANGES_REQUESTED until Claude reviews fixes and required evidence is available. Resolve findings and resubmit; do not start M1.
+5. Deferred review risks: iOS17 runtime, real Display Zoom/full VoiceOver (M6); score result provenance types, HealthKit anchors/source/night grouping (M2); self-scoped direct DML bypass of RPC validation (M1). No signing, real-device, Watch/GPS/background evidence claimed.

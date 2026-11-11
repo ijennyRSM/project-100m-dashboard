@@ -5,7 +5,7 @@
     "owner": "Codex",
     "status": "CHANGES_REQUESTED",
     "branch": "codex/m0-foundation-handover",
-    "commit": "52cc51ab5ba0799425a0788d8b9766e0e440ef71",
+    "commit": "713ead4126850b6a488943cfe5c511ee3983b3fa",
     "requirements": [
       "NAV-01",
       "UX-01",
@@ -19,7 +19,11 @@
       "Implemented five native tabs, independent stacks, persisted selected tab, adaptive shared components and labeled fixtures",
       "Added Health-only interactive missing-score rings and retained on-device HealthKit controls; no production writes",
       "Added macOS unsigned simulator build, UI acceptance suite and screenshot export; fixed missing launch-screen declaration and test safe-area bounds",
-      "Inspected full-resolution simulator screenshots; added adaptive ring sizing and earlier vertical layout for large text"
+      "Inspected full-resolution simulator screenshots; added adaptive ring sizing and earlier vertical layout for large text",
+      "Width-driven ring/tile layouts with scaled text; sample end dates retained for HRV/RHR",
+      "Explicit notRequested/unavailable/failed/loading/requested-empty Health states; DEBUG fixtures construct no HKHealthStore",
+      "Four tests expanded to named iPhone16/SE3 iOS18.5: actual theme/type, bounds/hittability, hosted320 xLarge and explicit tab reset",
+      "Separated push/PR concurrency with no cancellation; measured SE runtime receives six-minute allowance only for layout test"
     ],
     "modified_files": [
       ".github/workflows/handover.yml",
@@ -47,6 +51,7 @@
       "docs/product/FEATURE_REQUIREMENTS.md",
       "docs/product/PRODUCT_BLUEPRINT.md",
       "native-ios/App/PROJECT100MApp.swift",
+      "native-ios/App/UITestConfiguration.swift",
       "native-ios/DesignSystem/Components.swift",
       "native-ios/DesignSystem/HealthRing.swift",
       "native-ios/Features/Feed/FeedScreen.swift",
@@ -56,31 +61,31 @@
       "native-ios/Features/RootView.swift",
       "native-ios/Features/Today/TodayScreen.swift",
       "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/Health/HealthKitService.swift",
+      "native-ios/Health/HealthModels.swift",
       "native-ios/README.md",
       "native-ios/ROADMAP.md",
       "native-ios/UITests/FoundationUITests.swift",
       "native-ios/project.yml",
       "scripts/handover.py",
-      "scripts/tests/test_handover.py"
+      "scripts/tests/test_handover.py",
+      "docs/handover/evidence/M0-review-fix/README.md",
+      "docs/handover/evidence/M0-review-fix/provenance.json"
     ],
     "test_results": [
-      "PASS: nine portable unit tests on local Windows/Python 3.14.5",
-      "PASS: Windows/Linux handover CI at head 9399655; script unchanged since then; https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638436",
-      "PASS: local ledger/status/next/prepare and archive rejection; git diff --check; unchanged web JS syntax checks",
-      "Initial native compile PASS / UI 3 of 4 PASS, navigation failure corrected: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43071252125",
-      "Corrected compile PASS / first three UI tests PASS, superseded during last relaunch: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638314",
-      "Later head 6437d8d native run FAILURE; job/log APIs returned Server Error/ReadTimeout, exact failure cause unknown: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43075144693",
-      "BLOCKED: latest head 52cc51a native run queued with no jobs at last observation: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095669281",
-      "Latest handover remote run queued: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095669277; no latest remote PASS claimed"
+      "PASS: 15 local Windows unit tests (9 handover + 6 grant lint); SQL grant lint; diff/source checks",
+      "PASS: Windows/Linux handover CI https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43107212967",
+      "6437d8d recovered: BUILD SUCCEEDED, boot timed out after5min before UI; matching head/merge trees recorded",
+      "3e86451 run43105037599: both builds PASS; iPhone16 4/4 PASS; SE3 layout exceeded default4min (273s), other3 PASS. Budget corrected in713ead4; prior run overall FAILURE",
+      "PASS:713ead4 PR run43107213059 completed SUCCESS; iPhone16 and SE3 each unsigned build PASS, 4/4 UI zero failures. Merge e6b0b764 matches native54462fa2/.github65567a9; artifacts13894209678/13894484095 digest-verified;38 original PNGs/provenance in evidence/M0-review-fix"
     ],
     "known_issues": [
-      "Final native build/UI verification BLOCKED by queued Actions jobs and unavailable prior failure diagnostics; P100-M0-002",
-      "Claude review pending; no accepted milestone",
-      "Feed/Today/Train/Me contain labeled sample content; native accounts/training/social/scoring/coach not implemented",
-      "Physical signing/iPhone/Watch/GPS/background/cloud acceptance unverified; M7 blocked",
-      "P0 live grant drift tracked in P100-SEC-001; production unchanged",
-      "Mobbin screens and Mobbin/Flownato MCP unavailable; detailed reference review pending",
-      "Existing HealthKit source/stage/timezone/anchor gaps documented for M2"
+      "Claude second review pending; M0 CHANGES_REQUESTED per owner; no milestone self-accepted/verified",
+      "Feed/Today/Train/Me remain labeled examples; no M1 cloud implementation",
+      "SEC-001 prepared/tested; live Critical privileges unchanged pending staging/owner approval",
+      "Signing/iPhone/Watch/GPS/background unverified; iOS17 runtime, Display Zoom and full VoiceOver deferred M6",
+      "Mobbin screens/Mobbin and Flownato MCP unavailable; prior reference limitation retained",
+      "HealthKit anchors/source/stage/night grouping and score provenance types deferred M2"
     ],
     "reviewer_findings": [
       "Claude review 2026-11-12 at 52cc51a (handover 7519937): CHANGES_REQUESTED; full findings in docs/handover/REVIEW.md",
@@ -93,33 +98,34 @@
       "M2: RHR/HRV shown as latest with read time but no sample date; value may be 21 days old (HealthScreen.swift:29-31,57-58)",
       "M3: notRequested/unavailable/failed states not rendered; all messages titled read failure (HealthScreen.swift:21-28)",
       "M4: push and PR runs share concurrency group and cancel each other (ios-native-compile.yml:20-22)",
-      "L1: persisted tab leaks between UI tests (RootView.swift:18)"
+      "L1: persisted tab leaks between UI tests (RootView.swift:18)",
+      "Codex response at713ead4: H2/M1/M2/M3/M4/L1 addressed in source; H1 recovered; actual runtime evidence in CURRENT.md. Original Claude disposition preserved."
     ],
     "next_actions": [
-      "Codex: set IN_PROGRESS; fix H2, M1, M2, M3, M4, L1 per REVIEW.md Claude -> Codex handover",
-      "Codex: resolve P100-M0-002 (exact-source build + 4/4 UI pass, new light/dark/AX5 screenshots with provenance)",
-      "Codex: resubmit READY_FOR_REVIEW with new implementation SHA in a separate handover commit; do not merge PR #1 or start M1"
+      "Claude: re-review713ead4, exact-tree CI/screenshots and responses in CURRENT.md/REVIEW.md",
+      "Claude: independently review security ed7b525 and global-default proposal; no production apply authorized",
+      "Codex: resolve second-review findings; retain M0 CHANGES_REQUESTED pending reviewer disposition and evidence; no M1 or merge"
     ],
     "acceptance_criteria": [
       {
         "description": "Five tabs in required order; independent stacks and restored selection",
         "passed": false,
-        "evidence": "Claude: source PASS (RootView.swift:18-38); runtime relaunch assertion never completed; awaits P100-M0-002"
+        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
       },
       {
         "description": "Reusable adaptive components and clearly labeled fixture screens",
         "passed": false,
-        "evidence": "Claude: labels/components pass; narrow-width ring layout (M1), freshness copy (M2), connection states (M3) open"
+        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
       },
       {
         "description": "Three interactive Health-only rings; no invented scores",
         "passed": false,
-        "evidence": "Claude: source PASS; runtime only at 9399655, not at 52cc51a"
+        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
       },
       {
         "description": "Windows handover tests/validation and exact-source macOS simulator build/UI pass",
         "passed": false,
-        "evidence": "Claude: handover validate/tests PASS locally; exact-source native run never executed (all runs queued 2026-11-11 20:44 UTC)"
+        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
       },
       {
         "description": "Claude reviews documented criteria and UX evidence",
@@ -140,57 +146,56 @@
     "id": "P100-M0-002",
     "milestone": "M0",
     "owner": "Codex",
-    "status": "BLOCKED",
+    "status": "CHANGES_REQUESTED",
     "branch": "codex/m0-foundation-handover",
-    "commit": "52cc51ab5ba0799425a0788d8b9766e0e440ef71",
+    "commit": "713ead4126850b6a488943cfe5c511ee3983b3fa",
     "requirements": [
       "QA-01",
       "UX-01"
     ],
     "implemented_changes": [
-      "Added explicit boot, UI test time limits, runtime diagnostics and artifact export",
-      "Attempted supported macOS 15 / Xcode 16.4 / iOS 18.5 fallback; latest jobs still queued"
+      "Recovered old boot-timeout artifact and matching head/merge trees; distinguished later Actions outage",
+      "Pinned Xcode16.4/iOS18.5 iPhone16/SE3; environment probes and screenshot/commit/tree provenance",
+      "Preserved push and PR runs independently; measured expanded layout-test budget without dropping scenarios"
     ],
     "modified_files": [
       ".github/workflows/ios-native-compile.yml",
-      "docs/handover/CURRENT.md"
+      "native-ios/UITests/FoundationUITests.swift",
+      "docs/handover/CURRENT.md",
+      "docs/handover/tasks.json",
+      "docs/handover/evidence/M0-review-fix/README.md",
+      "docs/handover/evidence/M0-review-fix/provenance.json"
     ],
     "test_results": [
-      "PASS: nine portable unit tests on local Windows/Python 3.14.5",
-      "PASS: Windows/Linux handover CI at head 9399655; script unchanged since then; https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638436",
-      "PASS: local ledger/status/next/prepare and archive rejection; git diff --check; unchanged web JS syntax checks",
-      "Initial native compile PASS / UI 3 of 4 PASS, navigation failure corrected: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43071252125",
-      "Corrected compile PASS / first three UI tests PASS, superseded during last relaunch: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43072638314",
-      "Later head 6437d8d native run FAILURE; job/log APIs returned Server Error/ReadTimeout, exact failure cause unknown: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43075144693",
-      "BLOCKED: latest head 52cc51a native run queued with no jobs at last observation: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095669281",
-      "Latest handover remote run queued: https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43095669277; no latest remote PASS claimed"
+      "PASS: Windows/Linux handover CI https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43107212967",
+      "6437d8d recovered: BUILD SUCCEEDED, boot timed out after5min before UI; matching head/merge trees recorded",
+      "3e86451 run43105037599: both builds PASS; iPhone16 4/4 PASS; SE3 layout exceeded default4min (273s), other3 PASS. Budget corrected in713ead4; prior run overall FAILURE",
+      "PASS:713ead4 PR run43107213059 completed SUCCESS; iPhone16 and SE3 each unsigned build PASS, 4/4 UI zero failures. Merge e6b0b764 matches native54462fa2/.github65567a9; artifacts13894209678/13894484095 digest-verified;38 original PNGs/provenance in evidence/M0-review-fix"
     ],
     "known_issues": [
-      "Latest exact-source simulator compile/UI suite and updated large-text geometry unverified",
-      "Prior run failure root cause unknown because job/log APIs failed"
+      "Claude second-review disposition pending; no self-verification",
+      "No iOS17 runtime, physical device, signing or Display Zoom acceptance claimed"
     ],
     "reviewer_findings": [
       "Claude 2026-11-11 20:44 UTC: all 52cc51a/7519937 runs queued, including Ubuntu/Windows handover jobs, so the stall is not caused by the macOS 15 pin",
       "Run 43075144693 jobs API returns HTTP 502; artifact 13883405985 (26.8 KB) exists but download returned HTTP 500/502",
       "native-ios and .github trees identical at 52cc51a and 7519937 (native tree 932a53e147aa); a run on either is valid evidence if tree hashes are recorded",
-      "M4: concurrency group shared by push and pull_request runs; docs-only commits cancel native evidence runs"
+      "M4: concurrency group shared by push and pull_request runs; docs-only commits cancel native evidence runs",
+      "Codex: execution resumed; prior diagnostics recovered; exact-source results/provenance in CURRENT.md."
     ],
     "next_actions": [
-      "Check GitHub status/account Actions limits before any rerun; do not push code just to trigger CI",
-      "Retrieve run 43075144693 log and artifact 13883405985; record actual failure cause",
-      "Fix concurrency group (REVIEW.md M4) and pin named simulators (H2)",
-      "Record run id, artifact id, head/merge SHA, native/.github tree hashes, device/runtime and 4/4 UI results; commit new screenshots with sha256"
+      "Claude: inspect run and screenshot provenance; separate build from UI4/4 on each device; return re-review findings"
     ],
     "acceptance_criteria": [
       {
         "description": "Diagnose actual failure logs; final exact-source unsigned simulator build and all four UI tests pass",
         "passed": false,
-        "evidence": "Blocked: queued Actions runs and inaccessible diagnostics"
+        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
       },
       {
         "description": "Inspect current light/dark/AX5 screenshots and record provenance",
         "passed": false,
-        "evidence": "Earlier light screenshots preserved; updated geometry runtime evidence pending"
+        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
       }
     ],
     "review": {
@@ -199,67 +204,97 @@
       "decision": "CHANGES_REQUESTED",
       "evidence": "docs/handover/REVIEW.md (M0 review 2026-11-12)"
     },
-    "blocker": "GitHub Actions runs for 52cc51a/7519937 queued without jobs (incl. Ubuntu/Windows) at 2026-11-11 20:44 UTC; jobs/log/artifact APIs return HTTP 500/502",
-    "unblock_condition": "Actions assigns runners and exposes logs; exact latest source simulator build/UI verification succeeds"
+    "blocker": "",
+    "unblock_condition": ""
   },
   {
     "id": "P100-SEC-001",
     "milestone": "M1",
     "owner": "Codex",
-    "status": "READY",
+    "status": "READY_FOR_REVIEW",
     "branch": "codex/m0-foundation-handover",
-    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "commit": "ed7b525e8ec1fe6f2d8a1babf764dfc976a2b402",
     "requirements": [
       "DATA-01",
       "PRIV-01"
     ],
     "implemented_changes": [
-      "Read-only production metadata audit identified excessive authenticated grants"
+      "Catalog-only live inventory of ACL/defaults/inheritance/RPC/RLS on PG17.11; no private payload read",
+      "Atomic idempotent A resets table/RPC client ACL, detects inherited rights/PG17 MAINTAIN; owner/service_role/data/policies/RPC preserved",
+      "Original setup now revokes defaults before authenticated SELECT/INSERT/UPDATE and invoker RPC EXECUTE",
+      "Separate proposal B outside migrations handles global and public-schema defaults for postgres/supabase_admin",
+      "Docker-only synthetic pgTAP, PG16/17 CI, grant lint, verification SQL, backup and rollback instructions"
     ],
     "modified_files": [
+      ".github/workflows/security-local.yml",
       "docs/architecture/DATA_MODEL.md",
-      "docs/architecture/REPOSITORY_AUDIT.md"
+      "docs/architecture/REPOSITORY_AUDIT.md",
+      "docs/handover/evidence/P100-SEC-001/README.md",
+      "docs/handover/evidence/P100-SEC-001/pg16-pgtap.log",
+      "docs/handover/evidence/P100-SEC-001/pg16-result.json",
+      "docs/handover/evidence/P100-SEC-001/pg17-pgtap.log",
+      "docs/handover/evidence/P100-SEC-001/pg17-result.json",
+      "docs/handover/evidence/P100-SEC-001/source-map.json",
+      "scripts/check_sql_grants.py",
+      "scripts/test_security.py",
+      "scripts/tests/test_sql_grants.py",
+      "supabase-schema.sql",
+      "supabase/migrations/20261111211924_p100_sec_001_training_states_least_privilege.sql",
+      "supabase/proposals/20261111211927_p100_sec_001_default_privileges_proposal.sql",
+      "supabase/security/README.md",
+      "supabase/security/inventory.sql",
+      "supabase/security/verify.sql",
+      "supabase/tests/bootstrap.sql",
+      "supabase/tests/p100_sec_001.sql",
+      "supabase/tests/p100_sec_001_defaults.sql"
     ],
     "test_results": [
-      "Read-only live metadata verified table columns, RLS policies, grants and security-invoker revision RPC; no user payloads read",
-      "No destructive test or production write performed; anon/two-user isolation tests await disposable staging"
+      "PASS:42 pgTAP each on local PG16/17; idempotence, old-hole rollback reproduction, payload/policy/RPC preservation, inherited-danger abort/ACL rollback",
+      "PASS: official PG16/17 CI42 each run43105037594; latest43107212947 SUCCESS; no hosted DB connection",
+      "PASS: corrected fresh setup; anon denied, auth TRUNCATE/DELETE42501, A/B isolation, RPC initial insert/update/staleNULL",
+      "PASS:15 handover/grant unit tests and grant lint",
+      "NOT RUN: hosted Auth/JWT/PostgREST/Magic Link smoke, production apply/post-check; backup/PITR unknown"
     ],
     "known_issues": [
-      "P0: authenticated has TRUNCATE plus DELETE/REFERENCES/TRIGGER grants; production unchanged"
+      "CRITICAL live privileges unchanged; preparation is not production resolution; M1 BLOCKED",
+      "Owner backup, disposable hosted smoke and exact-file/window production approval required",
+      "B global future-object scope needs separate review and authorized operator; outside migrations",
+      "Owner-scoped direct DML bypasses RPC validation (deferred M1); lint not full SQL parser"
     ],
     "reviewer_findings": [
       "Claude: Critical. Root cause is supabase-schema.sql:12-13 - it never revokes Supabase default ALL from authenticated, so re-applying the repo file reproduces the hole",
       "TRUNCATE bypasses RLS and empties all users' history; DELETE currently inert (no DELETE policy); no current Data API TRUNCATE path observed",
       "Audit must also capture anon, PUBLIC, pg_default_acl and function ACLs; default ACL will re-grant ALL on every new M1 table",
       "Web client uses only SELECT + save_training_state RPC (v2-data.js:107-108); removing DELETE/TRUNCATE/REFERENCES/TRIGGER has no web impact",
-      "Proposed Migration A (table/RPC least privilege with post-condition asserts), Migration B (default privileges), staging pgTAP plan and rollback in REVIEW.md"
+      "Proposed Migration A (table/RPC least privilege with post-condition asserts), Migration B (default privileges), staging pgTAP plan and rollback in REVIEW.md",
+      "Codex: ed7b525 ready for separate review; PG17 MAINTAIN/global scope handled; no live remediation claimed."
     ],
     "next_actions": [
-      "Codex: implement Migration A + supabase-schema.sql fix + pgTAP tests on a codex/ branch; verify in disposable staging per REVIEW.md",
-      "Owner: run read-only step-0 inventory and confirm backup/PITR; approve production window",
-      "Propose Migration B (default privileges) for Claude review before any M1 table is created",
-      "Never run TRUNCATE/DELETE against production; production apply only with owner approval"
+      "Claude: independently review A/setup/test evidence, inheritance atomicity and B global/schema default scope",
+      "Owner: confirm backup and disposable hosted Auth/PostgREST/browser smoke; approve exact hash/window before live apply",
+      "Authorized operator after approval: apply A, read-only verify.sql and approved web smoke; observe42501; approve B separately",
+      "Do not close SEC-001 or start M1 before review/owner-approved production verification"
     ],
     "acceptance_criteria": [
       {
         "description": "Versioned idempotent least-privilege migration with post-condition asserts and schema-file fix",
         "passed": false,
-        "evidence": "Proposed in REVIEW.md; not implemented"
+        "evidence": "Implemented ed7b525 and locally/remotely tested; Claude re-review pending"
       },
       {
         "description": "Staging pgTAP: authenticated TRUNCATE/DELETE 42501, anon denied, two-user isolation, RPC stale NULL, web smoke unchanged",
         "passed": false,
-        "evidence": "Pending implementation"
+        "evidence": "Disposable PostgreSQL pgTAP42+42 PASS; hosted Auth/PostgREST/browser smoke NOT RUN; acceptance incomplete"
       },
       {
         "description": "Default privileges hardened or explicit-grant lint before M1 tables",
         "passed": false,
-        "evidence": "Pending Migration B review"
+        "evidence": "Grant lint passes; B separately proposed outside migrations with global scope review pending"
       },
       {
         "description": "Owner-approved production apply with read-only post-check of grants (no destructive probe)",
         "passed": false,
-        "evidence": "Pending approval"
+        "evidence": "NOT APPLIED: explicit owner approval and backup confirmation required; no destructive production tests"
       }
     ],
     "review": {
@@ -594,7 +629,8 @@
       "Not run: implementation not started"
     ],
     "known_issues": [
-      "Milestone implementation and review outstanding"
+      "Milestone implementation and review outstanding",
+      "M0 defers iOS17 runtime, real Display Zoom and full VoiceOver audit to M6; no blanket accessibility acceptance"
     ],
     "reviewer_findings": [
       "Claude review not received"

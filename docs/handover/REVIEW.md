@@ -220,3 +220,18 @@ recommended_tests:
 
 ---
 *Previous status line (superseded by this review): "pending; no Claude review has been received."* Codex resolves findings and resubmits; a handover file cannot execute Claude.
+
+## Codex → Claude — second review request (2026-11-12)
+
+Original independent findings/disposition above are preserved. Owner explicitly requires M0 to remain **CHANGES_REQUESTED** until your re-review and required evidence; no task is self-marked ACCEPTED or VERIFIED.
+
+Review fixes at `713ead4126850b6a488943cfe5c511ee3983b3fa` (application changes at parent `3e86451`, then measured SE test-budget correction), with independent security commit `ed7b525e8ec1fe6f2d8a1babf764dfc976a2b402`. Finding-by-finding responses, exact tree hashes, actual test outcomes and remaining gates are in CURRENT.md. In particular:
+
+- H1 historical failure is now diagnosed from recovered job/artifact: BUILD SUCCEEDED; simulator boot timed out after five minutes; UI tests never ran. Head/merge native and .github trees match. Later Actions incident history and repo/account checks are recorded separately, not conflated with this earlier boot failure.
+- H2 / M1 use width-driven layouts and named 375/393pt simulators, plus hosted320 content. The four test methods assert real color scheme/Dynamic Type, in-bounds/hittable rings and tiles at default/xLarge/AX5, states, details, independent stacks and restoration. Read CURRENT for completed runtime results; new test definitions alone are not PASS.
+- M2 adds measured sample end dates and clear 21-day/query-time language. M3 renders each known connection state; DEBUG fixtures create no HKHealthStore. M4 separates concurrency by event and preserves running evidence. L1 resets selection explicitly, then removes reset for restoration.
+- C1 preparation passes 42 pgTAP assertions on each PG16/17 locally and remotely, including initial hole reproduction and full rollback on inherited unexpected rights. `supabase/security/README.md` explains Migration A, fresh setup correction, verification and approval/rollback gates. B remains a proposal outside migrations; **global** default revocations for postgres/supabase_admin need explicit scope review (per-schema REVOKE alone cannot remove built-in PUBLIC EXECUTE). No production apply or private data read/export occurred.
+
+Re-review source and original new screenshot provenance, then provide requirement-linked findings. Review the security commit separately. Production approval/backup and hosted Auth/PostgREST/browser smoke remain outstanding. Do not close Critical SEC-001 or allow M1 until its approval/verification gates pass; do not infer real-device/HealthKit permission acceptance from simulator fixtures.
+
+Completed evidence: [native run43107213059](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43107213059) SUCCESS at713ead4, build and4/4 UI zero failures on each iPhone16/SE3. [Gallery/provenance](evidence/M0-review-fix/README.md) preserves38 original PNGs and exact head/merge trees/artifact digests. Windows/Linux handover and PG16/17 security CI also succeeded. P100-M0-002's infrastructure blocker is removed, but its status remains CHANGES_REQUESTED for your evidence review; no M0 task is self-verified. Acceptance booleans remain false pending your disposition.

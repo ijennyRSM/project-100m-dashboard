@@ -1,0 +1,452 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "20DCE367-2ACD-401F-982E-C00EDF350D25.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-hosted-320-xLarge-hrv_0_D826EE2A-1326-42A7-AC30-1328DE6BBF7D.png",
+        "timestamp" : 1794434560.151
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "40FD7B01-173D-48EF-88EF-BE74FDD7B5B9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-hosted-320-xLarge-rhr_0_3EDAE8BE-82FA-41B3-968D-A03B6D0F1E95.png",
+        "timestamp" : 1794434557.822
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "1DE54A0C-F2DD-407E-8FEF-B630EEDB9782.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-hosted-320-xLarge-strain_0_66166EB0-58E8-4B16-B1CD-B96AB148B809.png",
+        "timestamp" : 1794434548.597
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "AAB32F72-E896-4AF4-A7BC-F38F40A8547E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-hosted-320-xLarge-recovery_0_AE053C89-DC76-4818-A90E-62064DDA1807.png",
+        "timestamp" : 1794434548.081
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "ECF6ED98-AD8B-46EB-ACFF-17B9235EBD59.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-hosted-320-xLarge-sleep_0_0441324F-DE17-46AF-B254-39E982E2821B.png",
+        "timestamp" : 1794434547.415
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "C35F2124-D443-48B5-8A14-14D4F9C077BF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-AX5-hrv_0_EF292B15-D091-41D8-AAA9-06F225FC9EAF.png",
+        "timestamp" : 1794434533.82
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "115DAEE4-BD14-4377-B5EB-2D3068F56692.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-AX5-rhr_0_943A20B5-487D-410B-B17F-CC6164AABC03.png",
+        "timestamp" : 1794434529.115
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "65CFA6C9-36AA-4E57-A1D4-D1A66190BE84.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-AX5-strain_0_1C138DF2-AE80-4F88-840F-7886E350FF5B.png",
+        "timestamp" : 1794434511.682
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "B7EF0326-BB5B-4150-A057-C0DDC427D741.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-AX5-recovery_0_162815DF-CB96-4D2D-B66E-31A14F7A411E.png",
+        "timestamp" : 1794434508.109
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "5BC8D75F-91A9-42E7-9A57-8AF7DF58ABFA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-AX5-sleep_0_BD104CEA-3964-4DE3-9F37-A89502417710.png",
+        "timestamp" : 1794434507.109
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "AFE70A5E-BFBA-46AD-A2F6-F18CC206E67E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-xLarge-hrv_0_9B0501CB-832D-458F-9CE8-7DCF20027E88.png",
+        "timestamp" : 1794434485.969
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "1C42DB23-7ECC-4EB7-960E-CFE92B52C55D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-xLarge-rhr_0_33BC6B14-1CC4-4530-8175-DC6371969FEC.png",
+        "timestamp" : 1794434484.525
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "AA641410-9C19-4DBF-9371-22502346271A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-xLarge-strain_0_A676B406-A7AE-4ACB-9D00-131AA6B97BDA.png",
+        "timestamp" : 1794434482.828
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "651D2958-C6D6-44B5-97E0-B0B7F2A43E95.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-xLarge-recovery_0_B81345F3-1F82-442F-8AB6-A74A4CB4B544.png",
+        "timestamp" : 1794434482.174
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "3B981DB7-FE52-470C-925A-671D4C0EF103.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-xLarge-sleep_0_9EB2803E-857D-4B58-A953-DD0D8E7FEC55.png",
+        "timestamp" : 1794434481.381
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "3FE37868-B895-40A8-8A77-29764899C6DF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-large-hrv_0_1C1F09E1-296C-4884-B445-F03D39E27F4E.png",
+        "timestamp" : 1794434472.451
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "6447E364-9043-4A23-B369-C63E39A4C591.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-large-rhr_0_9090C6B3-3CDC-4645-8F8B-31699BF2B399.png",
+        "timestamp" : 1794434470.777
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "66147372-C60C-4B32-B371-2A7924300093.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-large-strain_0_08828091-5662-4E79-843A-023FFCBC4A92.png",
+        "timestamp" : 1794434469.304
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "63A2C1B2-8384-4F8B-92ED-290B4AFF19D1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-large-recovery_0_1AE9A6ED-0880-47E1-BA04-74284211E479.png",
+        "timestamp" : 1794434468.699
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "C0B5B3AC-3F8D-4697-9F27-0E6DE52B2A72.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-dark-large-sleep_0_9830C07A-4B16-482B-9E92-5FD4FAB5B838.png",
+        "timestamp" : 1794434467.762
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "26517325-49C3-4262-85E1-45B025D0142B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-AX5-hrv_0_4A3F7620-B53B-481D-88D7-A63649710B77.png",
+        "timestamp" : 1794434459.227
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "CBB966A3-9D89-4B41-A851-0D29EBDA247E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-AX5-rhr_0_F951C6BA-1A11-43FA-8AAF-7C1F011A8452.png",
+        "timestamp" : 1794434450.261
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "07DA4C0D-1A2A-4973-9898-9BB14948C7F2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-AX5-strain_0_81640294-1508-451B-B6B4-AA0B80B37788.png",
+        "timestamp" : 1794434431.032
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "8FB682E4-ED53-444F-B3D1-90B035C64620.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-AX5-recovery_0_5CF575A0-695B-4817-BE2B-A584DEA7AD02.png",
+        "timestamp" : 1794434427.326
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "3CC5401E-DD87-4AD8-A956-9F70B296C341.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-AX5-sleep_0_F409E3B3-FEF9-4361-BEEF-ADC76F052755.png",
+        "timestamp" : 1794434426.644
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "C1F480B7-8E4A-4DA9-A184-84608D89B60E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-xLarge-hrv_0_CD042446-1F95-498B-B10D-1206A353E77A.png",
+        "timestamp" : 1794434404.351
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "1434676F-F60E-48B4-8448-A26A2918D89A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-xLarge-rhr_0_069C8811-5239-4209-AAA0-571056D2A2C2.png",
+        "timestamp" : 1794434402.78
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "7CC4A4A2-CDF4-4054-B60C-B017ABC13392.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-xLarge-strain_0_979ABAF7-AC73-4540-BE2E-5B0DA64E2147.png",
+        "timestamp" : 1794434401.428
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "8E2636DE-7126-4E98-8871-86A23A65296B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-xLarge-recovery_0_05439EB8-A70F-4987-8D8E-E416CE32E1B6.png",
+        "timestamp" : 1794434400.333
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "2A8B408D-7721-488F-BE03-B253AF9C5170.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-xLarge-sleep_0_928A4658-C09B-4BE3-9B61-27EFDC713728.png",
+        "timestamp" : 1794434399.182
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "F8CEE51B-ECAA-4428-ABA6-A665A9A668F0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-large-hrv_0_8DE6FE9A-565F-4120-A91A-30AFDE72368B.png",
+        "timestamp" : 1794434391.698
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "73AC1780-E0E5-45FC-8389-20ACBD38AE55.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-large-rhr_0_8915149E-FC2A-41D2-9CA3-6AEC2EF944AA.png",
+        "timestamp" : 1794434389.707
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "5B1AA9B7-17FC-464E-B37E-2AF8769FC33C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-large-strain_0_D613088C-D2B7-47DF-96F4-FAA84ACF50B6.png",
+        "timestamp" : 1794434388.057
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "88EB3695-0211-4C47-941E-07952586EF23.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-large-recovery_0_6AD8A707-3F8A-4A99-9DA2-5D1396E5C30F.png",
+        "timestamp" : 1794434387.419
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "762D9DD3-16D0-49A1-AB40-F7C1F1F090C5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-iPhone 16-light-large-sleep_0_949A24ED-6162-48E4-BF83-BBCE54E6636A.png",
+        "timestamp" : 1794434386.787
+      }
+    ],
+    "testIdentifier" : "FoundationUITests/testDarkModeAndAccessibilityText()",
+    "testIdentifierURL" : "test://com.apple.xcode/PROJECT100M/PROJECT100MUITests/FoundationUITests/testDarkModeAndAccessibilityText"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "677D44AA-6939-4FB1-8064-392D4BC59ACA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Me-light_0_95995A0B-DF4A-4CA2-A9DD-3BA49AC5F4A4.png",
+        "timestamp" : 1794434590.487
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "D67F332E-F5A6-470B-96BD-1ECA446E6661.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-light_0_5033E0D0-86CF-40A5-A432-9EECB1C3111F.png",
+        "timestamp" : 1794434588.211
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "F3F74DBA-7C3D-48EF-8D7F-8640D75984EB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Train-light_0_B5E5BC81-F384-4C46-BFE0-66E49A58D82D.png",
+        "timestamp" : 1794434585.939
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "47485B22-379A-443E-977D-2BE65E819CE5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Today-light_0_B5D783F5-6C90-4661-BA01-0DC00EE9B5F8.png",
+        "timestamp" : 1794434583.608
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "E14161BD-4711-440D-820F-5530D8AC8A63.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Feed-light_0_3AB7EF42-6BC9-4300-8FCD-F4A28C545EC7.png",
+        "timestamp" : 1794434581.461
+      }
+    ],
+    "testIdentifier" : "FoundationUITests/testFiveTabsAndLabeledExamples()",
+    "testIdentifierURL" : "test://com.apple.xcode/PROJECT100M/PROJECT100MUITests/FoundationUITests/testFiveTabsAndLabeledExamples"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "4218B2DC-A864-4E0B-A00D-784C52D8FE18.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Strain-detail-missing_0_63D7E617-6108-4C28-8F9E-73976B4333E9.png",
+        "timestamp" : 1794434643.882
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "F3B158BF-B469-4C5E-9668-348647051D60.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Recovery-detail-missing_0_E036F36E-F403-46EC-BD54-B4A1E0465C16.png",
+        "timestamp" : 1794434639.946
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "09198409-97C2-4D80-8319-2669A901DDE7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Sleep-detail-missing_0_80759244-52EF-49BE-8F7A-87200665B3F8.png",
+        "timestamp" : 1794434636.046
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "9D75483C-D6AF-4F21-AE60-E950AA029029.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-state-loading_0_D871A25B-6769-4682-A9F8-E9F1AAD63A43.png",
+        "timestamp" : 1794434627.014
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "FB96B83C-20C1-456F-BA57-B63EBE672724.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-state-missing_0_8253DF85-636F-4441-94A2-0CC08B91C17D.png",
+        "timestamp" : 1794434619.828
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "854425FB-0D9F-46A4-BA76-94B1B848E5B7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-state-failed_0_5AA48AEA-47BD-46C1-AD8B-A2A885BDD06C.png",
+        "timestamp" : 1794434612.339
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "4F97F9A2-C530-4C57-8E5B-6897FE869F8A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-state-unavailable_0_51E0BBE7-DE33-4F46-B173-F17B10E65E94.png",
+        "timestamp" : 1794434605.511
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "00D57768-A527-424F-B014-EDA716BF4D2C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "M0-Health-state-notRequested_0_B4A16937-6C0F-4887-9C3A-36349A956AEB.png",
+        "timestamp" : 1794434598.136
+      }
+    ],
+    "testIdentifier" : "FoundationUITests/testHealthDetailsAndNoRingsInMe()",
+    "testIdentifierURL" : "test://com.apple.xcode/PROJECT100M/PROJECT100MUITests/FoundationUITests/testHealthDetailsAndNoRingsInMe"
+  }
+]

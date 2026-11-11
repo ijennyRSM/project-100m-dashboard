@@ -1,0 +1,12 @@
+{
+  "run_id": 43075144693,
+  "artifact_id": 13883405985,
+  "head_sha": "6437d8dea86877b99341f61932d40b98b18617aa",
+  "tested_merge_sha": "dcec212d44a3ddd73d2f3d7ba4b2d8cacb129600",
+  "native_tree": "932a53e147aa8543ad340e4d3249176fd7d7824f",
+  "github_tree": "f44d84c3c55e10a520df833c994ba5bfb8d5f3ba",
+  "head_and_merge_trees_match": true,
+  "artifact_sha256": "c4cd2fbebe72fd163c2e2fe1cb3dcfdb4fd366c0b9ead43d6d90628e31e4e23e",
+  "result": "Build succeeded; Boot selected simulator timed out after 5 minutes; UI tests not run",
+  "scope": "Historical run, not the new review fixes"
+}
