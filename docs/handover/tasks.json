@@ -3,7 +3,7 @@
     "id": "P100-M0-001",
     "milestone": "M0",
     "owner": "Codex",
-    "status": "READY_FOR_REVIEW",
+    "status": "CHANGES_REQUESTED",
     "branch": "codex/m0-foundation-handover",
     "commit": "52cc51ab5ba0799425a0788d8b9766e0e440ef71",
     "requirements": [
@@ -83,45 +83,55 @@
       "Existing HealthKit source/stage/timezone/anchor gaps documented for M2"
     ],
     "reviewer_findings": [
-      "Claude review not received"
+      "Claude review 2026-11-12 at 52cc51a (handover 7519937): CHANGES_REQUESTED; full findings in docs/handover/REVIEW.md",
+      "PASS (source): five tabs in order with independent NavigationStacks and persisted selection (RootView.swift:18-38)",
+      "PASS (source): three interactive rings first on Health only, hard-coded missing state, no invented score (HealthScreen.swift:7-20, HealthRing.swift)",
+      "PASS: web files, supabase-schema.sql, native Health service and native agent files unchanged vs main 53ba1b5 / 15e10f0",
+      "H1: no exact-source build + 4/4 UI pass at any SHA; 52cc51a runs queued; 6437d8d failure cause unknown (P100-M0-002)",
+      "H2: Dynamic Type/dark/small-width not asserted; simulator unpinned (FoundationUITests.swift:92-105; workflow :57-63)",
+      "M1: ring row overflows 288pt content width at xLarge on 320pt screens (HealthRing.swift:44,57; HealthScreen.swift:16-20)",
+      "M2: RHR/HRV shown as latest with read time but no sample date; value may be 21 days old (HealthScreen.swift:29-31,57-58)",
+      "M3: notRequested/unavailable/failed states not rendered; all messages titled read failure (HealthScreen.swift:21-28)",
+      "M4: push and PR runs share concurrency group and cancel each other (ios-native-compile.yml:20-22)",
+      "L1: persisted tab leaks between UI tests (RootView.swift:18)"
     ],
     "next_actions": [
-      "Resolve P100-M0-002: diagnose final CI failure and obtain exact-source simulator build/UI PASS with updated screenshot inspection",
-      "Claude reviews exact implementation SHA 52cc51ab5ba0799425a0788d8b9766e0e440ef71 using REVIEW.md; no acceptance before unresolved criteria pass",
-      "Codex resolves findings and resubmits; resolve P100-SEC-001 before M1 expansion"
+      "Codex: set IN_PROGRESS; fix H2, M1, M2, M3, M4, L1 per REVIEW.md Claude -> Codex handover",
+      "Codex: resolve P100-M0-002 (exact-source build + 4/4 UI pass, new light/dark/AX5 screenshots with provenance)",
+      "Codex: resubmit READY_FOR_REVIEW with new implementation SHA in a separate handover commit; do not merge PR #1 or start M1"
     ],
     "acceptance_criteria": [
       {
         "description": "Five tabs in required order; independent stacks and restored selection",
         "passed": false,
-        "evidence": "Order and partial stack retention observed at 9399655; final relaunch check remains unverified"
+        "evidence": "Claude: source PASS (RootView.swift:18-38); runtime relaunch assertion never completed; awaits P100-M0-002"
       },
       {
         "description": "Reusable adaptive components and clearly labeled fixture screens",
         "passed": false,
-        "evidence": "Implemented and prior light screenshots inspected; latest large-text ring geometry awaits final runtime evidence"
+        "evidence": "Claude: labels/components pass; narrow-width ring layout (M1), freshness copy (M2), connection states (M3) open"
       },
       {
         "description": "Three interactive Health-only rings; no invented scores",
         "passed": false,
-        "evidence": "Prior Health/Me UI test passed at 9399655; latest source still requires final CI"
+        "evidence": "Claude: source PASS; runtime only at 9399655, not at 52cc51a"
       },
       {
         "description": "Windows handover tests/validation and exact-source macOS simulator build/UI pass",
         "passed": false,
-        "evidence": "Local/earlier portable CI passes; latest native compile/UI verification BLOCKED in P100-M0-002"
+        "evidence": "Claude: handover validate/tests PASS locally; exact-source native run never executed (all runs queued 2026-11-11 20:44 UTC)"
       },
       {
         "description": "Claude reviews documented criteria and UX evidence",
         "passed": false,
-        "evidence": "Pending: no Claude review received"
+        "evidence": "Claude reviewed 52cc51a: CHANGES_REQUESTED; see REVIEW.md"
       }
     ],
     "review": {
-      "reviewer": "",
-      "commit": "",
-      "decision": "PENDING",
-      "evidence": ""
+      "reviewer": "Claude (Opus 5.5)",
+      "commit": "52cc51ab5ba0799425a0788d8b9766e0e440ef71",
+      "decision": "CHANGES_REQUESTED",
+      "evidence": "docs/handover/REVIEW.md (M0 review 2026-11-12); source, screenshots at 9399655, gh run/job API state, local handover validate"
     },
     "blocker": "",
     "unblock_condition": ""
@@ -160,12 +170,16 @@
       "Prior run failure root cause unknown because job/log APIs failed"
     ],
     "reviewer_findings": [
-      "Claude review not received"
+      "Claude 2026-11-11 20:44 UTC: all 52cc51a/7519937 runs queued, including Ubuntu/Windows handover jobs, so the stall is not caused by the macOS 15 pin",
+      "Run 43075144693 jobs API returns HTTP 502; artifact 13883405985 (26.8 KB) exists but download returned HTTP 500/502",
+      "native-ios and .github trees identical at 52cc51a and 7519937 (native tree 932a53e147aa); a run on either is valid evidence if tree hashes are recorded",
+      "M4: concurrency group shared by push and pull_request runs; docs-only commits cancel native evidence runs"
     ],
     "next_actions": [
-      "When Actions jobs/logs are available, inspect run 43075144693 failure diagnostics",
-      "Run pinned workflow on latest reviewed source; resolve actual failures; inspect screenshot artifacts",
-      "Record run/source SHA and observed results, then resubmit M0 to Claude"
+      "Check GitHub status/account Actions limits before any rerun; do not push code just to trigger CI",
+      "Retrieve run 43075144693 log and artifact 13883405985; record actual failure cause",
+      "Fix concurrency group (REVIEW.md M4) and pin named simulators (H2)",
+      "Record run id, artifact id, head/merge SHA, native/.github tree hashes, device/runtime and 4/4 UI results; commit new screenshots with sha256"
     ],
     "acceptance_criteria": [
       {
@@ -180,19 +194,19 @@
       }
     ],
     "review": {
-      "reviewer": "",
-      "commit": "",
-      "decision": "PENDING",
-      "evidence": ""
+      "reviewer": "Claude (Opus 5.5)",
+      "commit": "52cc51ab5ba0799425a0788d8b9766e0e440ef71",
+      "decision": "CHANGES_REQUESTED",
+      "evidence": "docs/handover/REVIEW.md (M0 review 2026-11-12)"
     },
-    "blocker": "GitHub Actions latest macOS and handover runs queued without jobs; prior job API returned Server Error and log connector ReadTimeout",
+    "blocker": "GitHub Actions runs for 52cc51a/7519937 queued without jobs (incl. Ubuntu/Windows) at 2026-11-11 20:44 UTC; jobs/log/artifact APIs return HTTP 500/502",
     "unblock_condition": "Actions assigns runners and exposes logs; exact latest source simulator build/UI verification succeeds"
   },
   {
     "id": "P100-SEC-001",
     "milestone": "M1",
     "owner": "Codex",
-    "status": "BACKLOG",
+    "status": "READY",
     "branch": "codex/m0-foundation-handover",
     "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
     "requirements": [
@@ -214,33 +228,45 @@
       "P0: authenticated has TRUNCATE plus DELETE/REFERENCES/TRIGGER grants; production unchanged"
     ],
     "reviewer_findings": [
-      "Claude review not received"
+      "Claude: Critical. Root cause is supabase-schema.sql:12-13 - it never revokes Supabase default ALL from authenticated, so re-applying the repo file reproduces the hole",
+      "TRUNCATE bypasses RLS and empties all users' history; DELETE currently inert (no DELETE policy); no current Data API TRUNCATE path observed",
+      "Audit must also capture anon, PUBLIC, pg_default_acl and function ACLs; default ACL will re-grant ALL on every new M1 table",
+      "Web client uses only SELECT + save_training_state RPC (v2-data.js:107-108); removing DELETE/TRUNCATE/REFERENCES/TRIGGER has no web impact",
+      "Proposed Migration A (table/RPC least privilege with post-condition asserts), Migration B (default privileges), staging pgTAP plan and rollback in REVIEW.md"
     ],
     "next_actions": [
-      "Claude review of P0 TRUNCATE grant drift; prepare separate hardening change before M1"
+      "Codex: implement Migration A + supabase-schema.sql fix + pgTAP tests on a codex/ branch; verify in disposable staging per REVIEW.md",
+      "Owner: run read-only step-0 inventory and confirm backup/PITR; approve production window",
+      "Propose Migration B (default privileges) for Claude review before any M1 table is created",
+      "Never run TRUNCATE/DELETE against production; production apply only with owner approval"
     ],
     "acceptance_criteria": [
       {
-        "description": "Review minimal-grant additive hardening and rollback plan",
+        "description": "Versioned idempotent least-privilege migration with post-condition asserts and schema-file fix",
         "passed": false,
-        "evidence": "Pending implementation/review"
+        "evidence": "Proposed in REVIEW.md; not implemented"
       },
       {
-        "description": "Verify anon and two-user access on disposable staging; do not run TRUNCATE on production",
+        "description": "Staging pgTAP: authenticated TRUNCATE/DELETE 42501, anon denied, two-user isolation, RPC stale NULL, web smoke unchanged",
         "passed": false,
-        "evidence": "Pending implementation/review"
+        "evidence": "Pending implementation"
       },
       {
-        "description": "Verify reviewed production grants after approved rollout",
+        "description": "Default privileges hardened or explicit-grant lint before M1 tables",
         "passed": false,
-        "evidence": "Pending implementation/review"
+        "evidence": "Pending Migration B review"
+      },
+      {
+        "description": "Owner-approved production apply with read-only post-check of grants (no destructive probe)",
+        "passed": false,
+        "evidence": "Pending approval"
       }
     ],
     "review": {
-      "reviewer": "",
-      "commit": "",
-      "decision": "PENDING",
-      "evidence": ""
+      "reviewer": "Claude (Opus 5.5)",
+      "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+      "decision": "CHANGES_REQUESTED",
+      "evidence": "docs/handover/REVIEW.md (M0 review 2026-11-12)"
     },
     "blocker": "",
     "unblock_condition": ""
@@ -270,7 +296,7 @@
       "No native auth implemented"
     ],
     "reviewer_findings": [
-      "Claude review not received"
+      "Claude: remain BLOCKED until M0 accepted and P100-SEC-001 verified; M1 migrations must carry explicit grants (default ACL grants ALL)"
     ],
     "next_actions": [
       "Obtain M0 review and resolve P100-SEC-001 before native cloud expansion"
