@@ -1,6 +1,6 @@
-# PROJECT 100M — Athlete Training Journey (V2)
+# PROJECT 100M — Move at Your Pace (Wellbeing Edition V3)
 
-Mobile-first training tracker hosted on GitHub Pages.
+Mobile-first training companion hosted on GitHub Pages. V3 uses a warm, accessible fitness design with clearer Thai navigation, large touch targets and a one-tap quick logging experience.
 
 **Website:** https://ijennyrsm.github.io/project-100m-dashboard/
 
@@ -32,7 +32,16 @@ Each person should sign in with a different email. Account data is isolated with
 - Edits to main branch auto-deploy via GitHub Pages.
 
 ## Source
-- index.html, v2.css, v2-data.js, v2-ui.js, v2-health.js — V2.
+- index.html, v3.css, icon.svg, v2-data.js, v2-ui.js, v2-health.js — V3 wellbeing UI with V2 data engine.
+- v2.css — previous dark-theme stylesheet retained in Git history.
 - cloud-config.js — public cloud settings (empty by default).
 - supabase-schema.sql — private account data with RLS.
 - v1.html, app.js, style.css, payload/ — V1 fallback.
+
+## Photography and fonts
+- [Uran Wang / Unsplash — running through morning light](https://unsplash.com/photos/a-person-running-through-a-field-at-sunrise-d6mx781xnvM)
+- [Peter Zhan / Unsplash — runner at starting blocks](https://unsplash.com/photos/a-male-runner-in-starting-blocks-on-a-track-P-UYSWGKilA)
+- Both images are provided under the Unsplash License and loaded from the Unsplash image CDN.
+- Google Fonts: Plus Jakarta Sans and Noto Sans Thai, with platform font fallbacks.
+
+Design-only changes do not reset workouts, profiles, or Supabase cloud data.
