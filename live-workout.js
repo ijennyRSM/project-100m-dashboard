@@ -58,7 +58,7 @@ function finish(rpe=null,notes=""){
  const status=all?"completed":"partial";
  A.profile().activeLive=null;
  try{
-   A.recordSession(l.key,{status,mode:"live",date:new Date(l.startedAt).toLocaleDateString("en-CA"),duration:dur,rpe:rpe===""?null:rpe,repsDone:sprint?.done??null,sets,notes:"Live Workout · "+l.steps.map(x=>x.title+" "+x.done+"/"+x.total).join(" | ")+(notes?" · "+String(notes).slice(0,400):"")});
+   A.recordSession(l.key,{status,mode:"live",date:A.day(),duration:dur,rpe:rpe===""?null:rpe,repsDone:sprint?.done??null,sets,notes:"Live Workout · "+l.steps.map(x=>x.title+" "+x.done+"/"+x.total).join(" | ")+(notes?" · "+String(notes).slice(0,400):"")});
  }catch(err){A.profile().activeLive=l;A.store();throw err}
  return {status,complete:all,duration:dur};
 }
