@@ -1,0 +1,183 @@
+[
+  {
+    "id": "P100-M0-001",
+    "milestone": "M0",
+    "owner": "Codex",
+    "status": "IN_PROGRESS",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "NAV-01",
+      "UX-01",
+      "HEALTH-01",
+      "HAND-01",
+      "QA-01"
+    ],
+    "implemented_changes": [
+      "Repository audit and approved specification committed"
+    ],
+    "modified_files": [
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/REPOSITORY_AUDIT.md"
+    ],
+    "test_results": [
+      "8 portable handover unit tests PASS on Windows/Python 3.14.5; native checks pending"
+    ],
+    "known_issues": [
+      "No native accounts/training/social/scoring implementation; physical-device acceptance pending"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Implement M0 shell; run CI; prepare Claude review"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Five tabs in required order; independent stacks and restored selection",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      },
+      {
+        "description": "Reusable adaptive components and clearly labeled fixture screens",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      },
+      {
+        "description": "Three interactive Health-only rings; no invented scores",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      },
+      {
+        "description": "Windows handover tests/validation and macOS simulator build pass",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      },
+      {
+        "description": "Claude reviews documented criteria and UX evidence",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-SEC-001",
+    "milestone": "M1",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "DATA-01",
+      "PRIV-01"
+    ],
+    "implemented_changes": [
+      "Read-only production metadata audit identified excessive authenticated grants"
+    ],
+    "modified_files": [
+      "docs/architecture/DATA_MODEL.md",
+      "docs/architecture/REPOSITORY_AUDIT.md"
+    ],
+    "test_results": [
+      "8 portable handover unit tests PASS on Windows/Python 3.14.5; native checks pending"
+    ],
+    "known_issues": [
+      "P0: authenticated has TRUNCATE plus DELETE/REFERENCES/TRIGGER grants; production unchanged"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Claude review of P0 TRUNCATE grant drift; prepare separate hardening change before M1"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Review minimal-grant additive hardening and rollback plan",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      },
+      {
+        "description": "Verify anon and two-user access on disposable staging; do not run TRUNCATE on production",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      },
+      {
+        "description": "Verify reviewed production grants after approved rollout",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M1-001",
+    "milestone": "M1",
+    "owner": "Codex",
+    "status": "BLOCKED",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "DATA-01",
+      "ME-01"
+    ],
+    "implemented_changes": [
+      "Target architecture and preservation requirements documented"
+    ],
+    "modified_files": [
+      "docs/architecture/SYSTEM_ARCHITECTURE.md",
+      "docs/architecture/DATA_MODEL.md"
+    ],
+    "test_results": [
+      "8 portable handover unit tests PASS on Windows/Python 3.14.5; native checks pending"
+    ],
+    "known_issues": [
+      "No native auth implemented"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Obtain M0 review and resolve P100-SEC-001 before native cloud expansion"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Existing identity login/restoration and logout isolation",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      },
+      {
+        "description": "Offline owner-partitioned persistence; safe legacy adapter",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      },
+      {
+        "description": "Negative RLS and sync-conflict tests",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "M0 Claude review and P0 security hardening outstanding",
+    "unblock_condition": "M0 review accepted; P100-SEC-001 verified with safe evidence"
+  }
+]

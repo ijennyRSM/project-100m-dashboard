@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+native-ios/*.xcodeproj/
+native-ios/App/Info.plist
+native-ios/App/PROJECT100M.entitlements
+native-ios/build/
+*.xcresult/
+docs/handover/prepared/
