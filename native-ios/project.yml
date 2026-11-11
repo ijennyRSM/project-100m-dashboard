@@ -24,6 +24,7 @@ targets:
       path: App/Info.plist
       properties:
         CFBundleDisplayName: PROJECT 100M
+        UILaunchScreen: {}
         NSHealthShareUsageDescription: PROJECT 100M reads your approved Apple Health sleep, heart and workouts to show your training and recovery. Data stays on this iPhone in this initial build.
         UIRequiredDeviceCapabilities: [arm64]
         UISupportedInterfaceOrientations:

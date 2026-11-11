@@ -8,6 +8,7 @@ struct PROJECT100MApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .preferredColorScheme(ProcessInfo.processInfo.arguments.contains("--ui-testing") && ProcessInfo.processInfo.arguments.contains("--ui-dark") ? .dark : nil)
                 .environmentObject(health)
                 .task {
                     if !ProcessInfo.processInfo.arguments.contains("--ui-testing") {

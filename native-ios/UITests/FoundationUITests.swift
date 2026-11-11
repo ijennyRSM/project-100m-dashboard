@@ -19,9 +19,15 @@ final class FoundationUITests: XCTestCase {
     }
 
     private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
-        for _ in 0..<6 {
-            if element.exists && element.isHittable { return }
-            app.swipeUp()
+        let scroll = app.scrollViews.firstMatch
+        for _ in 0..<12 {
+            let top = app.navigationBars.firstMatch.frame.maxY + 12
+            let bottom = app.tabBars.firstMatch.frame.minY - 12
+            if element.exists && element.isHittable && element.frame.midY > top && element.frame.midY < bottom { return }
+            let movingUp = !element.exists || element.frame.midY > bottom
+            let start = scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: movingUp ? 0.65 : 0.35))
+            let end = scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: movingUp ? 0.40 : 0.60))
+            start.press(forDuration: 0.05, thenDragTo: end)
         }
         XCTAssertTrue(element.isHittable)
     }
@@ -84,7 +90,7 @@ final class FoundationUITests: XCTestCase {
     }
 
     func testDarkModeAndAccessibilityText() {
-        let app = launch(extra: ["-AppleInterfaceStyle", "Dark",
+        let app = launch(extra: ["--ui-dark",
                                  "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"])
         for name in ["Feed", "Today", "Train", "Health", "Me"] {
             app.tabBars.buttons[name].tap()

@@ -6,3 +6,4 @@ native-ios/App/PROJECT100M.entitlements
 native-ios/build/
 *.xcresult/
 docs/handover/prepared/
+.local-evidence/
