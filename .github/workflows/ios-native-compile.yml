@@ -23,8 +23,10 @@ concurrency:
 
 jobs:
   build-simulator:
-    runs-on: macos-latest
+    runs-on: macos-15
     timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
     steps:
       - uses: actions/checkout@v4
       - name: Install XcodeGen
@@ -52,10 +54,10 @@ jobs:
           python3 - <<'PY'
           import json, os
           devices = json.load(open('build/devices.json'))['devices']
-          candidates = [d for runtime, rows in devices.items() if 'iOS' in runtime
+          candidates = [d for runtime, rows in devices.items() if runtime.endswith('iOS-18-5')
                         for d in rows if d['name'].startswith('iPhone') and d['isAvailable']]
           if not candidates:
-              raise SystemExit('No available iPhone simulator')
+              raise SystemExit('No available iOS 18.5 iPhone simulator for pinned Xcode 16.4')
           with open(os.environ['GITHUB_ENV'], 'a') as output:
               output.write('SIMULATOR_ID=' + candidates[0]['udid'] + '\n')
           print(candidates[0]['name'], candidates[0]['udid'])
