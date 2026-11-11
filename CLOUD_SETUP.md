@@ -25,7 +25,7 @@ The website is already functional in **local mode**. Training plans, profiles, s
 ## Limits / privacy
 - GitHub Pages serves static public files; it is not a backend, database or private storage.
 - Supabase Auth + Postgres RLS provide authentication and per-account private data, once set up.
-- This V2 does NOT yet auto-import Apple Watch HealthKit or directly sync Apple Health XML/ZIP. Existing V1 logs can be migrated and manual recovery data can be entered. HealthKit needs an iOS bridge and clear user permissions.
+- V2 **can manually import Apple Health export.xml/export.zip** from Settings, extracting selected workouts, resting HR, HRV, sleep and body weight on the device. Raw export files are not uploaded. Imported workouts do NOT automatically mark training sessions complete. Automatic Apple Watch/HealthKit sync still needs an iOS bridge and explicit permissions. Imported/derived data will sync to Supabase when the account is connected and the user approves importing.
 - Cloud sync uses a revision check; if two devices update the same account concurrently, the newer state is not silently overwritten. Export backup and manually resolve a reported conflict.
 - Safari private browsing, clearing site storage, or using another browser may lose locally stored data until cloud sync is configured.
 - HR and HRV are wellness/training indicators and not medical diagnosis.
@@ -35,6 +35,7 @@ The website is already functional in **local mode**. Training plans, profiles, s
 - index.html → V2 entrypoint
 - v2-data.js → training templates, profile state, persistence, optional cloud auth/sync
 - v2-ui.js → pages, forms, user interaction
+- v2-health.js → local Apple Health XML/ZIP importer
 - v2.css → responsive styles
 - cloud-config.js → public Supabase project configuration (empty by default)
 - supabase-schema.sql → SQL you must run inside your Supabase project
