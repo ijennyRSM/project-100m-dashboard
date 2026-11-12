@@ -14,6 +14,8 @@ V1 must eventually deliver working accounts, offline training and live workout, 
 
 ## Design references and access
 
+2026-11-12 redesign amendment: the owner's eight local iPhone references now take precedence for visual structure. Mandatory light/dark and floating Liquid Glass-style navigation. See [alignment](DESIGN_ALIGNMENT.md) and [design tokens](DESIGN_SYSTEM.md). Exactly five primary tabs remain; Maps/Groups are secondary routes. This is M0 presentation work, not M1 or a functional social/GPS expansion. Raw personal reference images are local-only.
+
 - [Strava / Flownato](https://www.flownato.com/apps/strava)
 - [Strava / Mobbin](https://mobbin.com/apps/strava-ios-1ac190cf-46ee-4c65-845d-38bb8354219d/0581b139-5dc9-492d-89ad-da56951a027b/screens)
 - [WHOOP / Mobbin](https://mobbin.com/apps/whoop-ios-f2d3db04-8fb3-4e1d-ada4-f5dc133be818/ff42691a-a36c-4a33-80c5-a349c719dfcb/screens)

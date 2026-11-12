@@ -1,5 +1,76 @@
 [
   {
+    "id": "P100-UI-001",
+    "milestone": "M0",
+    "owner": "Codex",
+    "status": "IN_PROGRESS",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "694c23a5b3aafcdf99f0da31bdefa1759d371585",
+    "requirements": [
+      "UI-01",
+      "NAV-01",
+      "UX-01",
+      "HEALTH-01",
+      "PRIV-01",
+      "QA-01"
+    ],
+    "implemented_changes": [
+      "Inspected eight local owner references; documented hierarchy, original visual direction and five-tab mapping before implementation"
+    ],
+    "modified_files": [
+      "docs/product/DESIGN_ALIGNMENT.md",
+      "docs/product/DESIGN_REFERENCES.json",
+      "docs/product/DESIGN_SYSTEM.md",
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/architecture/DECISIONS.md"
+    ],
+    "test_results": [
+      "Not run: redesign implementation/CI has not started; prior M0 evidence applies only to prior trees"
+    ],
+    "known_issues": [
+      "Parent M0 CHANGES_REQUESTED; SEC-001 live remediation still outstanding and M1 blocked",
+      "Actual SDK26 Liquid Glass and real-device acceptance not verified"
+    ],
+    "reviewer_findings": [
+      "Claude redesign review pending"
+    ],
+    "next_actions": [
+      "Implement original SwiftUI visual pass incrementally",
+      "Build/test on named simulators and preserve light/dark evidence with provenance",
+      "Submit to Claude; no self-verification or M1"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Screenshot-led original design system and six screen compositions with clear sample labeling",
+        "passed": false,
+        "evidence": "Pending implementation and independent review"
+      },
+      {
+        "description": "Exactly five primary tabs; Health first rings and no Me rings; Maps/Groups secondary",
+        "passed": false,
+        "evidence": "Pending implementation and independent review"
+      },
+      {
+        "description": "Light/dark, narrow/AX5, selected accessibility and safe areas with runtime evidence",
+        "passed": false,
+        "evidence": "Pending implementation and independent review"
+      },
+      {
+        "description": "Claude reviews requirements, source and screenshot provenance",
+        "passed": false,
+        "evidence": "Pending implementation and independent review"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
     "id": "P100-M0-001",
     "milestone": "M0",
     "owner": "Codex",

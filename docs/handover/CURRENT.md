@@ -1,4 +1,8 @@
-# Current handover — M0 second review
+# Current handover — M0 redesign sprint
+
+Owner's new screenshot-led UI sprint is tracked as **P100-UI-001 IN_PROGRESS**, continuing from694c23a on the existing PR branch. [Design alignment](../product/DESIGN_ALIGNMENT.md) records eight inspected local references, their precedence, the five-tab mapping and original/fictional asset policy. Maps → Train, Groups → Feed; Health remains a dedicated tab. No M1 work. Native verification below is historical until new-source builds/screenshots are obtained. Parent M0 remains CHANGES_REQUESTED; SEC-001 production gate is unchanged.
+
+## Preserved M0 second-review baseline
 
 2026-11-12 (Asia/Bangkok). Codex owns the fixes on `codex/m0-foundation-handover`. [Draft PR #1](https://github.com/ijennyRSM/project-100m-dashboard/pull/1) remains unmerged, base `feat/ios-native-foundation`. **M0 remains CHANGES_REQUESTED** per the owner's instruction; no self-acceptance/verification and no M1 development.
 
