@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "pg_version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "image": "postgres:17",
+  "image_id": "sha256:ff87138949ad9a46f32ff23bd6852b52ce024a13dffe9b4087be98292cdd3b4f",
+  "tests": 42,
+  "migration_sha256": "ac1d01f4d67e7074df33c35f060a47d7f47973217a692b5d06b078d892449352",
+  "proposal_sha256": "b13d1aa66bb79b1dfcd70b9ab90da8695b44f88a831470febc4065f95a52542e",
+  "scope": "Disposable local SQL/pgTAP only; no production data, JWT verification or Magic Link smoke test",
+  "base_commit": "f2b370f79581b9009836f7e5a47da08fe566e1ea",
+  "source_files": {
+    "scripts\\test_security.py": "b0a6428bc35e11af6f5472b94f00510385a346059f0ee344a060507864a4f87a",
+    "supabase-schema.sql": "8a4f258a58cbb6e6383667451e5c770de624e51a41ffb472579a7ce241b09c7a",
+    "supabase\\tests\\bootstrap.sql": "5671c9f40d7c46df7403728a4159ebc6ec970eb45238b89261eaa4fafd06a6c2",
+    "supabase\\tests\\p100_sec_001.sql": "eca689ecc160372fabc537564acd1dac656726a72efed48c91f756e6ee70b619",
+    "supabase\\tests\\p100_sec_001_defaults.sql": "df1756b235cdf029a41055577fcfb7d8999803da4828ffc648e739f6e05bffee"
+  }
+}

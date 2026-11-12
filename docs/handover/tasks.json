@@ -1,0 +1,1175 @@
+[
+  {
+    "id": "P100-UI-002",
+    "milestone": "M0",
+    "owner": "Claude",
+    "status": "READY_FOR_REVIEW",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "c05ea20ed8c964b23f3bee68a0489b20a3314365",
+    "requirements": [
+      "UI-01",
+      "UX-01",
+      "TRAIN-01",
+      "ME-01"
+    ],
+    "implemented_changes": [
+      "Owner feedback after first device install: keep green palette, follow reference activity-app structure more closely",
+      "New ActivityStyle components: SectionBand, ActivityHeader/ActivityPost, UnderlineTabs, SessionStartCard, ProgramTile, ListRowLabel, OutlineAction; full-bleed P100Screen option",
+      "Feed flat posts + real weekly summary; Train start card + program carousel; Me profile header, icon underline tabs, 12-week Swift Charts chart and week streak from real logs; Groups underlined tabs and event card; Maps full-bleed overlays",
+      "Core TrainingStats (weekly buckets, streak) for display only",
+      "Owner asked for a real Google-Maps-like basemap: Apple MapKit route maps in Feed run/walk sample posts and a full-screen interactive Maps screen with recenter; fictional sample routes around a public park, no location permission (ADR-018)"
+    ],
+    "modified_files": [
+      "native-ios/DesignSystem/ActivityStyle.swift",
+      "native-ios/Core/Training/TrainingStats.swift",
+      "native-ios/Features/Feed/FeedScreen.swift",
+      "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/Features/Me/MeScreen.swift",
+      "native-ios/Features/Feed/GroupsScreen.swift",
+      "native-ios/Features/Train/MapsScreen.swift",
+      "native-ios/UITests/FoundationUITests.swift",
+      "docs/product/DESIGN_SYSTEM.md",
+      "native-ios/DesignSystem/RouteMap.swift",
+      "native-ios/DesignSystem/SocialComponents.swift",
+      "native-ios/Features/PreviewContent.swift",
+      "native-ios/Features/Me/SettingsScreens.swift"
+    ],
+    "test_results": [
+      "PASS simulator UI 5/5 on iPhone 16 and SE, run 43253641663 (map layout fixed after visual review of runs 43246245076/43250499763)",
+      "PASS device IPA build and verifier, run 43253631746, SHA256 702ada0794125da5609b4f409e44660b139743c00a7b324260601a601bc28d6b",
+      "PASS core tests incl. StatsTests, run 43165820031",
+      "Infra only: run 43246237521 cancelled (no macOS runner capacity), re-run PASS; security pgTAP runs failed installing packages from apt.postgresql.org (mirror sync/broken packages), no database files changed",
+      "Not run: owner visual review on device"
+    ],
+    "known_issues": [
+      "Today and Health not restyled in this pass",
+      "Feed/Groups/Maps content remains labeled samples"
+    ],
+    "reviewer_findings": [
+      "Owner review on device pending"
+    ],
+    "next_actions": [
+      "Owner installs the new IPA and reviews look and feel",
+      "Optional Mobbin reference pass if owner enables a paid Mobbin plan"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Restyled screens compile and keep existing UI behaviour",
+        "passed": true,
+        "evidence": "Runs 43253641663 and 43253631746"
+      },
+      {
+        "description": "Owner accepts the visual direction on a physical iPhone",
+        "passed": false,
+        "evidence": "Not yet reviewed"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-DEV-001",
+    "milestone": "M7",
+    "owner": "Claude",
+    "status": "READY_FOR_REVIEW",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "c29c6253bc47ee5e8a88e1971caeb6090ff9b7bd",
+    "requirements": [
+      "QA-01",
+      "HK-01"
+    ],
+    "implemented_changes": [
+      "Separate workflow builds Release arm64 iphoneos app with signing disabled and packages PROJECT100M-unsigned.ipa",
+      "Ad-hoc pseudo-signature embeds declared HealthKit entitlement; no Apple identity or credentials in GitHub",
+      "Portable IPA verifier (ZIP, Info.plist, Mach-O arch/platform/minOS, signature state, entitlement) plus lipo/vtool/codesign cross-checks, SHA256 and provenance",
+      "Windows Sideloadly installation guide with HealthKit/free-provisioning limits and error collection",
+      "Owner-supplied 100M app icon: single-size 1024px opaque AppIcon asset catalog; verifier checks CFBundleIcons"
+    ],
+    "modified_files": [
+      ".github/workflows/ios-device-ipa.yml",
+      "native-ios/scripts/verify_ipa.py",
+      "scripts/tests/test_verify_ipa.py",
+      "docs/IOS_INSTALLATION_WINDOWS.md",
+      "native-ios/project.yml",
+      "native-ios/App/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png"
+    ],
+    "test_results": [
+      "PASS run 43259974147 (re-run after runner capacity cancellation): app-icon check, AppIcon60x60@2x.png and Assets.car in IPA, SHA256 dd130811bbfbaf4431034d8083251ad8fc11484502044e317829ce1281645fbd",
+      "PASS simulator UI both devices run 43259982703",
+      "PASS run 43152462029: device build, verifier 16/16, IPA SHA256 5510dfc393deed90265938d51f3e6757def2b834b5a3c97c2ef8db15057c07f3",
+      "PASS run 43146948447 (cf47dc6) artifact downloaded and re-verified locally on Windows",
+      "PASS local scripts/tests/test_verify_ipa.py 5 tests",
+      "Not run: physical iPhone install/launch, Sideloadly signing, device HealthKit"
+    ],
+    "known_issues": [
+      "Free personal-team HealthKit provisioning unverified and possibly unsupported",
+      "Free signing expires after 7 days"
+    ],
+    "reviewer_findings": [
+      "No review requested by owner; owner device test pending"
+    ],
+    "next_actions": [
+      "Owner installs via docs/IOS_INSTALLATION_WINDOWS.md and reports UI, sign-in, training and HealthKit results separately"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Successful arm64 iphoneos build and verified unsigned IPA artifact with checksum/provenance",
+        "passed": true,
+        "evidence": "Run 43152462029 at ef09ba0; verification.json PASS"
+      },
+      {
+        "description": "Complete Windows installation guide",
+        "passed": true,
+        "evidence": "docs/IOS_INSTALLATION_WINDOWS.md"
+      },
+      {
+        "description": "Owner installs and launches on a physical iPhone",
+        "passed": false,
+        "evidence": "Not yet performed"
+      },
+      {
+        "description": "HealthKit permission works on the device signing route",
+        "passed": false,
+        "evidence": "Not yet performed; free-team support uncertain"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-AUTH-001",
+    "milestone": "M1",
+    "owner": "Claude",
+    "status": "READY_FOR_REVIEW",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ef09ba0342b22c42ba7df141def13e7c1ddcd688",
+    "requirements": [
+      "DATA-01",
+      "ME-01",
+      "PRIV-01"
+    ],
+    "implemented_changes": [
+      "Minimal Supabase GoTrue client: email sign-in for existing accounts (create_user false), code or pasted-link verify, refresh, local-scope logout",
+      "AuthSessionController restore/offline/invalidation rules; Keychain store (device-only, cleared on reinstall)",
+      "Sign-in screen, Me account state, sign-out with optional local data removal, project100m:// callback, explicit Guest-to-account copy",
+      "Account-partitioned local storage opened only after session restore; no training_states access"
+    ],
+    "modified_files": [
+      "native-ios/Core/Auth/SupabaseAuth.swift",
+      "native-ios/Services/AuthPlatform.swift",
+      "native-ios/Services/AccountModel.swift",
+      "native-ios/Features/Me/SignInScreen.swift",
+      "native-ios/Features/Me/MeScreen.swift",
+      "native-ios/App/PROJECT100MApp.swift"
+    ],
+    "test_results": [
+      "PASS core AuthTests (mock transport) on Linux and macOS, run 43152467633",
+      "PASS simulator UI 5/5 both devices run 43152462066 (offline transport)",
+      "Not run: sign-in against live Supabase auth; device Keychain"
+    ],
+    "known_issues": [
+      "6-digit code needs the Token variable in the Supabase Magic Link template (owner dashboard choice)",
+      "Offline-restored session not re-refreshed until next launch"
+    ],
+    "reviewer_findings": [
+      "No review requested by owner"
+    ],
+    "next_actions": [
+      "Owner signs in on device with existing account",
+      "Retry refresh on foreground after offline restore"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Sign-in, restore, refresh, invalidation and sign-out logic unit tested",
+        "passed": true,
+        "evidence": "Run 43152467633 AuthTests"
+      },
+      {
+        "description": "Real sign-in with an existing account on a device",
+        "passed": false,
+        "evidence": "Not yet performed"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-TRAIN-001",
+    "milestone": "M3",
+    "owner": "Claude",
+    "status": "READY_FOR_REVIEW",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ef09ba0342b22c42ba7df141def13e7c1ddcd688",
+    "requirements": [
+      "TRAIN-01",
+      "TRAIN-02",
+      "LIVE-01",
+      "TODAY-01"
+    ],
+    "implemented_changes": [
+      "Catalog ported from web v2 (100M/5K/Strength/Wellness); 10K unavailable pending reviewed prescription",
+      "Progression engine: Completed advances, Partial stays with component progress, Skip needs confirmation, no date-driven progression",
+      "Live Workout engine and screen: warm-up checklist, sprint reps, strength sets, rest/elapsed timers, pause/resume, RPE, notes, Completed/Partial, cancel, draft recovery",
+      "Per-account JSON repository with atomic protected writes and quarantine of corrupt/newer data",
+      "Today/Train/Me connected to real local plan, progress and history; samples remain labeled in Feed/Groups/Maps/Gallery"
+    ],
+    "modified_files": [
+      "native-ios/Core/Training/TrainingCatalog.swift",
+      "native-ios/Core/Training/TrainingEngine.swift",
+      "native-ios/Core/Training/LiveWorkout.swift",
+      "native-ios/Core/Persistence/TrainingRepository.swift",
+      "native-ios/Services/TrainingModel.swift",
+      "native-ios/Features/Train/TrainingViews.swift",
+      "native-ios/Features/Train/LiveWorkoutScreen.swift",
+      "native-ios/Features/Today/TodayScreen.swift",
+      "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/UITests/FoundationUITests.swift"
+    ],
+    "test_results": [
+      "PASS core Catalog/Engine/LiveWorkout/Repository tests run 43152467633",
+      "PASS testTrainingFlowPersistsDraftAndPartial on iPhone 16 and SE run 43152462066",
+      "Earlier FAIL run 43149842661 (identifier masking) fixed in ef09ba0",
+      "Not run: physical device"
+    ],
+    "known_issues": [
+      "No cloud sync or import of web history yet (SEC-001, reviewed adapter required)",
+      "Running/GPS recording not implemented"
+    ],
+    "reviewer_findings": [
+      "No review requested by owner"
+    ],
+    "next_actions": [
+      "Owner-approved read-only web plan import adapter after SEC-001 decision",
+      "Sync design with revision conflict handling"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Web progression rules reproduced and unit tested",
+        "passed": true,
+        "evidence": "Run 43152467633"
+      },
+      {
+        "description": "Offline draft survives termination and Partial keeps session (simulator)",
+        "passed": true,
+        "evidence": "Run 43152462066 both devices"
+      },
+      {
+        "description": "Physical device training flow",
+        "passed": false,
+        "evidence": "Not yet performed"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-UI-001",
+    "milestone": "M0",
+    "owner": "Codex",
+    "status": "READY_FOR_REVIEW",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "5ecb4f212932418d4257dd8c2b6cda390f196d9d",
+    "requirements": [
+      "UI-01",
+      "NAV-01",
+      "UX-01",
+      "HEALTH-01",
+      "PRIV-01",
+      "QA-01"
+    ],
+    "implemented_changes": [
+      "Committed screenshot hierarchy/design alignment before implementation; eight dark owner references inspected, kept local/ignored and unchanged",
+      "Original adaptive light/dark tokens, typography/spacing, flat activity sections, avatar/stat strips, chips, circular material controls and capsule actions",
+      "Floating Material capsule over native TabView; five independent stacks/restored selection, selected traits,44pt targets, opaque fallback and enlarged-content labels",
+      "Feed filter, Train/Workout previews, Maps sample selector and Groups sections; Me Progress/Activities/Gallery/More; all synthetic content labeled",
+      "Dedicated Health with first rings/no Me rings and existing real read-only Health service/states/sample dates retained",
+      "Fixed inherited accessibility ID, width-driven AX5 Feed header, intrinsic stat height and capture settling; documented measured cold-preparation CI budget without removing assertions",
+      "Preserved52 original current-source screenshots, attachment maps, artifact digests, exact head/merge trees and prior failure/visual-finding evidence"
+    ],
+    "modified_files": [
+      ".github/workflows/ios-native-compile.yml",
+      ".gitignore",
+      "docs/architecture/DECISIONS.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md",
+      "docs/handover/CURRENT.md",
+      "docs/handover/REVIEW.md",
+      "docs/handover/evidence/UI-redesign/30bebd2-failure-provenance.json",
+      "docs/handover/evidence/UI-redesign/370adde-capture-finding.json",
+      "docs/handover/evidence/UI-redesign/6158ec9-visual-finding.json",
+      "docs/handover/evidence/UI-redesign/README.md",
+      "docs/handover/evidence/UI-redesign/f379701-timeout-provenance.json",
+      "docs/handover/evidence/UI-redesign/provenance.json",
+      "docs/handover/tasks.json",
+      "docs/product/DESIGN_ALIGNMENT.md",
+      "docs/product/DESIGN_REFERENCES.json",
+      "docs/product/DESIGN_SYSTEM.md",
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "native-ios/DesignSystem/Components.swift",
+      "native-ios/DesignSystem/MaterialCapsuleBar.swift",
+      "native-ios/DesignSystem/SocialComponents.swift",
+      "native-ios/Features/Feed/FeedScreen.swift",
+      "native-ios/Features/Feed/GroupsScreen.swift",
+      "native-ios/Features/Health/HealthScreen.swift",
+      "native-ios/Features/Me/MeScreen.swift",
+      "native-ios/Features/PreviewContent.swift",
+      "native-ios/Features/RootView.swift",
+      "native-ios/Features/Today/TodayScreen.swift",
+      "native-ios/Features/Train/MapsScreen.swift",
+      "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/README.md",
+      "native-ios/UITests/FoundationUITests.swift"
+    ],
+    "test_results": [
+      "PASS:5ecb4f2 run43141777432 SUCCESS; unsigned builds and4/4 UI zero failures each on iPhone16/SE3 iOS18.5 (368.545s /402.776s); merge79c26b3 matches native32941871/.github3a8c647. Artifacts13909953454/13910042452 ZIP SHA256 verified;52 original PNGs/provenance retained",
+      "PASS:15 local Windows handover/grant unit tests;11-record ledger validation/status/prepare; grant lint, diff/source checks; eight reference files preserved/ignored",
+      "PASS: Windows/Linux handover43141777372; unchanged PG16/17 security43141777481; no live database connection or privilege change",
+      "Historical30bebd2: builds PASS/UI0/4 both because parent ID overwrote children; runtime tree proves cause.6158ec9 corrected it, both builds/UI4/4 PASS but visual AX5 squeeze prompted stronger header assertions",
+      "Historicalf379701: SE4/4 PASS,16 first case PASS then15min step timeout;370adde budget correction then4/4 both PASS. Partial capture concerns prompted current5ecb4f2; no previous-source proof substituted for current",
+      "VISUAL: representative current Feed light/dark, both-device AX5 heading/action, Me light, Health dark, Maps light, Train dark and Workout light inspected; complete gallery remains for Claude review",
+      "NOT RUN: OS VoiceOver/Reduce Transparency/enlarged-content-viewer interaction, iOS17 runtime/real Display Zoom, SDK26 glassEffect, signing or physical iPhone/Watch/GPS/background acceptance"
+    ],
+    "known_issues": [
+      "Claude UI/architecture/privacy acceptance pending; parent M0 CHANGES_REQUESTED; no self-verification or M1",
+      "Maps/Groups/profile/feed/training data are fictional presentation with local selection only; no new backend, GPS, recording or uploads",
+      "Liquid Glass styling uses iOS17 Material; native SDK26 API and OS/manual accessibility/device checks unverified",
+      "Raw reference comparison requires owner local/private images; originals are not published in git",
+      "SEC-001 live Critical grants unchanged; prepared remediation still awaits review/staging/backup/owner approval; M1 blocked"
+    ],
+    "reviewer_findings": [
+      "Claude redesign review pending; original independent M0 findings preserved in REVIEW.md",
+      "Codex visual checks found AX5 squeeze despite passing6158ec9; fixed in f379701 with explicit vertical placement/size assertions",
+      "Current exact-source automated checks pass; no independent reviewer acceptance inferred from CI or representative visual inspection"
+    ],
+    "next_actions": [
+      "Claude: review5ecb4f2 source, UI-01/design alignment, five-tab mapping, original assets and complete current gallery/provenance; return severity/requirement/file-line/evidence/disposition",
+      "Codex: resolve reviewer findings and resubmit; parent M0 stays CHANGES_REQUESTED until independent disposition and required evidence",
+      "Track OS/manual accessibility, iOS17/Display Zoom and physical device checks separately; no simulator release claim",
+      "Keep SEC-001 production approval gate and M1 BLOCKED; no merge or self-acceptance"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Screenshot-led original design system and six screen compositions with clear sample labeling",
+        "passed": false,
+        "evidence": "Source5ecb4f2 and current run43141777432 provide implementation/runtime evidence;52-image gallery/provenance available; Claude independent criterion/UX disposition pending."
+      },
+      {
+        "description": "Exactly five primary tabs; Health first rings and no Me rings; Maps/Groups secondary",
+        "passed": false,
+        "evidence": "Source5ecb4f2 and current run43141777432 provide implementation/runtime evidence;52-image gallery/provenance available; Claude independent criterion/UX disposition pending."
+      },
+      {
+        "description": "Light/dark, narrow/AX5, selected accessibility and safe areas with runtime evidence",
+        "passed": false,
+        "evidence": "Source5ecb4f2 and current run43141777432 provide implementation/runtime evidence;52-image gallery/provenance available; Claude independent criterion/UX disposition pending."
+      },
+      {
+        "description": "Claude reviews requirements, source and screenshot provenance",
+        "passed": false,
+        "evidence": "Source5ecb4f2 and current run43141777432 provide implementation/runtime evidence;52-image gallery/provenance available; Claude independent criterion/UX disposition pending."
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M0-001",
+    "milestone": "M0",
+    "owner": "Codex",
+    "status": "CHANGES_REQUESTED",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "5ecb4f212932418d4257dd8c2b6cda390f196d9d",
+    "requirements": [
+      "NAV-01",
+      "UX-01",
+      "HEALTH-01",
+      "HAND-01",
+      "QA-01"
+    ],
+    "implemented_changes": [
+      "Audited both branch histories, web/native code and live Supabase metadata; persisted approved specification before features",
+      "Added portable status/next/prepare/validate/archive commands and Windows/Linux CI with no self-acceptance",
+      "Implemented five native tabs, independent stacks, persisted selected tab, adaptive shared components and labeled fixtures",
+      "Added Health-only interactive missing-score rings and retained on-device HealthKit controls; no production writes",
+      "Added macOS unsigned simulator build, UI acceptance suite and screenshot export; fixed missing launch-screen declaration and test safe-area bounds",
+      "Inspected full-resolution simulator screenshots; added adaptive ring sizing and earlier vertical layout for large text",
+      "Width-driven ring/tile layouts with scaled text; sample end dates retained for HRV/RHR",
+      "Explicit notRequested/unavailable/failed/loading/requested-empty Health states; DEBUG fixtures construct no HKHealthStore",
+      "Four tests expanded to named iPhone16/SE3 iOS18.5: actual theme/type, bounds/hittability, hosted320 xLarge and explicit tab reset",
+      "Separated push/PR concurrency with no cancellation; measured SE runtime receives six-minute allowance only for layout test",
+      "Owner-approved screenshot-led redesign and current exact-source evidence tracked in P100-UI-001; replaces older visual source"
+    ],
+    "modified_files": [
+      ".github/workflows/handover.yml",
+      ".github/workflows/ios-native-compile.yml",
+      ".gitignore",
+      "AGENTS.md",
+      "README.md",
+      "docs/architecture/DATA_MODEL.md",
+      "docs/architecture/DECISIONS.md",
+      "docs/architecture/REPOSITORY_AUDIT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md",
+      "docs/handover/CURRENT.md",
+      "docs/handover/REVIEW.md",
+      "docs/handover/TASKS.md",
+      "docs/handover/evidence/M0-9399655/M0-Feed-light.png",
+      "docs/handover/evidence/M0-9399655/M0-Health-light.png",
+      "docs/handover/evidence/M0-9399655/M0-Me-light.png",
+      "docs/handover/evidence/M0-9399655/M0-Today-light.png",
+      "docs/handover/evidence/M0-9399655/M0-Train-light.png",
+      "docs/handover/evidence/M0-9399655/README.md",
+      "docs/handover/evidence/M0-9399655/provenance.json",
+      "docs/handover/evidence/M0-review-fix/README.md",
+      "docs/handover/evidence/M0-review-fix/provenance.json",
+      "docs/handover/evidence/UI-redesign/30bebd2-failure-provenance.json",
+      "docs/handover/evidence/UI-redesign/370adde-capture-finding.json",
+      "docs/handover/evidence/UI-redesign/6158ec9-visual-finding.json",
+      "docs/handover/evidence/UI-redesign/README.md",
+      "docs/handover/evidence/UI-redesign/f379701-timeout-provenance.json",
+      "docs/handover/evidence/UI-redesign/provenance.json",
+      "docs/handover/history/README.md",
+      "docs/handover/tasks.json",
+      "docs/product/DESIGN_ALIGNMENT.md",
+      "docs/product/DESIGN_REFERENCES.json",
+      "docs/product/DESIGN_SYSTEM.md",
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "native-ios/App/PROJECT100MApp.swift",
+      "native-ios/App/UITestConfiguration.swift",
+      "native-ios/DesignSystem/Components.swift",
+      "native-ios/DesignSystem/HealthRing.swift",
+      "native-ios/DesignSystem/MaterialCapsuleBar.swift",
+      "native-ios/DesignSystem/SocialComponents.swift",
+      "native-ios/Features/Feed/FeedScreen.swift",
+      "native-ios/Features/Feed/GroupsScreen.swift",
+      "native-ios/Features/Health/HealthScreen.swift",
+      "native-ios/Features/Me/MeScreen.swift",
+      "native-ios/Features/PreviewContent.swift",
+      "native-ios/Features/RootView.swift",
+      "native-ios/Features/Today/TodayScreen.swift",
+      "native-ios/Features/Train/MapsScreen.swift",
+      "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/Health/HealthKitService.swift",
+      "native-ios/Health/HealthModels.swift",
+      "native-ios/README.md",
+      "native-ios/ROADMAP.md",
+      "native-ios/UITests/FoundationUITests.swift",
+      "native-ios/project.yml",
+      "scripts/handover.py",
+      "scripts/tests/test_handover.py"
+    ],
+    "test_results": [
+      "PASS: 15 local Windows unit tests (9 handover + 6 grant lint); SQL grant lint; diff/source checks",
+      "PASS: Windows/Linux handover CI https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43107212967",
+      "6437d8d recovered: BUILD SUCCEEDED, boot timed out after5min before UI; matching head/merge trees recorded",
+      "3e86451 run43105037599: both builds PASS; iPhone16 4/4 PASS; SE3 layout exceeded default4min (273s), other3 PASS. Budget corrected in713ead4; prior run overall FAILURE",
+      "PASS:713ead4 PR run43107213059 completed SUCCESS; iPhone16 and SE3 each unsigned build PASS, 4/4 UI zero failures. Merge e6b0b764 matches native54462fa2/.github65567a9; artifacts13894209678/13894484095 digest-verified;38 original PNGs/provenance in evidence/M0-review-fix",
+      "PASS:5ecb4f2 run43141777432 SUCCESS; unsigned builds and4/4 UI zero failures each on iPhone16/SE3 iOS18.5 (368.545s /402.776s); merge79c26b3 matches native32941871/.github3a8c647. Artifacts13909953454/13910042452 ZIP SHA256 verified;52 original PNGs/provenance retained"
+    ],
+    "known_issues": [
+      "Claude second review pending; M0 CHANGES_REQUESTED per owner; no milestone self-accepted/verified",
+      "Feed/Today/Train/Me remain labeled examples; no M1 cloud implementation",
+      "SEC-001 prepared/tested; live Critical privileges unchanged pending staging/owner approval",
+      "Signing/iPhone/Watch/GPS/background unverified; iOS17 runtime, Display Zoom and full VoiceOver deferred M6",
+      "Mobbin screens/Mobbin and Flownato MCP unavailable; prior reference limitation retained",
+      "HealthKit anchors/source/stage/night grouping and score provenance types deferred M2"
+    ],
+    "reviewer_findings": [
+      "Claude review 2026-11-12 at 52cc51a (handover 7519937): CHANGES_REQUESTED; full findings in docs/handover/REVIEW.md",
+      "PASS (source): five tabs in order with independent NavigationStacks and persisted selection (RootView.swift:18-38)",
+      "PASS (source): three interactive rings first on Health only, hard-coded missing state, no invented score (HealthScreen.swift:7-20, HealthRing.swift)",
+      "PASS: web files, supabase-schema.sql, native Health service and native agent files unchanged vs main 53ba1b5 / 15e10f0",
+      "H1: no exact-source build + 4/4 UI pass at any SHA; 52cc51a runs queued; 6437d8d failure cause unknown (P100-M0-002)",
+      "H2: Dynamic Type/dark/small-width not asserted; simulator unpinned (FoundationUITests.swift:92-105; workflow :57-63)",
+      "M1: ring row overflows 288pt content width at xLarge on 320pt screens (HealthRing.swift:44,57; HealthScreen.swift:16-20)",
+      "M2: RHR/HRV shown as latest with read time but no sample date; value may be 21 days old (HealthScreen.swift:29-31,57-58)",
+      "M3: notRequested/unavailable/failed states not rendered; all messages titled read failure (HealthScreen.swift:21-28)",
+      "M4: push and PR runs share concurrency group and cancel each other (ios-native-compile.yml:20-22)",
+      "L1: persisted tab leaks between UI tests (RootView.swift:18)",
+      "Codex response at713ead4: H2/M1/M2/M3/M4/L1 addressed in source; H1 recovered; actual runtime evidence in CURRENT.md. Original Claude disposition preserved."
+    ],
+    "next_actions": [
+      "Claude: review current5ecb4f2 source and P100-UI-001 gallery/design direction with preserved original findings; return disposition; do not self-accept, merge or start M1"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Five tabs in required order; independent stacks and restored selection",
+        "passed": false,
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
+      },
+      {
+        "description": "Reusable adaptive components and clearly labeled fixture screens",
+        "passed": false,
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
+      },
+      {
+        "description": "Three interactive Health-only rings; no invented scores",
+        "passed": false,
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
+      },
+      {
+        "description": "Windows handover tests/validation and exact-source macOS simulator build/UI pass",
+        "passed": false,
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
+      },
+      {
+        "description": "Claude reviews documented criteria and UX evidence",
+        "passed": false,
+        "evidence": "Claude reviewed 52cc51a: CHANGES_REQUESTED; see REVIEW.md"
+      }
+    ],
+    "review": {
+      "reviewer": "Claude (Opus 5.5)",
+      "commit": "52cc51ab5ba0799425a0788d8b9766e0e440ef71",
+      "decision": "CHANGES_REQUESTED",
+      "evidence": "docs/handover/REVIEW.md (M0 review 2026-11-12); source, screenshots at 9399655, gh run/job API state, local handover validate"
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M0-002",
+    "milestone": "M0",
+    "owner": "Codex",
+    "status": "CHANGES_REQUESTED",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "5ecb4f212932418d4257dd8c2b6cda390f196d9d",
+    "requirements": [
+      "QA-01",
+      "UX-01"
+    ],
+    "implemented_changes": [
+      "Recovered old boot-timeout artifact and matching head/merge trees; distinguished later Actions outage",
+      "Pinned Xcode16.4/iOS18.5 iPhone16/SE3; environment probes and screenshot/commit/tree provenance",
+      "Preserved push and PR runs independently; measured expanded layout-test budget without dropping scenarios",
+      "Owner-approved screenshot-led redesign and current exact-source evidence tracked in P100-UI-001; replaces older visual source"
+    ],
+    "modified_files": [
+      ".github/workflows/ios-native-compile.yml",
+      ".gitignore",
+      "docs/architecture/DECISIONS.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md",
+      "docs/handover/CURRENT.md",
+      "docs/handover/REVIEW.md",
+      "docs/handover/evidence/M0-review-fix/README.md",
+      "docs/handover/evidence/M0-review-fix/provenance.json",
+      "docs/handover/evidence/UI-redesign/30bebd2-failure-provenance.json",
+      "docs/handover/evidence/UI-redesign/370adde-capture-finding.json",
+      "docs/handover/evidence/UI-redesign/6158ec9-visual-finding.json",
+      "docs/handover/evidence/UI-redesign/README.md",
+      "docs/handover/evidence/UI-redesign/f379701-timeout-provenance.json",
+      "docs/handover/evidence/UI-redesign/provenance.json",
+      "docs/handover/tasks.json",
+      "docs/product/DESIGN_ALIGNMENT.md",
+      "docs/product/DESIGN_REFERENCES.json",
+      "docs/product/DESIGN_SYSTEM.md",
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "native-ios/DesignSystem/Components.swift",
+      "native-ios/DesignSystem/MaterialCapsuleBar.swift",
+      "native-ios/DesignSystem/SocialComponents.swift",
+      "native-ios/Features/Feed/FeedScreen.swift",
+      "native-ios/Features/Feed/GroupsScreen.swift",
+      "native-ios/Features/Health/HealthScreen.swift",
+      "native-ios/Features/Me/MeScreen.swift",
+      "native-ios/Features/PreviewContent.swift",
+      "native-ios/Features/RootView.swift",
+      "native-ios/Features/Today/TodayScreen.swift",
+      "native-ios/Features/Train/MapsScreen.swift",
+      "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/README.md",
+      "native-ios/UITests/FoundationUITests.swift"
+    ],
+    "test_results": [
+      "PASS: Windows/Linux handover CI https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43107212967",
+      "6437d8d recovered: BUILD SUCCEEDED, boot timed out after5min before UI; matching head/merge trees recorded",
+      "3e86451 run43105037599: both builds PASS; iPhone16 4/4 PASS; SE3 layout exceeded default4min (273s), other3 PASS. Budget corrected in713ead4; prior run overall FAILURE",
+      "PASS:713ead4 PR run43107213059 completed SUCCESS; iPhone16 and SE3 each unsigned build PASS, 4/4 UI zero failures. Merge e6b0b764 matches native54462fa2/.github65567a9; artifacts13894209678/13894484095 digest-verified;38 original PNGs/provenance in evidence/M0-review-fix",
+      "PASS:5ecb4f2 run43141777432 SUCCESS; unsigned builds and4/4 UI zero failures each on iPhone16/SE3 iOS18.5 (368.545s /402.776s); merge79c26b3 matches native32941871/.github3a8c647. Artifacts13909953454/13910042452 ZIP SHA256 verified;52 original PNGs/provenance retained"
+    ],
+    "known_issues": [
+      "Claude second-review disposition pending; no self-verification",
+      "No iOS17 runtime, physical device, signing or Display Zoom acceptance claimed"
+    ],
+    "reviewer_findings": [
+      "Claude 2026-11-11 20:44 UTC: all 52cc51a/7519937 runs queued, including Ubuntu/Windows handover jobs, so the stall is not caused by the macOS 15 pin",
+      "Run 43075144693 jobs API returns HTTP 502; artifact 13883405985 (26.8 KB) exists but download returned HTTP 500/502",
+      "native-ios and .github trees identical at 52cc51a and 7519937 (native tree 932a53e147aa); a run on either is valid evidence if tree hashes are recorded",
+      "M4: concurrency group shared by push and pull_request runs; docs-only commits cancel native evidence runs",
+      "Codex: execution resumed; prior diagnostics recovered; exact-source results/provenance in CURRENT.md."
+    ],
+    "next_actions": [
+      "Claude: review current5ecb4f2 source and P100-UI-001 gallery/design direction with preserved original findings; return disposition; do not self-accept, merge or start M1"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Diagnose actual failure logs; final exact-source unsigned simulator build and all four UI tests pass",
+        "passed": false,
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
+      },
+      {
+        "description": "Inspect current light/dark/AX5 screenshots and record provenance",
+        "passed": false,
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
+      }
+    ],
+    "review": {
+      "reviewer": "Claude (Opus 5.5)",
+      "commit": "52cc51ab5ba0799425a0788d8b9766e0e440ef71",
+      "decision": "CHANGES_REQUESTED",
+      "evidence": "docs/handover/REVIEW.md (M0 review 2026-11-12)"
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-SEC-001",
+    "milestone": "M1",
+    "owner": "Codex",
+    "status": "READY_FOR_REVIEW",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ed7b525e8ec1fe6f2d8a1babf764dfc976a2b402",
+    "requirements": [
+      "DATA-01",
+      "PRIV-01"
+    ],
+    "implemented_changes": [
+      "Catalog-only live inventory of ACL/defaults/inheritance/RPC/RLS on PG17.11; no private payload read",
+      "Atomic idempotent A resets table/RPC client ACL, detects inherited rights/PG17 MAINTAIN; owner/service_role/data/policies/RPC preserved",
+      "Original setup now revokes defaults before authenticated SELECT/INSERT/UPDATE and invoker RPC EXECUTE",
+      "Separate proposal B outside migrations handles global and public-schema defaults for postgres/supabase_admin",
+      "Docker-only synthetic pgTAP, PG16/17 CI, grant lint, verification SQL, backup and rollback instructions"
+    ],
+    "modified_files": [
+      ".github/workflows/security-local.yml",
+      "docs/architecture/DATA_MODEL.md",
+      "docs/architecture/REPOSITORY_AUDIT.md",
+      "docs/handover/evidence/P100-SEC-001/README.md",
+      "docs/handover/evidence/P100-SEC-001/pg16-pgtap.log",
+      "docs/handover/evidence/P100-SEC-001/pg16-result.json",
+      "docs/handover/evidence/P100-SEC-001/pg17-pgtap.log",
+      "docs/handover/evidence/P100-SEC-001/pg17-result.json",
+      "docs/handover/evidence/P100-SEC-001/source-map.json",
+      "scripts/check_sql_grants.py",
+      "scripts/test_security.py",
+      "scripts/tests/test_sql_grants.py",
+      "supabase-schema.sql",
+      "supabase/migrations/20261111211924_p100_sec_001_training_states_least_privilege.sql",
+      "supabase/proposals/20261111211927_p100_sec_001_default_privileges_proposal.sql",
+      "supabase/security/README.md",
+      "supabase/security/inventory.sql",
+      "supabase/security/verify.sql",
+      "supabase/tests/bootstrap.sql",
+      "supabase/tests/p100_sec_001.sql",
+      "supabase/tests/p100_sec_001_defaults.sql"
+    ],
+    "test_results": [
+      "PASS:42 pgTAP each on local PG16/17; idempotence, old-hole rollback reproduction, payload/policy/RPC preservation, inherited-danger abort/ACL rollback",
+      "PASS: official PG16/17 CI42 each run43105037594; latest43107212947 SUCCESS; no hosted DB connection",
+      "PASS: corrected fresh setup; anon denied, auth TRUNCATE/DELETE42501, A/B isolation, RPC initial insert/update/staleNULL",
+      "PASS:15 handover/grant unit tests and grant lint",
+      "NOT RUN: hosted Auth/JWT/PostgREST/Magic Link smoke, production apply/post-check; backup/PITR unknown"
+    ],
+    "known_issues": [
+      "CRITICAL live privileges unchanged; preparation is not production resolution; M1 BLOCKED",
+      "Owner backup, disposable hosted smoke and exact-file/window production approval required",
+      "B global future-object scope needs separate review and authorized operator; outside migrations",
+      "Owner-scoped direct DML bypasses RPC validation (deferred M1); lint not full SQL parser"
+    ],
+    "reviewer_findings": [
+      "Claude: Critical. Root cause is supabase-schema.sql:12-13 - it never revokes Supabase default ALL from authenticated, so re-applying the repo file reproduces the hole",
+      "TRUNCATE bypasses RLS and empties all users' history; DELETE currently inert (no DELETE policy); no current Data API TRUNCATE path observed",
+      "Audit must also capture anon, PUBLIC, pg_default_acl and function ACLs; default ACL will re-grant ALL on every new M1 table",
+      "Web client uses only SELECT + save_training_state RPC (v2-data.js:107-108); removing DELETE/TRUNCATE/REFERENCES/TRIGGER has no web impact",
+      "Proposed Migration A (table/RPC least privilege with post-condition asserts), Migration B (default privileges), staging pgTAP plan and rollback in REVIEW.md",
+      "Codex: ed7b525 ready for separate review; PG17 MAINTAIN/global scope handled; no live remediation claimed."
+    ],
+    "next_actions": [
+      "Claude: independently review A/setup/test evidence, inheritance atomicity and B global/schema default scope",
+      "Owner: confirm backup and disposable hosted Auth/PostgREST/browser smoke; approve exact hash/window before live apply",
+      "Authorized operator after approval: apply A, read-only verify.sql and approved web smoke; observe42501; approve B separately",
+      "Do not close SEC-001 or start M1 before review/owner-approved production verification"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Versioned idempotent least-privilege migration with post-condition asserts and schema-file fix",
+        "passed": false,
+        "evidence": "Implemented ed7b525 and locally/remotely tested; Claude re-review pending"
+      },
+      {
+        "description": "Staging pgTAP: authenticated TRUNCATE/DELETE 42501, anon denied, two-user isolation, RPC stale NULL, web smoke unchanged",
+        "passed": false,
+        "evidence": "Disposable PostgreSQL pgTAP42+42 PASS; hosted Auth/PostgREST/browser smoke NOT RUN; acceptance incomplete"
+      },
+      {
+        "description": "Default privileges hardened or explicit-grant lint before M1 tables",
+        "passed": false,
+        "evidence": "Grant lint passes; B separately proposed outside migrations with global scope review pending"
+      },
+      {
+        "description": "Owner-approved production apply with read-only post-check of grants (no destructive probe)",
+        "passed": false,
+        "evidence": "NOT APPLIED: explicit owner approval and backup confirmation required; no destructive production tests"
+      }
+    ],
+    "review": {
+      "reviewer": "Claude (Opus 5.5)",
+      "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+      "decision": "CHANGES_REQUESTED",
+      "evidence": "docs/handover/REVIEW.md (M0 review 2026-11-12)"
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M1-001",
+    "milestone": "M1",
+    "owner": "Codex",
+    "status": "BLOCKED",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "DATA-01",
+      "ME-01"
+    ],
+    "implemented_changes": [
+      "Target architecture and preservation requirements documented"
+    ],
+    "modified_files": [
+      "docs/architecture/SYSTEM_ARCHITECTURE.md",
+      "docs/architecture/DATA_MODEL.md"
+    ],
+    "test_results": [
+      "Not run: native account/persistence implementation has not started"
+    ],
+    "known_issues": [
+      "No native auth implemented"
+    ],
+    "reviewer_findings": [
+      "Claude: remain BLOCKED until M0 accepted and P100-SEC-001 verified; M1 migrations must carry explicit grants (default ACL grants ALL)"
+    ],
+    "next_actions": [
+      "Obtain M0 review and resolve P100-SEC-001 before native cloud expansion"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Existing identity login/restoration and logout isolation",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      },
+      {
+        "description": "Offline owner-partitioned persistence; safe legacy adapter",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      },
+      {
+        "description": "Negative RLS and sync-conflict tests",
+        "passed": false,
+        "evidence": "Pending implementation/review"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "M0 Claude review and P0 security hardening outstanding",
+    "unblock_condition": "M0 review accepted; P100-SEC-001 verified with safe evidence"
+  },
+  {
+    "id": "P100-M2-001",
+    "milestone": "M2",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "HK-01",
+      "HEALTH-01",
+      "SCORE-01",
+      "SCORE-02",
+      "SCORE-03"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Inject mockable Health repository; test interval union, source selection, stale/missing data and DST",
+      "Implement persistent anchors/deletions and authorized HR/steps/energy reads",
+      "Review scoring research and baseline/missing-component policies before algorithms"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Direct authorized reading with provenance and foreground refresh",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Persistent anchors and deduplication/deletion tests",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Original score and missing-data tests; simulator/device evidence separate",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M3-001",
+    "milestone": "M3",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "TRAIN-01",
+      "TRAIN-02",
+      "LIVE-01",
+      "RUN-01"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Port versioned ordered prescriptions including reviewed 10K program",
+      "Implement component attempts, explicit skip confirmation and offline workout continuation",
+      "Test Completed/Partial/Skipped and concurrent sync preservation"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Five independent programs usable with low-friction logging",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Partial component persistence and explicit confirmed skipping",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Live timers/pause/resume/offline relaunch and conflict tests",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M4-001",
+    "milestone": "M4",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "FEED-01",
+      "PRIV-01",
+      "ME-01"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Add separate safe public projection and moderation/blocking policies",
+      "Implement paginated Feed, compose/like/comment/profile/report/block",
+      "Verify media EXIF stripping and route redaction before publish preview"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Functioning public feed and social interactions",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Private default; explicit publish; blocked/private access negative tests",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Pagination/loading/empty/error states and route privacy verified",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M5-001",
+    "milestone": "M5",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "COACH-01",
+      "AI-01"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Port explainable rules with evidence, baseline sufficiency and uncertainty",
+      "Require approval for every suggested plan change",
+      "Review future secure AI function architecture without enabling health transfer"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Working conservative history and recovery analysis",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "No unapproved plan mutation or health AI transfer",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Deterministic baseline/rule tests and future chat boundary",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M6-001",
+    "milestone": "M6",
+    "owner": "Codex",
+    "status": "BACKLOG",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "UX-01",
+      "QA-01",
+      "DATA-01",
+      "PRIV-01"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding",
+      "M0 defers iOS17 runtime, real Display Zoom and full VoiceOver audit to M6; no blanket accessibility acceptance"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Complete accessibility/small-screen/error/offline and performance audit",
+      "Run integration and RLS security suite with disposable staging identities",
+      "Resolve reviewer findings and document release readiness"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Accessibility and responsive evidence",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Integration/performance/RLS/security CI passes",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Reviewer accepts release criteria and risk disposition",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-M7-001",
+    "milestone": "M7",
+    "owner": "Codex",
+    "status": "BLOCKED",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ffada65b2674f6b9765d7bf21c493254c62179c4",
+    "requirements": [
+      "QA-01",
+      "HK-01",
+      "RUN-01",
+      "DATA-01"
+    ],
+    "implemented_changes": [
+      "Approved requirements and target architecture documented only; feature work not started"
+    ],
+    "modified_files": [
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "test_results": [
+      "Not run: implementation not started"
+    ],
+    "known_issues": [
+      "Milestone implementation and review outstanding"
+    ],
+    "reviewer_findings": [
+      "Claude review not received"
+    ],
+    "next_actions": [
+      "Obtain a supported signed build route without assuming paid membership",
+      "Install on owner iPhone; verify real Watch samples and denied permissions",
+      "Record actual GPS/background and two-account/two-device cloud behavior"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Actual signed physical iPhone launch evidence",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "Real HealthKit/Watch/GPS/background results with limitations",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      },
+      {
+        "description": "End-to-end account/sync and privacy acceptance recorded",
+        "passed": false,
+        "evidence": "Not implemented or verified"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "No signed physical iPhone/Watch execution access or verified signing path in this Windows session",
+    "unblock_condition": "Owner-supported signing environment and physical device access; prerequisites reviewed"
+  }
+]

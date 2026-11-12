@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+native-ios/*.xcodeproj/
+native-ios/App/Info.plist
+native-ios/App/PROJECT100M.entitlements
+native-ios/build/
+*.xcresult/
+docs/handover/prepared/
+.local-evidence/
+supabase/.temp/
+/iOS Strava ss/
+native-ios/.build/
+native-ios/.swiftpm/

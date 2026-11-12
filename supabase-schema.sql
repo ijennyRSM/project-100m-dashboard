@@ -1,6 +1,8 @@
 -- PROJECT 100M V2 · Supabase SQL Editor setup
 -- Run this once in your own Supabase project before enabling cloud credentials.
 -- The table belongs to each auth.uid() and is never public to anonymous users.
+begin;
+set local lock_timeout = '5s';
 create table if not exists public.training_states (
   user_id uuid primary key references auth.users(id) on delete cascade,
   revision bigint not null default 0,
@@ -9,7 +11,8 @@ create table if not exists public.training_states (
 );
 
 alter table public.training_states enable row level security;
-revoke all on public.training_states from anon;
+-- Supabase default ACLs can already have granted ALL. GRANT alone cannot narrow them.
+revoke all on table public.training_states from public, anon, authenticated;
 grant select, insert, update on public.training_states to authenticated;
 
 drop policy if exists "training_states_select_own" on public.training_states;
@@ -59,5 +62,6 @@ begin
 end;
 $$;
 
-revoke all on function public.save_training_state(bigint,jsonb) from public, anon;
+revoke all on function public.save_training_state(bigint,jsonb) from public, anon, authenticated;
 grant execute on function public.save_training_state(bigint,jsonb) to authenticated;
+commit;

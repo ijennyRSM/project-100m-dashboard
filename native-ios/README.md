@@ -2,11 +2,14 @@
 
 This is the **new SwiftUI iPhone app** started alongside the existing PROJECT 100M GitHub Pages website. The web app and its Supabase data are unchanged.
 
-**Status:** source scaffold committed; NOT YET compiled, code signed, or installed on a real iPhone.
+**Status:** M0 five-tab design foundation; see [current handover](../docs/handover/CURRENT.md) for exact commit/build evidence. Not signed or installed on a physical iPhone. Feed/training/profile content is explicitly labeled fictional preview data; accounts, social interactions, native workout logging and scores are not implemented.
 
-## Milestone 0 — HealthKit first
+## M0 — Foundation and design
 
-- SwiftUI Today / Health / Training / Account screens with the warm fitness design direction.
+The approved [Product Blueprint](../docs/product/PRODUCT_BLUEPRINT.md) and [requirements](../docs/product/FEATURE_REQUIREMENTS.md) supersede the old milestone numbering. M7 separately tracks physical-device acceptance.
+
+- Exactly Feed / Today / Train / Health / Me using native TabView, independent stacks and restored selected tab. The M0 redesign presents a custom floating Material capsule over the hidden stock bar, with selected accessibility traits and ≥44pt targets; iOS17 minimum retained.
+- Adaptive shared design tokens/cards/banners/activity previews; Thai-first copy and Dynamic Type. Health begins with interactive Sleep/Recovery/Strain rings showing no invented scores; Me has none.
 - User explicitly taps **อนุญาตการอ่านข้อมูล** to request read-only HealthKit access.
 - Read the last 21 days of permitted resting heart rate, HRV (SDNN), sleep stages and workouts from Apple Health, including samples already synced from the paired Apple Watch.
 - Refresh when the app comes to the foreground, and use HealthKit change observers while the app is alive.
@@ -16,6 +19,8 @@ This is the **new SwiftUI iPhone app** started alongside the existing PROJECT 10
 - The existing 100M training plan remains available by linking to the current website; native migration follows.
 
 ## Building
+
+The screenshot-led redesign is a visual foundation: Feed filters, Groups sections, Maps sample selection and Me sections switch local fictional content. It does not add social mutations, enrollment, workout recording, GPS, photo upload or account editing. Raw owner reference images stay local/ignored. `DESIGN_ALIGNMENT.md` documents why Maps is under Train, Groups under Feed and Health remains dedicated. Light/dark use shared semantic tokens; the capsule uses iOS17 Material, not a verified SDK26 Liquid Glass API.
 
 Requirements:
 1. A Mac with Xcode or a supported hosted macOS build runner. **Xcode cannot build or sign an iOS/watchOS app natively on Windows**.
@@ -41,9 +46,15 @@ The default bundle identifier com.project100m.ios is a placeholder; change it to
 - App/PROJECT100MApp.swift — SwiftUI app lifecycle
 - Health/HealthModels.swift — read-only native display data
 - Health/HealthKitService.swift — HealthKit authorization and queries
-- Features/RootView.swift — Today, Health, Training, Account screens
+- Features/ — five-tab shell and feature-specific views, explicitly labeled fixtures
+- DesignSystem/ — adaptive tokens, shared components and ring presentation states
+- UITests/ — simulator navigation, privacy placement, fixture labeling and screenshot checks
 - AGENTS.md — Codex + Claude guardrails
 - ROADMAP.md — phases and acceptance checks
+
+CI builds an unsigned simulator app and runs four UI tests on pinned iPhone 16 and iPhone SE (3rd generation), iOS 18.5. Light/dark/default/xLarge/AX5 captures assert actual presentation, ring/tile bounds and hittability; a 320pt hosted container covers narrow content without claiming Display Zoom. Provenance includes head/tested SHA, native/.github trees, device/runtime and run/event IDs. Push/PR concurrency groups are separate and running evidence is never auto-cancelled by later commits.
+
+DEBUG-only `--ui-testing` uses a Health stub that never constructs HealthKit. `--ui-health-state=notRequested|unavailable|failed|missing|loading|stale`, `--ui-theme=light|dark`, `--ui-text-size=large|xLarge|AX5` and optional `--ui-content-width=320` support deterministic checks. `--ui-reset` removes only saved tab selection; tests remove it for restoration relaunch. These overrides are inactive in Release builds. Fixtures are labeled and never uploaded/persisted. Production still reads only authorized HealthKit types, with sample measurement dates separate from query time and explicit connection states. UI tests prove no real HealthKit permissions/device behavior. See CURRENT for actual observed test results, not just test definitions.
 
 ## Apple Watch without ZIP exports
 

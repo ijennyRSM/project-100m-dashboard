@@ -1,0 +1,9 @@
+)}, found {(
+    Button, identifier: 'primary-navigation', label: 'Feed', value: unselected,
+    Button, identifier: 'primary-navigation', label: 'Today', value: selected, Selected,
+    Button, identifier: 'primary-navigation', label: 'Train', value: unselected,
+    Button, identifier: 'primary-navigation', label: 'Health', value: unselected,
+    Button, identifier: 'primary-navigation', label: 'Me', value: unselected,
+    Button, identifier: 'next-workout-example', label: 'ดูตัวอย่าง Session',
+    Button, label: 'ดูการเชื่อมต่อ Apple Health',
+    Button, label: 'เปิดแผนและประวัติเดิมบนเว็บ ↗'

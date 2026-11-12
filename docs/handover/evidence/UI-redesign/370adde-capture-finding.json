@@ -1,0 +1,10 @@
+{
+  "head": "370addedb5637cf984aff957878ed848f4de4b00",
+  "merge": "893227f96e0a2cf44f4eff25cb01500ccb7a67cc",
+  "run_id": 43138252275,
+  "result": "Both build and4/4 UI zero failures each PASS; capture-quality review still required",
+  "finding": "Some adjacent AX5 captures have partially rendered content despite neighboring complete captures; default Feed stats also appear vertically clipped",
+  "screenshot": "370adde-iphone16-AX5-capture-before.png",
+  "screenshot_sha256": "689db75d5f2b4faa9a74c2881e3aac54c0e3416a3d09683152d34571b0f5d5fa",
+  "follow_up": "Flush a frame and settle UI captures in test process; preserve intrinsic StatStrip height; rerun exact source; no image editing"
+}

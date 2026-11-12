@@ -1,0 +1,620 @@
+{
+  "run_id": 43107213059,
+  "conclusion": "success",
+  "results": [
+    {
+      "label": "iphone16",
+      "artifact_id": 13894209678,
+      "artifact_sha256": "264e1e24c73c6d53ec62531d21d75260a7ae2d52e36e453818bc05facb54634b",
+      "job_id": 130813544329,
+      "build": "PASS",
+      "tests": "4/4 PASS, zero failures",
+      "cases": [
+        {
+          "name": "testDarkModeAndAccessibilityText",
+          "seconds": 185.246
+        },
+        {
+          "name": "testFiveTabsAndLabeledExamples",
+          "seconds": 30.069
+        },
+        {
+          "name": "testHealthDetailsAndNoRingsInMe",
+          "seconds": 55.104
+        },
+        {
+          "name": "testIndependentStacksAndRestoredTab",
+          "seconds": 18.409
+        }
+      ],
+      "provenance": {
+        "head_sha": "713ead4126850b6a488943cfe5c511ee3983b3fa",
+        "tested_sha": "e6b0b764e2967118c6622800ec2b0c67e4ed846d",
+        "native_tree": "54462fa2bbd9b1a56ae46b02b8acd836f8f62ea3",
+        "github_tree": "65567a9f07fe2630b099ed4c7e16443188510e95",
+        "head_native_tree": "54462fa2bbd9b1a56ae46b02b8acd836f8f62ea3",
+        "head_github_tree": "65567a9f07fe2630b099ed4c7e16443188510e95",
+        "device": "iPhone 16",
+        "simulator_id": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "runtime": "iOS 18.5",
+        "run_id": "43107213059",
+        "event": "pull_request",
+        "xcode": "Xcode 16.4\nBuild version 16F6\n"
+      }
+    },
+    {
+      "label": "se3",
+      "artifact_id": 13894484095,
+      "artifact_sha256": "c4628ce57246af763c72e5257d53f94ed95cb7791a04016ced000def71623a6a",
+      "job_id": 130813543828,
+      "build": "PASS",
+      "tests": "4/4 PASS, zero failures",
+      "cases": [
+        {
+          "name": "testDarkModeAndAccessibilityText",
+          "seconds": 239.497
+        },
+        {
+          "name": "testFiveTabsAndLabeledExamples",
+          "seconds": 17.137
+        },
+        {
+          "name": "testHealthDetailsAndNoRingsInMe",
+          "seconds": 55.59
+        },
+        {
+          "name": "testIndependentStacksAndRestoredTab",
+          "seconds": 19.214
+        }
+      ],
+      "provenance": {
+        "head_sha": "713ead4126850b6a488943cfe5c511ee3983b3fa",
+        "tested_sha": "e6b0b764e2967118c6622800ec2b0c67e4ed846d",
+        "native_tree": "54462fa2bbd9b1a56ae46b02b8acd836f8f62ea3",
+        "github_tree": "65567a9f07fe2630b099ed4c7e16443188510e95",
+        "head_native_tree": "54462fa2bbd9b1a56ae46b02b8acd836f8f62ea3",
+        "head_github_tree": "65567a9f07fe2630b099ed4c7e16443188510e95",
+        "device": "iPhone SE (3rd generation)",
+        "simulator_id": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "runtime": "iOS 18.5",
+        "run_id": "43107213059",
+        "event": "pull_request",
+        "xcode": "Xcode 16.4\nBuild version 16F6\n"
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "iphone16/M0-Health-iphone16-light-large-sleep.png",
+      "artifact_id": 13894209678,
+      "sha256": "17578ff301cd37f79eb1b760958a7119ec9bb5e53250a225713f09ff48cbc069",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "762D9DD3-16D0-49A1-AB40-F7C1F1F090C5.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone 16-light-large-sleep_0_949A24ED-6162-48E4-BF83-BBCE54E6636A.png",
+        "timestamp": 1794434386.787
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-iphone16-light-xLarge-sleep.png",
+      "artifact_id": 13894209678,
+      "sha256": "e52efd1fa89086e9ed0ee01b3b89cdbd941a21ba2ee16aa85596bf57353cde71",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "2A8B408D-7721-488F-BE03-B253AF9C5170.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone 16-light-xLarge-sleep_0_928A4658-C09B-4BE3-9B61-27EFDC713728.png",
+        "timestamp": 1794434399.182
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-iphone16-light-AX5-sleep.png",
+      "artifact_id": 13894209678,
+      "sha256": "3165cbaabfba46928bc70a53c6bff2630859dbfdf334f51175ff9672ad0b3296",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "3CC5401E-DD87-4AD8-A956-9F70B296C341.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone 16-light-AX5-sleep_0_F409E3B3-FEF9-4361-BEEF-ADC76F052755.png",
+        "timestamp": 1794434426.644
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-iphone16-dark-large-sleep.png",
+      "artifact_id": 13894209678,
+      "sha256": "38b39617e4fb1f9862bb5667543d9e1629bc76ea76cdb84b336479a132b88d26",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "C0B5B3AC-3F8D-4697-9F27-0E6DE52B2A72.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone 16-dark-large-sleep_0_9830C07A-4B16-482B-9E92-5FD4FAB5B838.png",
+        "timestamp": 1794434467.762
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-iphone16-dark-xLarge-sleep.png",
+      "artifact_id": 13894209678,
+      "sha256": "4d9c6b50f218b74897f6243831ffd4c5afbc406b3dc81d8bcaaf975b23f2c369",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "3B981DB7-FE52-470C-925A-671D4C0EF103.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone 16-dark-xLarge-sleep_0_9EB2803E-857D-4B58-A953-DD0D8E7FEC55.png",
+        "timestamp": 1794434481.381
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-iphone16-dark-AX5-sleep.png",
+      "artifact_id": 13894209678,
+      "sha256": "476b46c45f85655604b9222ecac57233d1e32c2034d4684467b632de84c25bcd",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "5BC8D75F-91A9-42E7-9A57-8AF7DF58ABFA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone 16-dark-AX5-sleep_0_BD104CEA-3964-4DE3-9F37-A89502417710.png",
+        "timestamp": 1794434507.109
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-iphone16-dark-AX5-recovery.png",
+      "artifact_id": 13894209678,
+      "sha256": "4b337c2bc2d66ea8489a662e0071dde15432e7d90c070dd25942e1b9e8891b59",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "B7EF0326-BB5B-4150-A057-C0DDC427D741.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone 16-dark-AX5-recovery_0_162815DF-CB96-4D2D-B66E-31A14F7A411E.png",
+        "timestamp": 1794434508.109
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-iphone16-dark-AX5-strain.png",
+      "artifact_id": 13894209678,
+      "sha256": "cd97f9991a72890b2d2e2b6d84c4ca1d5e7c7a6040a28dbc939ae36b8cda9629",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "65CFA6C9-36AA-4E57-A1D4-D1A66190BE84.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone 16-dark-AX5-strain_0_1C138DF2-AE80-4F88-840F-7886E350FF5B.png",
+        "timestamp": 1794434511.682
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-iphone16-dark-AX5-rhr.png",
+      "artifact_id": 13894209678,
+      "sha256": "549ea5451eb225313b10d20b6485419889361e9f762e6a8afd56032084a5e110",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "115DAEE4-BD14-4377-B5EB-2D3068F56692.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone 16-dark-AX5-rhr_0_943A20B5-487D-410B-B17F-CC6164AABC03.png",
+        "timestamp": 1794434529.115
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-iphone16-dark-AX5-hrv.png",
+      "artifact_id": 13894209678,
+      "sha256": "a7add9c462381d809edb5a0b1fc9179a192ad20ff54dc689a298fd527ae0bee6",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "C35F2124-D443-48B5-8A14-14D4F9C077BF.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone 16-dark-AX5-hrv_0_EF292B15-D091-41D8-AAA9-06F225FC9EAF.png",
+        "timestamp": 1794434533.82
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-hosted-320-xLarge-sleep.png",
+      "artifact_id": 13894209678,
+      "sha256": "4b301bacbb95c31efb5c69281e358d81a9bb8961c1ee26643dd39f3e25ad3832",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "ECF6ED98-AD8B-46EB-ACFF-17B9235EBD59.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-hosted-320-xLarge-sleep_0_0441324F-DE17-46AF-B254-39E982E2821B.png",
+        "timestamp": 1794434547.415
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-hosted-320-xLarge-rhr.png",
+      "artifact_id": 13894209678,
+      "sha256": "c6d63a2e08fe51b3f1d261c87acb6000e4ca4306fd9a339fff7e12f2623c5fa7",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "40FD7B01-173D-48EF-88EF-BE74FDD7B5B9.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-hosted-320-xLarge-rhr_0_3EDAE8BE-82FA-41B3-968D-A03B6D0F1E95.png",
+        "timestamp": 1794434557.822
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-state-notRequested.png",
+      "artifact_id": 13894209678,
+      "sha256": "8e961bbe8f875ddb93050109342a061ef270508dd199e1c918ff5b4eed1cd457",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "00D57768-A527-424F-B014-EDA716BF4D2C.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-state-notRequested_0_B4A16937-6C0F-4887-9C3A-36349A956AEB.png",
+        "timestamp": 1794434598.136
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-state-unavailable.png",
+      "artifact_id": 13894209678,
+      "sha256": "2ecdb7106f7701a5c97369399fcd6d6c3504537d5a7b7bf28db6e919df0c356f",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "4F97F9A2-C530-4C57-8E5B-6897FE869F8A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-state-unavailable_0_51E0BBE7-DE33-4F46-B173-F17B10E65E94.png",
+        "timestamp": 1794434605.511
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-state-failed.png",
+      "artifact_id": 13894209678,
+      "sha256": "c66fd731abac141be4b889322abec9805e2173d6a757fa06c77c327a95df9247",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "854425FB-0D9F-46A4-BA76-94B1B848E5B7.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-state-failed_0_5AA48AEA-47BD-46C1-AD8B-A2A885BDD06C.png",
+        "timestamp": 1794434612.339
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-state-missing.png",
+      "artifact_id": 13894209678,
+      "sha256": "d48f930293d2124bca50bd5a8ae40cffbae9a7cc6563aa0038d66f378c5d55f3",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "FB96B83C-20C1-456F-BA57-B63EBE672724.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-state-missing_0_8253DF85-636F-4441-94A2-0CC08B91C17D.png",
+        "timestamp": 1794434619.828
+      }
+    },
+    {
+      "path": "iphone16/M0-Health-state-loading.png",
+      "artifact_id": 13894209678,
+      "sha256": "9d7f4526b859b7e3919554201bdfc6e0a06d69edfeadf1cf218090e481df59b1",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "9D75483C-D6AF-4F21-AE60-E950AA029029.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-state-loading_0_D871A25B-6769-4682-A9F8-E9F1AAD63A43.png",
+        "timestamp": 1794434627.014
+      }
+    },
+    {
+      "path": "iphone16/M0-Me-light.png",
+      "artifact_id": 13894209678,
+      "sha256": "a9b4686beb0e68690a1aba14bb469585df9654faee8a5b24a3f2dee396c8a998",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "677D44AA-6939-4FB1-8064-392D4BC59ACA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Me-light_0_95995A0B-DF4A-4CA2-A9DD-3BA49AC5F4A4.png",
+        "timestamp": 1794434590.487
+      }
+    },
+    {
+      "path": "iphone16/M0-Sleep-detail-missing.png",
+      "artifact_id": 13894209678,
+      "sha256": "450f7170aa15a5fb23703dbded6ba1d52cb11f375dfda547cd7c4cb5784aac75",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "341D689A-78F6-4171-9723-8609B5394AD8",
+        "deviceName": "iPhone 16",
+        "exportedFileName": "09198409-97C2-4D80-8319-2669A901DDE7.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Sleep-detail-missing_0_80759244-52EF-49BE-8F7A-87200665B3F8.png",
+        "timestamp": 1794434636.046
+      }
+    },
+    {
+      "path": "se3/M0-Health-se3-light-large-sleep.png",
+      "artifact_id": 13894484095,
+      "sha256": "f0d188ee31f7cf2df120a2d013fbd22770159730e697e130a7ec4c56111ba91e",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "8CB5452B-C379-4698-81BD-BF0C5FC4508D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone SE (3rd generation)-light-large-sleep_0_E95FB292-21CA-470B-B37E-2857CAACA4AC.png",
+        "timestamp": 1794434416.51
+      }
+    },
+    {
+      "path": "se3/M0-Health-se3-light-xLarge-sleep.png",
+      "artifact_id": 13894484095,
+      "sha256": "233ea697a01f884575ccc8f5747b8c5fc9046c21fb7202bf37d1f7b3e29333e3",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "BCF0DC1B-99F4-4CC9-867C-51D8C1CBD7AA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone SE (3rd generation)-light-xLarge-sleep_0_09F7347A-43E5-4FD4-A254-44E8B452738B.png",
+        "timestamp": 1794434438.501
+      }
+    },
+    {
+      "path": "se3/M0-Health-se3-light-AX5-sleep.png",
+      "artifact_id": 13894484095,
+      "sha256": "b6079840be062488d9c3896ae100ed98d17697676146ee999c65d741ef085b2f",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "AA0908C3-6DA7-4CCC-B1CD-47E3162A306D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone SE (3rd generation)-light-AX5-sleep_0_03D02BCF-1DC1-4C84-BE12-490DD0B37FA7.png",
+        "timestamp": 1794434479.352
+      }
+    },
+    {
+      "path": "se3/M0-Health-se3-dark-large-sleep.png",
+      "artifact_id": 13894484095,
+      "sha256": "cce613a7cc5741f32aa07ab3a50fdcd8e40a0272d6feebf68cab6db0f7fd040a",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "EACEB2E3-20AA-47A5-A297-FBF6CECC0795.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone SE (3rd generation)-dark-large-sleep_0_FBE8CE70-AC6A-45E6-8812-F78B5B6BAE68.png",
+        "timestamp": 1794434521.033
+      }
+    },
+    {
+      "path": "se3/M0-Health-se3-dark-xLarge-sleep.png",
+      "artifact_id": 13894484095,
+      "sha256": "734a14058f8c04a7ee305b8f086b71bb8aa6c2f7138e8c2c32a51b42db4f3076",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "97477180-E57E-4CFA-9E11-72B281203BB9.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone SE (3rd generation)-dark-xLarge-sleep_0_4B1BB2DC-672E-4328-9B83-538751776303.png",
+        "timestamp": 1794434544.571
+      }
+    },
+    {
+      "path": "se3/M0-Health-se3-dark-AX5-sleep.png",
+      "artifact_id": 13894484095,
+      "sha256": "f48b87101a95019be972cd34db3c0a0f3a7b57547a0fe585854182aad71b4376",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "E79CFA88-0CD1-423F-A354-CD2128C855D4.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone SE (3rd generation)-dark-AX5-sleep_0_E80D65A2-28A2-4BB1-8BB0-A98F1C80F3D6.png",
+        "timestamp": 1794434581.109
+      }
+    },
+    {
+      "path": "se3/M0-Health-se3-dark-AX5-recovery.png",
+      "artifact_id": 13894484095,
+      "sha256": "c439facdfb0abdacf3bf42b3fe6b55e2e3903d3a0420140b8de7a7fc4226a79f",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "DF327608-401D-4BA3-BCBA-6E1F38F797C3.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone SE (3rd generation)-dark-AX5-recovery_0_998EAC37-B21B-44B1-945B-A026D7E2ED36.png",
+        "timestamp": 1794434584.756
+      }
+    },
+    {
+      "path": "se3/M0-Health-se3-dark-AX5-strain.png",
+      "artifact_id": 13894484095,
+      "sha256": "b38197181027a5b348c8ceef01522c863a7f1d44827d5e797ec5b6ae625690d9",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "55FE7F48-855F-45C3-BDC0-30D156D60640.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone SE (3rd generation)-dark-AX5-strain_0_F491346D-C8C7-415B-9F19-777A1023FA88.png",
+        "timestamp": 1794434585.385
+      }
+    },
+    {
+      "path": "se3/M0-Health-se3-dark-AX5-rhr.png",
+      "artifact_id": 13894484095,
+      "sha256": "6bdcb2b4b1d9377de66e9f2f5e74fae21b89335f09ea9d8dd69626a54256acb4",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "EC862B2B-295C-4CE4-831E-8037342C1F3F.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone SE (3rd generation)-dark-AX5-rhr_0_891D3A84-0E6D-4CE5-B38A-ED1FA679F228.png",
+        "timestamp": 1794434609.857
+      }
+    },
+    {
+      "path": "se3/M0-Health-se3-dark-AX5-hrv.png",
+      "artifact_id": 13894484095,
+      "sha256": "b1a5b9077513f6456036b8cbd93c5aecc401f53f99499d0fc2ec33e9944750cb",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "33B71A78-6141-4018-8556-93AB0E4BDDA6.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-iPhone SE (3rd generation)-dark-AX5-hrv_0_B0445D99-89E3-4269-AB3B-CBE87D61B0E6.png",
+        "timestamp": 1794434614.823
+      }
+    },
+    {
+      "path": "se3/M0-Health-hosted-320-xLarge-sleep.png",
+      "artifact_id": 13894484095,
+      "sha256": "e9262acdecff2a639c0c02d804d5c562da108032a5a41a8eddca1dcd762466ac",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "E061DF2A-D5A8-4938-9B6C-41B24D2CC72A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-hosted-320-xLarge-sleep_0_1895EA8D-5062-42CA-80BA-41046D6E201B.png",
+        "timestamp": 1794434629.407
+      }
+    },
+    {
+      "path": "se3/M0-Health-hosted-320-xLarge-rhr.png",
+      "artifact_id": 13894484095,
+      "sha256": "b43a619382acd283af29b30e0f968e4c6826c947e4fe7a695c6f5e213f8ff15d",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "BAB39AEE-984F-4B47-AF21-AC969C1AAF46.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-hosted-320-xLarge-rhr_0_84994F28-825A-44DA-A3F2-A26308C23D86.png",
+        "timestamp": 1794434638.835
+      }
+    },
+    {
+      "path": "se3/M0-Health-state-notRequested.png",
+      "artifact_id": 13894484095,
+      "sha256": "77342b2f010912b324c107f3d52a206483d4b4d679482b601bd60d4261ad7457",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "32CC90F8-771E-454C-BA39-6E1202DCBCB9.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-state-notRequested_0_150583EE-5B20-4F40-A7B3-FBCC6196C114.png",
+        "timestamp": 1794434669.239
+      }
+    },
+    {
+      "path": "se3/M0-Health-state-unavailable.png",
+      "artifact_id": 13894484095,
+      "sha256": "b4717629c11a03edad69a6c2494199208d33dde76cb50e1afd59c9d21c84be6d",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "D25F871C-F8E5-4E73-B32F-D6B6859C951A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-state-unavailable_0_356054D2-6E38-427A-8890-88AAF643E989.png",
+        "timestamp": 1794434676.149
+      }
+    },
+    {
+      "path": "se3/M0-Health-state-failed.png",
+      "artifact_id": 13894484095,
+      "sha256": "b004b1142a51c9583ae89d9e2b961752d753229ce597e4f8fefb9a9625c30bb4",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "92F3D622-99C5-413E-93B7-93E4279FBB08.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-state-failed_0_A18EC714-1FD0-41AA-BE79-A87332A1218D.png",
+        "timestamp": 1794434683.957
+      }
+    },
+    {
+      "path": "se3/M0-Health-state-missing.png",
+      "artifact_id": 13894484095,
+      "sha256": "85261e2ed9c1d6768e8b5108d4c3c167d9e53b020014e8c6a32df53e0703b244",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "FF41B781-4BC3-4D30-BEFF-AB0F8FD6DEB3.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-state-missing_0_C95066CF-E86E-4D4B-9C87-B683E4411652.png",
+        "timestamp": 1794434691.074
+      }
+    },
+    {
+      "path": "se3/M0-Health-state-loading.png",
+      "artifact_id": 13894484095,
+      "sha256": "7c5ebe45eee0bc24cf3feaafebad8b3c3f94cdc9674fdfe577ce5678878f3bb7",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "C6689AEC-2447-4524-AA45-3C8FEF0EAD1C.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Health-state-loading_0_FDA21584-C4FF-4A01-9015-0254016E51A2.png",
+        "timestamp": 1794434698.355
+      }
+    },
+    {
+      "path": "se3/M0-Me-light.png",
+      "artifact_id": 13894484095,
+      "sha256": "6f354fb896277b74d46f2cb61e87dc92052923350dcd24f7a63bb2a4cbc491a0",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "60E79011-CAFB-498F-B45E-A84C53683E1D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Me-light_0_A81E8ADE-8C07-4EF8-BF76-1BF45A8165B7.png",
+        "timestamp": 1794434661.781
+      }
+    },
+    {
+      "path": "se3/M0-Sleep-detail-missing.png",
+      "artifact_id": 13894484095,
+      "sha256": "ea29a33b8b27521f4f74642fa75e287289b33e6599cc9b67c8533a9150a57ffc",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "66571EB4-A450-4628-ABB9-3D215AFEDD58",
+        "deviceName": "iPhone SE (3rd generation)",
+        "exportedFileName": "AD712496-920C-43FD-9530-6E7753A5DFA2.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "M0-Sleep-detail-missing_0_3707D6FC-34DF-485D-B40F-87E97900A037.png",
+        "timestamp": 1794434707.596
+      }
+    }
+  ]
+}

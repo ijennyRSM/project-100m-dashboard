@@ -1,0 +1,37 @@
+{
+  "note": "Local owner images visually inspected; raw files intentionally excluded from git and app assets. All dark mode; no personal data transcribed.",
+  "files": [
+    {
+      "filename": "ChatGPT Image Nov 12, 2026, 07_33_27 AM.jpg",
+      "sha256": "fd07eb92c4a20f2cf84e3e0826cd885d433c6be9d1b9d7f3cb57b9f8ac6af9d7"
+    },
+    {
+      "filename": "ChatGPT Image Nov 12, 2026, 07_33_36 AM.jpg",
+      "sha256": "e83ce1efbd185409295c3caa3fdbe4f100c57753d168493ba029218d998946b6"
+    },
+    {
+      "filename": "ChatGPT Image Nov 12, 2026, 07_33_41 AM.png",
+      "sha256": "d51602a1310e1114dc2f0c7a652a6c110b3a8896c39a798425847c2013f92bfa"
+    },
+    {
+      "filename": "ChatGPT Image Nov 12, 2026, 07_33_46 AM.jpg",
+      "sha256": "3f31fbc2c64a3632f684396bff4e61f3626a719e836b003ab38e5a23d5317ca3"
+    },
+    {
+      "filename": "ChatGPT Image Nov 12, 2026, 07_33_50 AM.png",
+      "sha256": "a139928a4f6ee51ff984ba686077f03f873ced92e9ed1130b1048a782b292954"
+    },
+    {
+      "filename": "ChatGPT Image Nov 12, 2026, 07_33_55 AM.jpg",
+      "sha256": "15977e04def31a1347a2fce5f4a5880baffb8e72d2f817ded935f4d1b0442a42"
+    },
+    {
+      "filename": "ChatGPT Image Nov 12, 2026, 07_33_59 AM.jpg",
+      "sha256": "ad27c470c3840ccbad1188d50cbf3ecbcc2b23886e75fdb6364894a9fa41cccc"
+    },
+    {
+      "filename": "ChatGPT Image Nov 12, 2026, 07_34_03 AM.png",
+      "sha256": "444b7f5e2fba0c913cd348176849e0e6f9babfcef58e99279cb7cb15853cdabc"
+    }
+  ]
+}

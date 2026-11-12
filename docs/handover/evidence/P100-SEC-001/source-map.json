@@ -1,0 +1,36 @@
+{
+  "security_commit": "ed7b525e8ec1fe6f2d8a1babf764dfc976a2b402",
+  "note": "Test runner uses UTF-8 read_text universal-newline conversion before psql. Original schema working copy has CRLF; canonical git blob has LF. Content is identical after this same conversion.",
+  "files": [
+    {
+      "path": "scripts/test_security.py",
+      "tested_working_bytes_sha256": "b0a6428bc35e11af6f5472b94f00510385a346059f0ee344a060507864a4f87a",
+      "canonical_git_bytes_sha256": "b0a6428bc35e11af6f5472b94f00510385a346059f0ee344a060507864a4f87a",
+      "universal_newline_content_matches": true
+    },
+    {
+      "path": "supabase-schema.sql",
+      "tested_working_bytes_sha256": "8a4f258a58cbb6e6383667451e5c770de624e51a41ffb472579a7ce241b09c7a",
+      "canonical_git_bytes_sha256": "d29e88c7e7236dad490eff6647568607c9720ffce608f6053251176381cd767f",
+      "universal_newline_content_matches": true
+    },
+    {
+      "path": "supabase/tests/bootstrap.sql",
+      "tested_working_bytes_sha256": "5671c9f40d7c46df7403728a4159ebc6ec970eb45238b89261eaa4fafd06a6c2",
+      "canonical_git_bytes_sha256": "5671c9f40d7c46df7403728a4159ebc6ec970eb45238b89261eaa4fafd06a6c2",
+      "universal_newline_content_matches": true
+    },
+    {
+      "path": "supabase/tests/p100_sec_001.sql",
+      "tested_working_bytes_sha256": "eca689ecc160372fabc537564acd1dac656726a72efed48c91f756e6ee70b619",
+      "canonical_git_bytes_sha256": "eca689ecc160372fabc537564acd1dac656726a72efed48c91f756e6ee70b619",
+      "universal_newline_content_matches": true
+    },
+    {
+      "path": "supabase/tests/p100_sec_001_defaults.sql",
+      "tested_working_bytes_sha256": "df1756b235cdf029a41055577fcfb7d8999803da4828ffc648e739f6e05bffee",
+      "canonical_git_bytes_sha256": "df1756b235cdf029a41055577fcfb7d8999803da4828ffc648e739f6e05bffee",
+      "universal_newline_content_matches": true
+    }
+  ]
+}

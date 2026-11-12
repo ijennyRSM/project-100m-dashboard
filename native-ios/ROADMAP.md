@@ -1,5 +1,7 @@
 # PROJECT 100M Native App — product and engineering roadmap
 
+> Historical roadmap below. The approved 2026-11-12 [Product Blueprint](../docs/product/PRODUCT_BLUEPRINT.md) now defines M0–M7; [tasks](../docs/handover/tasks.json) and [CURRENT](../docs/handover/CURRENT.md) track actual progress. Old M0 physical-iPhone acceptance is now M7 and remains required. Do not infer completion or sequence from the legacy headings below.
+
 ## North Star
 A friendly, privacy-aware fitness companion combining:
 - Runna-like session-based adaptive training, not fixed calendar guilt

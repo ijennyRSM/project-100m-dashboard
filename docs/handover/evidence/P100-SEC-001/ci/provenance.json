@@ -1,0 +1,18 @@
+{
+  "run_id": 43105037594,
+  "head_sha": "3e864514b2687e44a603532040ebd448b17bd8b8",
+  "tested_merge_sha": "ea5c5b7691e41b3d8c9f179f00a9afb9c3c7570f",
+  "result": "completed success",
+  "artifacts": [
+    {
+      "artifact_id": 13894480144,
+      "label": "pg16",
+      "artifact_sha256": "ab76c44f7227333775eb5539cc48873508669df56f131b24d75ab82e4f435697"
+    },
+    {
+      "artifact_id": 13892909178,
+      "label": "pg17",
+      "artifact_sha256": "fbc17bce5242408026c53b40a37fdc703f7d6b547ef62b52c315005f5e4b0723"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+Test Case '-[PROJECT100MUITests.FoundationUITests testDarkModeAndAccessibilityText]' started.
+Test Case '-[PROJECT100MUITests.FoundationUITests testDarkModeAndAccessibilityText]' passed (208.865 seconds).
+Test Case '-[PROJECT100MUITests.FoundationUITests testFiveTabsAndLabeledExamples]' started.
+Test Case '-[PROJECT100MUITests.FoundationUITests testFiveTabsAndLabeledExamples]' passed (91.651 seconds).
+Test Case '-[PROJECT100MUITests.FoundationUITests testHealthDetailsAndNoRingsInMe]' started.
+Test Case '-[PROJECT100MUITests.FoundationUITests testHealthDetailsAndNoRingsInMe]' passed (50.942 seconds).
+Test Case '-[PROJECT100MUITests.FoundationUITests testIndependentStacksAndRestoredTab]' started.
+Test Case '-[PROJECT100MUITests.FoundationUITests testIndependentStacksAndRestoredTab]' passed (17.087 seconds).
+	 Executed 4 tests, with 0 failures (0 unexpected) in 368.545 (368.547) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 368.545 (368.548) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 368.545 (368.549) seconds
+** TEST SUCCEEDED **

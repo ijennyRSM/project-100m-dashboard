@@ -1,0 +1,145 @@
+name: iPhone Device Build (Unsigned IPA)
+
+# Builds the real arm64 iphoneos app (not the Simulator app) and packages it as an
+# IPA for owner re-signing with a personal Apple ID (see docs/IOS_INSTALLATION_WINDOWS.md).
+# No Apple certificate, provisioning profile or Apple ID is used or stored here.
+# A compiled, packaged IPA is NOT proof that it installs or that HealthKit works on a device.
+
+on:
+  push:
+    branches:
+      - feat/ios-native-foundation
+      - 'codex/**'
+      - 'claude/**'
+    paths:
+      - native-ios/**
+      - .github/workflows/ios-device-ipa.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ipa-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  build-iphoneos:
+    runs-on: macos-15
+    timeout-minutes: 35
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+      CONFIGURATION: Release
+      OUT: build/out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        working-directory: native-ios
+        run: xcodegen generate
+      - name: Build arm64 iphoneos app (signing disabled for this stage only)
+        working-directory: native-ios
+        run: |
+          set -o pipefail
+          mkdir -p "$OUT"
+          xcodebuild \
+            -project PROJECT100M.xcodeproj \
+            -scheme PROJECT100M \
+            -configuration "$CONFIGURATION" \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build/DerivedData \
+            ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
+            CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build 2>&1 | tee "$OUT/device-build.log"
+      - name: Package IPA (ad-hoc pseudo-signature carries declared entitlements; no Apple identity)
+        working-directory: native-ios
+        run: |
+          set -euo pipefail
+          APP="build/DerivedData/Build/Products/${CONFIGURATION}-iphoneos/PROJECT100M.app"
+          test -d "$APP" || { echo "::error::Device app not produced at $APP"; exit 1; }
+          STAGE=build/ipa-stage
+          rm -rf "$STAGE" && mkdir -p "$STAGE/Payload"
+          ditto "$APP" "$STAGE/Payload/PROJECT100M.app"
+          # Without an embedded entitlements blob a re-signing tool has no record that the
+          # app needs HealthKit. Identity "-" is an ad-hoc pseudo-signature, not an Apple
+          # certificate; Sideloadly/Xcode replace it when signing for a device.
+          codesign --force --sign - --timestamp=none --generate-entitlement-der \
+            --entitlements App/PROJECT100M.entitlements "$STAGE/Payload/PROJECT100M.app"
+          cp App/PROJECT100M.entitlements "$OUT/declared-entitlements.plist"
+          (cd "$STAGE" && zip -qry -X "../out/PROJECT100M-unsigned.ipa" Payload)
+      - name: Verify IPA structure, platform, architecture and entitlements
+        working-directory: native-ios
+        run: |
+          set -euo pipefail
+          IPA="$OUT/PROJECT100M-unsigned.ipa"
+          python3 scripts/verify_ipa.py "$IPA" --report "$OUT/verification.json" | tee "$OUT/verification.txt"
+          BIN=build/ipa-stage/Payload/PROJECT100M.app/PROJECT100M
+          {
+            echo "--- independent Apple tool cross-checks ---"
+            lipo -info "$BIN"
+            xcrun vtool -show-build "$BIN"
+            codesign -dv "build/ipa-stage/Payload/PROJECT100M.app" 2>&1
+            codesign -d --entitlements - --xml "build/ipa-stage/Payload/PROJECT100M.app" 2>/dev/null; echo
+            unzip -l "$IPA" | head -20
+          } | tee -a "$OUT/verification.txt"
+          lipo -archs "$BIN" | grep -qx arm64
+          xcrun vtool -show-build "$BIN" | grep -Eq 'platform (IOS|2)$'
+          (cd "$OUT" && shasum -a 256 PROJECT100M-unsigned.ipa > SHA256SUMS.txt && cat SHA256SUMS.txt)
+      - name: Record build provenance
+        working-directory: native-ios
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, subprocess
+          def run(*a): return subprocess.check_output(list(a), text=True).strip()
+          out = os.environ['OUT']
+          ipa = os.path.join(out, 'PROJECT100M-unsigned.ipa')
+          verification = json.load(open(os.path.join(out, 'verification.json')))
+          repo, run_id = os.environ['GITHUB_REPOSITORY'], os.environ['GITHUB_RUN_ID']
+          data = dict(
+              artifact='PROJECT100M-iPhone-Unsigned', ipa='PROJECT100M-unsigned.ipa',
+              ipa_sha256=hashlib.sha256(open(ipa, 'rb').read()).hexdigest(), ipa_bytes=os.path.getsize(ipa),
+              commit=run('git', 'rev-parse', 'HEAD'), ref=os.environ['GITHUB_REF_NAME'],
+              native_tree=run('git', 'rev-parse', 'HEAD:native-ios'), github_tree=run('git', 'rev-parse', 'HEAD:.github'),
+              configuration=os.environ['CONFIGURATION'], sdk='iphoneos ' + run('xcrun', '--sdk', 'iphoneos', '--show-sdk-version'),
+              destination='generic/platform=iOS', xcode=run('xcodebuild', '-version').replace('\n', ' '),
+              build_number=os.environ['GITHUB_RUN_NUMBER'], run_id=run_id,
+              run_url=f"https://github.com/{repo}/actions/runs/{run_id}",
+              bundle=verification.get('info'), checks_passed=verification.get('passed'),
+              signing_state='No Apple certificate or provisioning profile. Ad-hoc (identity "-") pseudo-signature only, '
+                            'embedding declared entitlements. Must be re-signed (e.g. Sideloadly + Apple ID) to install.',
+              limitations=['Compile/package evidence only; not installation evidence',
+                           'HealthKit on free personal-team signing is unverified and may be stripped or rejected'])
+          json.dump(data, open(os.path.join(out, 'provenance.json'), 'w'), indent=2)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as s:
+              s.write('## PROJECT 100M unsigned iPhone IPA\n\n')
+              s.write(f"- Artifact: `PROJECT100M-iPhone-Unsigned` → `PROJECT100M-unsigned.ipa`\n")
+              s.write(f"- SHA256: `{data['ipa_sha256']}` ({data['ipa_bytes']} bytes)\n")
+              s.write(f"- Commit: `{data['commit']}` · native tree `{data['native_tree']}`\n")
+              s.write(f"- {data['xcode']} · {data['sdk']} · {data['configuration']} · build {data['build_number']}\n")
+              s.write(f"- Verification: {'PASS' if data['checks_passed'] else 'FAIL'} (see verification.txt)\n")
+              s.write('- Install guide: docs/IOS_INSTALLATION_WINDOWS.md. Not installation evidence.\n')
+          print(json.dumps(data, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PROJECT100M-iPhone-Unsigned
+          path: |
+            native-ios/build/out/PROJECT100M-unsigned.ipa
+            native-ios/build/out/SHA256SUMS.txt
+            native-ios/build/out/provenance.json
+            native-ios/build/out/verification.json
+            native-ios/build/out/verification.txt
+            native-ios/build/out/declared-entitlements.plist
+          if-no-files-found: error
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: PROJECT100M-iPhone-build-log-${{ github.run_number }}
+          path: native-ios/build/out/device-build.log
+          retention-days: 14

@@ -10,6 +10,8 @@ settings:
     SWIFT_VERSION: "5.0"
     CODE_SIGN_STYLE: Automatic
     TARGETED_DEVICE_FAMILY: "1"
+    MARKETING_VERSION: "0.2.0"
+    CURRENT_PROJECT_VERSION: "1"
 
 targets:
   PROJECT100M:
@@ -17,14 +19,23 @@ targets:
     platform: iOS
     sources:
       - path: App
+      - path: Core
+      - path: Services
       - path: Health
       - path: Features
+      - path: DesignSystem
     info:
       path: App/Info.plist
       properties:
         CFBundleDisplayName: PROJECT 100M
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        UILaunchScreen: {}
         NSHealthShareUsageDescription: PROJECT 100M reads your approved Apple Health sleep, heart and workouts to show your training and recovery. Data stays on this iPhone in this initial build.
         UIRequiredDeviceCapabilities: [arm64]
+        CFBundleURLTypes:
+          - CFBundleURLName: com.project100m.ios.auth
+            CFBundleURLSchemes: [project100m]
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
     entitlements:
@@ -34,5 +45,28 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.project100m.ios
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         GENERATE_INFOPLIST_FILE: "NO"
         SUPPORTS_MACCATALYST: "NO"
+  PROJECT100MUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: UITests
+    dependencies:
+      - target: PROJECT100M
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: "YES"
+        PRODUCT_BUNDLE_IDENTIFIER: com.project100m.ios.uitests
+        TEST_TARGET_NAME: PROJECT100M
+
+schemes:
+  PROJECT100M:
+    build:
+      targets:
+        PROJECT100M: all
+        PROJECT100MUITests: [test]
+    test:
+      targets:
+        - PROJECT100MUITests
