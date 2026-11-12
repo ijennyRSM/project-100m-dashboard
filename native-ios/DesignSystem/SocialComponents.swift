@@ -40,6 +40,7 @@ struct StatStrip: View {
             }
             VStack(alignment: .leading, spacing: 16) { ForEach(items) { stat($0) } }
         }.frame(maxWidth: .infinity, alignment: .leading)
+            .fixedSize(horizontal: false, vertical: true)
     }
     private func stat(_ item: StatItem) -> some View {
         VStack(alignment: .leading, spacing: 4) {

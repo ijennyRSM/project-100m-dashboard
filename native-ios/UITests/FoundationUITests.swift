@@ -54,6 +54,12 @@ final class FoundationUITests: XCTestCase {
     }
 
     private func capture(_ app: XCUIApplication, _ name: String) {
+        if name.hasPrefix("UI-") {
+            // AX snapshots can precede the compositor after a tab/section change on loaded CI.
+            // Flush one frame, then allow the native transition to settle in the separate test process.
+            _ = app.screenshot()
+            Thread.sleep(forTimeInterval: 0.6)
+        }
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = name
         attachment.lifetime = .keepAlways
