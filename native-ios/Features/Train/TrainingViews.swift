@@ -65,7 +65,8 @@ struct ActivePlanCard: View {
             } else {
                 Label("จบแผนนี้แล้ว ยินดีด้วย!", systemImage: "flag.checkered").font(.headline)
             }
-        }.accessibilityIdentifier("active-plan")
+        }
+        // No container identifier here: it would override child IDs such as next-session-title (ADR-013).
     }
 }
 

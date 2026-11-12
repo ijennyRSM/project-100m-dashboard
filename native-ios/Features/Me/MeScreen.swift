@@ -5,6 +5,7 @@ struct MeScreen: View {
     @EnvironmentObject private var training: TrainingModel
     @State private var section = "Progress"
     @State private var confirmSignOut = false
+    @State private var confirmImport = false
 
     private var completedCount: Int { training.history.filter { $0.attempt.status == .completed }.count }
     private var liveCount: Int { training.history.filter { $0.attempt.mode == "live" }.count }
@@ -15,6 +16,15 @@ struct MeScreen: View {
             StatStrip(items: [StatItem(label: "ฝึกครบ", value: "\(completedCount)"),
                               StatItem(label: "บันทึกทั้งหมด", value: "\(training.history.count)"),
                               StatItem(label: "Live Workout", value: "\(liveCount)")])
+            if account.phase == .signedIn && training.guestImportAvailable {
+                P100Card {
+                    Label("พบข้อมูลฝึกโหมด Guest ในเครื่องนี้", systemImage: "tray.and.arrow.down").font(.headline)
+                    Text("บัญชีนี้ยังไม่มีแผนในเครื่อง คัดลอกแผนและประวัติจากโหมด Guest เข้าบัญชีนี้ได้ ข้อมูล Guest เดิมยังอยู่ และไม่มีการส่งขึ้นคลาวด์")
+                        .font(.subheadline).foregroundStyle(.secondary)
+                    Button("คัดลอกเข้าบัญชีนี้…") { confirmImport = true }.buttonStyle(SecondaryAction())
+                        .accessibilityIdentifier("import-guest")
+                }
+            }
             ChipPicker(labels: ["Progress", "Activities", "Gallery", "More"], selection: $section, id: "profile-section")
             Group {
                 switch section {
@@ -56,6 +66,12 @@ struct MeScreen: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     IconLink(title: "ความเป็นส่วนตัวและการแชร์", symbol: "gearshape") { PrivacyScreen() }
                 }
+            }
+            .confirmationDialog("คัดลอกข้อมูล Guest เข้าบัญชีนี้?", isPresented: $confirmImport, titleVisibility: .visible) {
+                Button("คัดลอก") { training.importGuestData() }
+                Button("ยกเลิก", role: .cancel) {}
+            } message: {
+                Text("แผน ประวัติ และ Live Workout ที่ค้างอยู่ในโหมด Guest จะถูกคัดลอกเข้าบัญชี \(account.user?.email ?? "")")
             }
             .confirmationDialog("ออกจากระบบ?", isPresented: $confirmSignOut, titleVisibility: .visible) {
                 Button("ออกจากระบบ (เก็บข้อมูลฝึกในเครื่องไว้)") { Task { await signOut(removeData: false) } }

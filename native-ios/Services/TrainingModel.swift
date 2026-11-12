@@ -10,6 +10,8 @@ final class TrainingModel: ObservableObject {
     @Published private(set) var scope: AccountScope?
     @Published var notice: String?
     @Published var errorMessage: String?
+    /// True when signed in to an empty account while this device holds Guest training data.
+    @Published private(set) var guestImportAvailable = false
 
     private let root: URL
     private var repository: TrainingRepository?
@@ -48,11 +50,32 @@ final class TrainingModel: ObservableObject {
         state = loaded
         scope = newScope
         errorMessage = nil
+        guestImportAvailable = false
+        if case .user = newScope, loaded.plans.isEmpty, let guest = TrainingRepository.forScope(.guest, root: root) {
+            let (guestState, guestOutcome) = guest.load()
+            guestImportAvailable = guestOutcome == .loaded && !guestState.plans.isEmpty
+        }
         if case .recovered(let reason, let backup) = outcome {
             notice = "ข้อมูลฝึกเดิมในเครื่องเปิดไม่ได้ (\(reason)) จึงเริ่มใหม่ และเก็บไฟล์เดิมไว้เป็น \(backup.isEmpty ? "ไฟล์เดิม" : backup)"
         } else {
             notice = nil
         }
+    }
+
+    /// Copies (never moves or merges) this device's Guest training into an empty account
+    /// partition, only after explicit user confirmation. Guest data stays in place.
+    @discardableResult
+    func importGuestData() -> Bool {
+        guard case .user = scope, state.plans.isEmpty, state.activeLive == nil,
+              let guest = TrainingRepository.forScope(.guest, root: root) else { return false }
+        let (guestState, outcome) = guest.load()
+        guard outcome == .loaded, !guestState.plans.isEmpty else { return false }
+        let copied = perform { state in
+            state = guestState
+            state.updatedAt = Date()
+        }
+        if copied { guestImportAvailable = false }
+        return copied
     }
 
     /// Deletes this device's training files for the current scope (explicit user action only).
