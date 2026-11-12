@@ -67,6 +67,10 @@ Implementation commit **`ef09ba0342b22c42ba7df141def13e7c1ddcd688`** (native tre
 - Visual review caught overlays under the floating tab bar twice; the non-scrolling Maps layout does not receive the capsule inset, so it pads explicitly. Local preview gallery: `.local-evidence/preview-c05ea20.html` (ignored, not committed).
 - CI infrastructure: one macOS job was never acquired (capacity) and re-ran green; security pgTAP jobs currently fail while installing packages from apt.postgresql.org. No database files changed; re-run later.
 
+## App icon
+
+- Owner-supplied "100M" logo is the app icon (commit `c29c6253bc47ee5e8a88e1971caeb6090ff9b7bd`): `native-ios/App/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png`, 1024px opaque, corners filled black (iOS applies its own mask). Latest installable IPA: [run 43259974147](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43259974147), SHA256 `dd130811bbfbaf4431034d8083251ad8fc11484502044e317829ce1281645fbd`; simulator UI [43259982703](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43259982703) PASS on both devices.
+
 ## Security gate
 
 **P100-SEC-001 unchanged and unresolved in production** (authenticated TRUNCATE etc. on `public.training_states`). Migration A/proposal B remain READY_FOR_REVIEW; requires owner approval, backup confirmation and disposable/staging proof before any production SQL. Native code does not touch that table.
@@ -77,13 +81,11 @@ Implementation commit **`ef09ba0342b22c42ba7df141def13e7c1ddcd688`** (native tre
 - Sign-in by code requires the email template to include `{{ .Token }}`; otherwise use pasted link (link is single-use; tapping it first consumes it on the website).
 - Offline-restored session is not re-refreshed when connectivity returns until next launch (no API calls depend on it yet).
 - Native training is device-local; no cloud sync/import of web history yet (needs SEC-001 + reviewed adapter).
-- No app icon asset yet; iOS shows a blank icon.
 - Build number = workflow run number of `ios-device-ipa.yml`.
 
 ## Exact next tasks
 
 1. Owner: install the IPA via the guide; report launch/UI, sign-in, Live Workout relaunch and Health results separately (M7 evidence).
-2. Add an original app icon asset; re-run device build.
 3. Read-only, explicit "import my web plan" adapter (training_states SELECT under RLS, owner-approved) mapping v2 profiles/plans/records into a local copy — only after SEC-001 decision.
 4. Retry refresh on foreground when restored offline; expose session state in Me.
 5. Owner decision on SEC-001 production remediation (separate approval).

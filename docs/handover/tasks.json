@@ -79,7 +79,7 @@
     "owner": "Claude",
     "status": "READY_FOR_REVIEW",
     "branch": "codex/m0-foundation-handover",
-    "commit": "ef09ba0342b22c42ba7df141def13e7c1ddcd688",
+    "commit": "c29c6253bc47ee5e8a88e1971caeb6090ff9b7bd",
     "requirements": [
       "QA-01",
       "HK-01"
@@ -88,16 +88,20 @@
       "Separate workflow builds Release arm64 iphoneos app with signing disabled and packages PROJECT100M-unsigned.ipa",
       "Ad-hoc pseudo-signature embeds declared HealthKit entitlement; no Apple identity or credentials in GitHub",
       "Portable IPA verifier (ZIP, Info.plist, Mach-O arch/platform/minOS, signature state, entitlement) plus lipo/vtool/codesign cross-checks, SHA256 and provenance",
-      "Windows Sideloadly installation guide with HealthKit/free-provisioning limits and error collection"
+      "Windows Sideloadly installation guide with HealthKit/free-provisioning limits and error collection",
+      "Owner-supplied 100M app icon: single-size 1024px opaque AppIcon asset catalog; verifier checks CFBundleIcons"
     ],
     "modified_files": [
       ".github/workflows/ios-device-ipa.yml",
       "native-ios/scripts/verify_ipa.py",
       "scripts/tests/test_verify_ipa.py",
       "docs/IOS_INSTALLATION_WINDOWS.md",
-      "native-ios/project.yml"
+      "native-ios/project.yml",
+      "native-ios/App/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png"
     ],
     "test_results": [
+      "PASS run 43259974147 (re-run after runner capacity cancellation): app-icon check, AppIcon60x60@2x.png and Assets.car in IPA, SHA256 dd130811bbfbaf4431034d8083251ad8fc11484502044e317829ce1281645fbd",
+      "PASS simulator UI both devices run 43259982703",
       "PASS run 43152462029: device build, verifier 16/16, IPA SHA256 5510dfc393deed90265938d51f3e6757def2b834b5a3c97c2ef8db15057c07f3",
       "PASS run 43146948447 (cf47dc6) artifact downloaded and re-verified locally on Windows",
       "PASS local scripts/tests/test_verify_ipa.py 5 tests",
@@ -105,15 +109,13 @@
     ],
     "known_issues": [
       "Free personal-team HealthKit provisioning unverified and possibly unsupported",
-      "No app icon asset",
       "Free signing expires after 7 days"
     ],
     "reviewer_findings": [
       "No review requested by owner; owner device test pending"
     ],
     "next_actions": [
-      "Owner installs via docs/IOS_INSTALLATION_WINDOWS.md and reports UI, sign-in, training and HealthKit results separately",
-      "Add original app icon"
+      "Owner installs via docs/IOS_INSTALLATION_WINDOWS.md and reports UI, sign-in, training and HealthKit results separately"
     ],
     "acceptance_criteria": [
       {
