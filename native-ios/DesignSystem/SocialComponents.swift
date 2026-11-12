@@ -54,6 +54,8 @@ struct ChipPicker: View {
     let labels: [String]
     @Binding var selection: String
     var id: String
+    /// Opaque chips for use over maps and media.
+    var filled = false
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
@@ -61,8 +63,8 @@ struct ChipPicker: View {
                     Button { selection = label } label: {
                         Text(label).font(.subheadline.weight(.semibold))
                             .padding(.horizontal, 16).frame(minHeight: 44)
-                            .foregroundStyle(selection == label ? P100Theme.accent : Color.primary)
-                            .background(selection == label ? P100Theme.accent.opacity(0.1) : P100Theme.surface, in: Capsule())
+                            .foregroundStyle(selection == label ? (filled ? P100Theme.canvas : P100Theme.accent) : Color.primary)
+                            .background(selection == label ? (filled ? P100Theme.accent : P100Theme.accent.opacity(0.1)) : P100Theme.surface, in: Capsule())
                             .overlay(Capsule().strokeBorder(selection == label ? P100Theme.accent : Color.primary.opacity(0.15)))
                     }.buttonStyle(.plain)
                         .accessibilityIdentifier("\(id)-\(label)")

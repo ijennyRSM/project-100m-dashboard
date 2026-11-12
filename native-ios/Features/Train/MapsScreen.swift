@@ -11,33 +11,41 @@ struct MapsScreen: View {
     private var selected: SampleRoute { route == "Easy Loop" ? .easyLoop : .shortLoop }
 
     var body: some View {
-        ZStack(alignment: .top) {
-            RouteMapView(route: selected, position: $position, interactive: true)
-                .ignoresSafeArea(edges: .bottom)
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 10) {
-                    Image(systemName: "figure.run").foregroundStyle(P100Theme.accent)
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("Running · เส้นทางตัวอย่าง").font(.headline)
-                        Text("ไม่ใช้ตำแหน่งของคุณ").font(.caption).foregroundStyle(.secondary)
-                    }
-                    Spacer(minLength: 0)
+        // Overlays stay inside the safe area (above the floating tab bar). The map fills the
+        // whole screen behind them, with bottom padding so Apple's legal label stays visible.
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 10) {
+                Image(systemName: "figure.run").foregroundStyle(P100Theme.accent)
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Running · เส้นทางตัวอย่าง").font(.headline)
+                    Text("ไม่ใช้ตำแหน่งของคุณ").font(.caption).foregroundStyle(.secondary)
                 }
-                .padding(.horizontal, 16).padding(.vertical, 6).frame(minHeight: 48)
-                .background(.regularMaterial, in: Capsule())
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, 16).padding(.vertical, 6).frame(minHeight: 48)
+            .background(.regularMaterial, in: Capsule())
+            ChipPicker(labels: ["Easy Loop", "Short Loop"], selection: $route, id: "route-filter", filled: true)
+            routeSummary
+            Spacer(minLength: 0)
+            HStack(alignment: .bottom) {
                 SampleBanner().padding(.horizontal, 12).padding(.vertical, 6)
                     .background(.regularMaterial, in: Capsule())
-                ChipPicker(labels: ["Easy Loop", "Short Loop"], selection: $route, id: "route-filter")
-                Spacer(minLength: 0)
-                HStack {
-                    Spacer()
-                    Button { recenter() } label: {
-                        Image(systemName: "scope").font(.system(size: 20, weight: .semibold))
-                            .frame(width: 48, height: 48).background(.regularMaterial, in: Circle())
-                    }.buttonStyle(.plain).accessibilityLabel("กลับไปที่เส้นทาง").accessibilityIdentifier("map-recenter")
-                }
-                routeSummary
-            }.padding(12)
+                Spacer()
+                Button { recenter() } label: {
+                    Image(systemName: "scope").font(.system(size: 20, weight: .semibold))
+                        .frame(width: 48, height: 48).background(.regularMaterial, in: Circle())
+                }.buttonStyle(.plain).accessibilityLabel("กลับไปที่เส้นทาง").accessibilityIdentifier("map-recenter")
+            }.padding(.bottom, 28)
+        }
+        .padding(12)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background {
+            RouteMapView(route: selected, position: $position, interactive: true)
+                // MapKit fits the camera inside its safe area: keep the route clear of the
+                // top overlays and keep the legal label above the floating tab bar.
+                .safeAreaPadding(.top, typeSize.isAccessibilitySize ? 120 : 250)
+                .safeAreaPadding(.bottom, 110)
+                .ignoresSafeArea(edges: .bottom)
         }
         .navigationTitle("Maps").navigationBarTitleDisplayMode(.inline)
         .onChange(of: route) { _, _ in recenter() }
