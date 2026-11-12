@@ -1,0 +1,29 @@
+name: Web browser tests
+on:
+  push:
+    branches: ['codex/**']
+    paths: ['*.html', '*.js', '*.css', 'scripts/dev-server.mjs', 'tests/browser/**', 'package*.json', 'playwright.config.mjs', '.github/workflows/web-tests.yml']
+  pull_request:
+    paths: ['*.html', '*.js', '*.css', 'scripts/dev-server.mjs', 'tests/browser/**', 'package*.json', 'playwright.config.mjs', '.github/workflows/web-tests.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chromium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: web-test-results
+          path: test-results/
+          retention-days: 7
