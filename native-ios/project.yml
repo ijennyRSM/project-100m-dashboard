@@ -19,6 +19,8 @@ targets:
     platform: iOS
     sources:
       - path: App
+      - path: Core
+      - path: Services
       - path: Health
       - path: Features
       - path: DesignSystem
@@ -31,6 +33,9 @@ targets:
         UILaunchScreen: {}
         NSHealthShareUsageDescription: PROJECT 100M reads your approved Apple Health sleep, heart and workouts to show your training and recovery. Data stays on this iPhone in this initial build.
         UIRequiredDeviceCapabilities: [arm64]
+        CFBundleURLTypes:
+          - CFBundleURLName: com.project100m.ios.auth
+            CFBundleURLSchemes: [project100m]
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
     entitlements:

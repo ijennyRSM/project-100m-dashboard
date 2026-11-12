@@ -1,26 +1,32 @@
 import SwiftUI
 
 struct MeScreen: View {
+    @EnvironmentObject private var account: AccountModel
+    @EnvironmentObject private var training: TrainingModel
     @State private var section = "Progress"
+    @State private var confirmSignOut = false
+
+    private var completedCount: Int { training.history.filter { $0.attempt.status == .completed }.count }
+    private var liveCount: Int { training.history.filter { $0.attempt.mode == "live" }.count }
+
     var body: some View {
         P100Screen {
-            SampleBanner()
-            HStack(alignment: .top, spacing: 16) {
-                ProfileAvatar(initial: "ม", size: 76)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("เมย์").font(P100Type.hero)
-                    Text("@may_example").font(.subheadline).foregroundStyle(.secondary)
-                    Text("ตัวอย่างโปรไฟล์ · ยังไม่ได้เข้าสู่ระบบ").font(.caption).foregroundStyle(.secondary)
-                }
-            }
-            Text("กลับมาขยับในจังหวะของตัวเอง 🌱")
-            StatStrip(items: [StatItem(label: "กิจกรรมสมมติ", value: "12"), StatItem(label: "PR สมมติ", value: "2"), StatItem(label: "สัปดาห์สมมติ", value: "4")])
+            identity
+            StatStrip(items: [StatItem(label: "ฝึกครบ", value: "\(completedCount)"),
+                              StatItem(label: "บันทึกทั้งหมด", value: "\(training.history.count)"),
+                              StatItem(label: "Live Workout", value: "\(liveCount)")])
             ChipPicker(labels: ["Progress", "Activities", "Gallery", "More"], selection: $section, id: "profile-section")
             Group {
                 switch section {
                 case "Activities":
-                    ForEach(SampleActivity.examples) { ActivityCard(activity: $0) }
+                    if training.history.isEmpty {
+                        Text("ยังไม่มีกิจกรรมที่บันทึกในเครื่องนี้").foregroundStyle(.secondary)
+                            .accessibilityIdentifier("profile-activities-empty")
+                    } else {
+                        ForEach(training.history.prefix(20)) { HistoryRow(entry: $0) }
+                    }
                 case "Gallery":
+                    SampleBanner()
                     P100Card {
                         RouteIllustration().frame(height: 210)
                         Text("Gallery ตัวอย่าง").font(P100Type.section)
@@ -29,29 +35,57 @@ struct MeScreen: View {
                 case "More": settings
                 default:
                     P100Card {
-                        SectionHeading(title: "This week", subtitle: "ความคืบหน้าสมมติ ไม่ใช่ประวัติของคุณ")
-                        StatStrip(items: [StatItem(label: "ระยะทาง", value: "3.2 km"), StatItem(label: "เวลา", value: "24 นาที")])
-                        HStack(alignment: .bottom, spacing: 10) {
-                            ForEach(Array([0.25, 0.42, 0.32, 0.75, 0.58, 0.9, 0.65].enumerated()), id: \.offset) { _, value in
-                                Capsule().fill(P100Theme.accent.opacity(0.6)).frame(maxWidth: .infinity).frame(height: 100 * value)
-                            }
-                        }.frame(height: 108).accessibilityHidden(true)
-                        Text("ภาพความเคลื่อนไหวสมมติ 7 สัปดาห์").font(.caption).foregroundStyle(.secondary)
+                        SectionHeading(title: "แผนปัจจุบัน", subtitle: training.activeTemplate?.name ?? "ยังไม่ได้เลือกแผน")
+                        if let overview = training.overview {
+                            ProgressView(value: Double(overview.completed + overview.skipped), total: Double(max(overview.total, 1)))
+                            Text("\(overview.percent)% · ฝึกครบ \(overview.completed) · ข้าม \(overview.skipped) · ทั้งหมด \(overview.total)")
+                                .font(.subheadline.bold())
+                        } else {
+                            NavigationLink("เลือกแผนฝึก") { TrainingLibraryScreen() }.frame(minHeight: 44)
+                        }
                     }.accessibilityIdentifier("profile-progress")
                     P100Card {
                         Label("ทีละก้าว ก็ไปได้ไกล", systemImage: "flag.checkered").font(.headline)
-                        Text("พื้นที่สำหรับ Personal Records และ Achievements — ยังไม่คำนวณหรือมอบรางวัลจริง").foregroundStyle(.secondary)
+                        Text("Personal Records และ Achievements ยังไม่คำนวณ จะไม่แสดงตัวเลขที่ไม่ได้มาจากการบันทึกจริง").foregroundStyle(.secondary)
                     }
                 }
             }
-            Link("เปิดประวัติจริงบนเว็บ ↗", destination: P100Theme.dashboardURL).frame(minHeight: 44)
+            Link("เปิดประวัติเดิมบนเว็บ ↗", destination: P100Theme.dashboardURL).frame(minHeight: 44)
         }.navigationTitle("Me").navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     IconLink(title: "ความเป็นส่วนตัวและการแชร์", symbol: "gearshape") { PrivacyScreen() }
                 }
             }
+            .confirmationDialog("ออกจากระบบ?", isPresented: $confirmSignOut, titleVisibility: .visible) {
+                Button("ออกจากระบบ (เก็บข้อมูลฝึกในเครื่องไว้)") { Task { await signOut(removeData: false) } }
+                Button("ออกจากระบบและลบข้อมูลฝึกของบัญชีนี้ในเครื่อง", role: .destructive) { Task { await signOut(removeData: true) } }
+                Button("ยกเลิก", role: .cancel) {}
+            } message: {
+                Text("Session ใน Keychain จะถูกลบ ข้อมูลฝึกของบัญชีนี้จะถูกซ่อนจนกว่าจะเข้าสู่ระบบอีกครั้ง เว้นแต่เลือกลบ")
+            }
     }
+
+    @ViewBuilder private var identity: some View {
+        HStack(alignment: .top, spacing: 16) {
+            ProfileAvatar(initial: String(account.displayName.prefix(1)).uppercased(), size: 76)
+            VStack(alignment: .leading, spacing: 4) {
+                if account.phase == .signedIn {
+                    Text(account.displayName).font(P100Type.hero).accessibilityIdentifier("screen-me")
+                    Text(account.user?.email ?? "").font(.subheadline).foregroundStyle(.secondary)
+                    Text(account.isOffline ? "บัญชี PROJECT 100M · ออฟไลน์ (ใช้ Session ที่บันทึกไว้)" : "บัญชี PROJECT 100M")
+                        .font(.caption).foregroundStyle(.secondary)
+                } else {
+                    Text(account.phase == .restoring ? "กำลังตรวจสอบบัญชี…" : "ยังไม่ได้เข้าสู่ระบบ").font(P100Type.section)
+                        .accessibilityIdentifier("screen-me")
+                    Text("ข้อมูลฝึกตอนนี้อยู่ในโหมด Guest บนเครื่องนี้").font(.caption).foregroundStyle(.secondary)
+                    NavigationLink { SignInScreen() } label: { Label("เข้าสู่ระบบ", systemImage: "person.badge.key") }
+                        .buttonStyle(SecondaryAction()).accessibilityIdentifier("me-sign-in")
+                }
+            }
+        }
+    }
+
     private var settings: some View {
         P100Card {
             SectionHeading(title: "การตั้งค่าบนอุปกรณ์นี้")
@@ -61,8 +95,23 @@ struct MeScreen: View {
             NavigationLink { PrivacyScreen() } label: {
                 Label("ความเป็นส่วนตัวและการแชร์", systemImage: "lock.shield").frame(minHeight: 44)
             }
-            Text("บัญชีและการแก้ไขโปรไฟล์ยังไม่เปิดใช้งาน").font(.caption).foregroundStyle(.secondary)
+            if account.phase == .signedIn {
+                Button(role: .destructive) { confirmSignOut = true } label: {
+                    Label("ออกจากระบบ", systemImage: "rectangle.portrait.and.arrow.right").frame(minHeight: 44)
+                }.accessibilityIdentifier("me-sign-out")
+            } else {
+                NavigationLink { SignInScreen() } label: {
+                    Label("เข้าสู่ระบบ", systemImage: "person.badge.key").frame(minHeight: 44)
+                }
+            }
+            Text("การแก้ไขโปรไฟล์สาธารณะยังไม่เปิดใช้งาน").font(.caption).foregroundStyle(.secondary)
         }.accessibilityIdentifier("profile-settings")
+    }
+
+    private func signOut(removeData: Bool) async {
+        let scope = account.scope
+        await account.signOut()
+        if removeData { training.deleteLocalData(for: scope) }
     }
 }
 
@@ -104,9 +153,10 @@ struct PrivacyScreen: View {
                 Text("Workout ใหม่ต้องเป็นส่วนตัว การเผยแพร่ต้องเป็นการเลือกของคุณเอง")
                 Text("ข้อมูลนอน HRV และ Resting HR ไม่ถูกเผยแพร่เป็นโพสต์หรือส่งไป AI โดยอัตโนมัติ")
             }
-            Section("สถานะรุ่น M0") {
-                Text("ยังไม่มีบัญชี การสร้างโพสต์ Cloud Sync หรือการบันทึก Workout ใน Native จึงยังไม่มีการตั้งค่าแชร์ที่เปลี่ยนข้อมูลได้")
-                Text("แผนและข้อมูลจริงบนเว็บยังอยู่ที่เดิม")
+            Section("บัญชีและข้อมูลในเครื่อง") {
+                Text("เข้าสู่ระบบด้วยบัญชี PROJECT 100M เดิม Session เก็บใน Keychain และลบเมื่อออกจากระบบ")
+                Text("แผนและ Workout ที่บันทึกในแอปเก็บในเครื่องนี้ แยกตามบัญชี ยังไม่ซิงก์ขึ้นคลาวด์ และไม่เขียนทับประวัติบนเว็บ")
+                Text("ยังไม่มีการสร้างโพสต์หรือแชร์ Workout สู่สาธารณะ")
             }
         }.navigationTitle("ความเป็นส่วนตัว").navigationBarTitleDisplayMode(.inline)
     }

@@ -48,4 +48,9 @@ struct RootView: View {
     }
 }
 
-#Preview { RootView().environmentObject(HealthKitService()) }
+#Preview {
+    RootView()
+        .environmentObject(HealthKitService())
+        .environmentObject(AccountModel.uiTesting())
+        .environmentObject(TrainingModel(root: TrainingModel.uiTestingRoot(reset: false)))
+}

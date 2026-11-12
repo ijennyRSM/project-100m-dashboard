@@ -100,7 +100,7 @@ final class FoundationUITests: XCTestCase {
                 XCTAssertEqual(button.value as? String, "selected")
                 XCTAssertTrue(app.navigationBars[name].waitForExistence(timeout: 5))
                 if name != "Health" {
-                    XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "sample-banner").firstMatch.exists)
+                    assertScreenContent(app, name)
                     XCTAssertFalse(app.buttons["ring-sleep"].exists)
                 }
                 capture(app, "UI-\(name)-\(theme)")
@@ -125,15 +125,15 @@ final class FoundationUITests: XCTestCase {
             XCTAssertTrue(app.staticTexts["1.6 km"].exists)
 
             tab(app, "Today").tap()
-            let next = app.buttons["next-workout-example"]
-            reveal(next, in: app)
-            next.tap()
-            XCTAssertTrue(app.navigationBars["ตัวอย่าง Session"].waitForExistence(timeout: 5))
-            capture(app, "UI-Workout-\(theme)")
+            let choose = app.buttons["choose-plan"]
+            reveal(choose, in: app)
+            choose.tap()
+            XCTAssertTrue(app.navigationBars["เลือกแผน"].waitForExistence(timeout: 5))
+            capture(app, "UI-Library-\(theme)")
 
             tab(app, "Me").tap()
             selectChip(app, "profile-section", "Activities")
-            XCTAssertTrue(app.staticTexts["Morning Easy Run"].exists)
+            XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "profile-activities-empty").firstMatch.exists)
             capture(app, "UI-Profile-Activities-\(theme)")
             selectChip(app, "profile-section", "Gallery")
             capture(app, "UI-Profile-Gallery-\(theme)")
@@ -176,14 +176,14 @@ final class FoundationUITests: XCTestCase {
     func testIndependentStacksAndRestoredTab() {
         let app = launch()
         tab(app, "Today").tap()
-        let next = app.buttons["next-workout-example"]
-        reveal(next, in: app)
-        next.tap()
-        XCTAssertTrue(app.navigationBars["ตัวอย่าง Session"].waitForExistence(timeout: 5))
+        let connection = app.buttons["today-health-connection"]
+        reveal(connection, in: app)
+        connection.tap()
+        XCTAssertTrue(app.navigationBars["Apple Health"].waitForExistence(timeout: 5))
         tab(app, "Health").tap()
         app.buttons["ring-sleep"].tap()
         tab(app, "Today").tap()
-        XCTAssertTrue(app.navigationBars["ตัวอย่าง Session"].exists)
+        XCTAssertTrue(app.navigationBars["Apple Health"].exists)
         tab(app, "Health").tap()
         XCTAssertTrue(app.navigationBars["Sleep"].exists)
         tab(app, "Me").tap()
@@ -211,7 +211,7 @@ final class FoundationUITests: XCTestCase {
                     for name in ["Feed", "Today", "Train", "Me"] {
                         tab(app, name).tap()
                         assertCapsule(app)
-                        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "sample-banner").firstMatch.exists)
+                        assertScreenContent(app, name)
                         if name == "Feed" {
                             let title = app.staticTexts["feed-title"]
                             let groups = app.buttons["open-groups"]
@@ -230,6 +230,81 @@ final class FoundationUITests: XCTestCase {
         let hosted = launch(state: "stale", size: "xLarge", width: 320)
         verifyHealthLayout(hosted, theme: "light", size: "xLarge", name: "hosted-320-xLarge")
         XCTAssertEqual(hosted.scrollViews.firstMatch.frame.width, 320, accuracy: 1)
+    }
+
+    /// Feed remains labeled sample content; Today/Train/Me now render real local state.
+    private func assertScreenContent(_ app: XCUIApplication, _ name: String) {
+        let id = name == "Feed" ? "sample-banner" : "screen-\(name.lowercased())"
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: id).firstMatch.waitForExistence(timeout: 5), id)
+        if name != "Feed" {
+            XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "sample-banner").firstMatch.exists,
+                           "\(name) must not present fictional sample data as real progress")
+        }
+    }
+
+    /// Plan enrolment, Live Workout draft recovery after termination, and Partial logging keeping
+    /// the same session current. Runs offline against an isolated UI-testing store.
+    func testTrainingFlowPersistsDraftAndPartial() {
+        let app = launch()
+        tab(app, "Today").tap()
+        let choose = app.buttons["choose-plan"]
+        reveal(choose, in: app)
+        choose.tap()
+        let program = app.buttons["program-sprint100"]
+        XCTAssertTrue(program.waitForExistence(timeout: 5))
+        reveal(program, in: app)
+        program.tap()
+        let start = app.buttons["start-plan"]
+        XCTAssertTrue(start.waitForExistence(timeout: 5))
+        reveal(start, in: app)
+        start.tap()
+        let startLive = app.buttons["program-start-live"]
+        XCTAssertTrue(startLive.waitForExistence(timeout: 5))
+        reveal(startLive, in: app)
+        startLive.tap()
+        XCTAssertTrue(app.navigationBars["Live Workout"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["live-title"].label, "Sprint A + Strength A")
+        let warmup = app.buttons["checklist-warmup-0"]
+        reveal(warmup, in: app)
+        warmup.tap()
+        XCTAssertTrue(warmup.isSelected)
+        let next = app.buttons["live-next"]
+        reveal(next, in: app)
+        next.tap()
+        let mark = app.buttons["live-mark"]
+        reveal(mark, in: app)
+        mark.tap()
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "live-count").firstMatch.label.hasPrefix("1"))
+        capture(app, "UI-LiveWorkout-light")
+
+        app.terminate()
+        app.launchArguments.removeAll { $0 == "--ui-reset" }
+        app.launch()
+        XCTAssertTrue(tab(app, "Today").waitForExistence(timeout: 15))
+        tab(app, "Today").tap()
+        let resume = app.buttons["resume-live"]
+        XCTAssertTrue(resume.waitForExistence(timeout: 5), "Draft must survive termination")
+        reveal(resume, in: app)
+        resume.tap()
+        XCTAssertTrue(app.navigationBars["Live Workout"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "live-count").firstMatch.label.hasPrefix("1"),
+                      "Restored sprint step and completed rep")
+        let finish = app.buttons["live-finish"]
+        reveal(finish, in: app)
+        finish.tap()
+        let partial = app.buttons["บันทึก Partial"]
+        XCTAssertTrue(partial.waitForExistence(timeout: 5))
+        partial.tap()
+        let result = app.descendants(matching: .any).matching(identifier: "live-result").firstMatch
+        XCTAssertTrue(result.waitForExistence(timeout: 5))
+        XCTAssertTrue(result.label.contains("ทำบางส่วน"))
+        capture(app, "UI-LiveWorkout-partial-result")
+        app.buttons["live-done"].tap()
+        tab(app, "Today").tap()
+        let title = app.staticTexts["next-session-title"]
+        XCTAssertTrue(title.waitForExistence(timeout: 5))
+        XCTAssertEqual(title.label, "Sprint A + Strength A", "Partial keeps the same session current")
+        capture(app, "UI-Today-after-partial")
     }
 
     private func verifyHealthLayout(_ app: XCUIApplication, theme: String, size: String, name: String) {

@@ -23,6 +23,16 @@ enum UITestConfiguration {
             UserDefaults.standard.removeObject(forKey: "project100m.selectedTab")
         }
     }
+    /// UI testing never contacts Supabase and uses an isolated, resettable training directory.
+    @MainActor static func makeAccount() -> AccountModel {
+        enabled ? AccountModel.uiTesting() : AccountModel.live()
+    }
+    @MainActor static func makeTraining() -> TrainingModel {
+        if enabled {
+            return TrainingModel(root: TrainingModel.uiTestingRoot(reset: ProcessInfo.processInfo.arguments.contains("--ui-reset")))
+        }
+        return TrainingModel(root: TrainingModel.liveRoot())
+    }
     @MainActor static func makeHealthService() -> HealthKitService {
         #if DEBUG
         if enabled { return HealthKitService(testState: HealthTestState(rawValue: argument("--ui-health-state") ?? "missing") ?? .missing) }

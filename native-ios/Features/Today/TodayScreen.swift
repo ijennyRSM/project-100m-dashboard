@@ -1,60 +1,60 @@
 import SwiftUI
 
 struct TodayScreen: View {
+    @EnvironmentObject private var account: AccountModel
+    @EnvironmentObject private var training: TrainingModel
+
     var body: some View {
         P100Screen {
-            SampleBanner()
             VStack(alignment: .leading, spacing: 8) {
                 Text("MOVE AT YOUR PACE").font(.caption.bold()).tracking(1.5).foregroundStyle(P100Theme.accent)
-                Text("สวัสดี, เมย์").font(P100Type.hero)
+                Text(account.phase == .signedIn ? "สวัสดี, \(account.displayName)" : "สวัสดี").font(P100Type.hero)
+                    .accessibilityIdentifier("screen-today")
                 Text("กลับมาเมื่อพร้อม แล้วไปต่อได้เลย").foregroundStyle(.secondary)
             }
-            P100Card {
-                Label("ครั้งต่อไปของคุณ · ตัวอย่าง", systemImage: "arrow.forward.circle.fill").font(.subheadline.bold()).foregroundStyle(P100Theme.accent)
-                Text("Sprint A + Strength A").font(.title2.bold())
-                Text("Block 1 · Session 1\nSprint 4 × 20m · 60–70% · เวทขา").foregroundStyle(.secondary)
-                NavigationLink { WorkoutExampleScreen() } label: {
-                    Label("ดูตัวอย่าง Session", systemImage: "arrow.right").frame(maxWidth: .infinity, minHeight: 44)
-                }.buttonStyle(PrimaryAction()).accessibilityIdentifier("next-workout-example")
-                Text("Session ไม่หมดอายุ แม้หยุดพักหลายวัน").font(.caption).foregroundStyle(.secondary)
+            if let notice = training.notice {
+                StatusBanner(title: "กู้คืนข้อมูลในเครื่อง", message: notice, symbol: "exclamationmark.triangle")
             }
-            P100Card {
-                SectionHeading(title: "เส้นทางของคุณ", subtitle: "100M — The Comeback · ตัวอย่างความคืบหน้า")
-                ProgressView(value: 0, total: 60).accessibilityLabel("ตัวอย่าง ฝึกครบ 0 จาก 60 sessions")
-                Text("0 / 60 sessions · ตัวอย่าง").font(.subheadline.bold())
-                Text("ฝึกครบแล้วจึงไปต่อ ทำบางส่วนยังกลับมาทำครั้งเดิมได้").font(.subheadline).foregroundStyle(.secondary)
+            if let live = training.live {
+                P100Card {
+                    Label("Live Workout ค้างอยู่", systemImage: "timer").font(.subheadline.bold()).foregroundStyle(P100Theme.accent)
+                    Text(live.title).font(.title3.bold())
+                    Text("สำเร็จ \(live.unitsDone)/\(live.unitsTotal) ขั้นย่อย · บันทึกไว้ในเครื่องแล้ว").foregroundStyle(.secondary)
+                    NavigationLink { LiveWorkoutScreen(startKey: nil) } label: {
+                        Label("ฝึกต่อ", systemImage: "play.fill")
+                    }.buttonStyle(PrimaryAction()).accessibilityIdentifier("resume-live")
+                }
+            }
+            if !training.isLoaded {
+                ProgressView("กำลังเปิดข้อมูลฝึก…")
+            } else if let plan = training.activePlan, let overview = training.overview {
+                ActivePlanCard(plan: plan, overview: overview)
+            } else {
+                NoPlanCard()
             }
             P100Card {
                 SectionHeading(title: "Recovery แบบสั้น")
                 Text("ดูข้อมูลจริงที่อนุญาตใน Health ส่วนคะแนนและคำแนะนำกำลังพัฒนา").foregroundStyle(.secondary)
                 NavigationLink("ดูการเชื่อมต่อ Apple Health") { HealthConnectionScreen() }.frame(minHeight: 44)
+                    .accessibilityIdentifier("today-health-connection")
             }
-            SectionHeading(title: "กิจกรรมล่าสุด · ตัวอย่าง")
-            ActivityCard(activity: SampleActivity.examples[0])
+            SectionHeading(title: "กิจกรรมล่าสุด")
+            if let latest = training.history.first {
+                HistoryRow(entry: latest)
+            } else {
+                Text("ยังไม่มีการบันทึกการฝึกในเครื่องนี้ เริ่มครั้งแรกจากแผนด้านบน").foregroundStyle(.secondary)
+                    .accessibilityIdentifier("today-empty-history")
+            }
             P100Card {
                 SectionHeading(title: "Quick Actions")
+                if account.phase != .signedIn {
+                    NavigationLink { SignInScreen() } label: { Label("เข้าสู่ระบบบัญชี PROJECT 100M", systemImage: "person.badge.key") }
+                        .frame(minHeight: 44)
+                }
                 Link("เปิดแผนและประวัติเดิมบนเว็บ ↗", destination: P100Theme.dashboardURL).frame(minHeight: 44)
-                Text("Native ยังไม่อ่านหรือแก้ไขประวัติเดิม").font(.caption).foregroundStyle(.secondary)
+                Text("ประวัติบนเว็บยังไม่ถูกนำเข้าหรือแก้ไขโดยแอป Native การฝึกในแอปเก็บในเครื่องนี้")
+                    .font(.caption).foregroundStyle(.secondary)
             }
         }.navigationTitle("Today").navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-struct WorkoutExampleScreen: View {
-    var body: some View {
-        P100Screen {
-            SampleBanner()
-            Label("WORKOUT PREVIEW", systemImage: "figure.run").font(.caption.bold()).foregroundStyle(P100Theme.accent)
-            Text("Sprint A\n+ Strength A").font(P100Type.hero)
-            StatStrip(items: [StatItem(label: "Sprint", value: "4 × 20m"), StatItem(label: "ความหนัก", value: "60–70%")])
-            P100Card {
-                SectionHeading(title: "Sprint A + Strength A", subtitle: "ตัวอย่างจาก Session แรกของแผนบนเว็บ")
-                Text("Warm-up · 15–20 นาที\nSprint · 4 × 20m ที่ 60–70%\nพักเต็ม · 2–3 นาทีต่อเที่ยว")
-                Divider()
-                Text("Goblet Squat · 2 × 8\nRomanian Deadlift · 2 × 8\nCalf Raise · 2 × 12\nPlank · 2 × 20–30 วินาที")
-                Text("ยังไม่มีการเริ่ม Live Workout หรือบันทึกผลใน Native").font(.caption).foregroundStyle(.secondary)
-            }
-            Link("ฝึกและบันทึกด้วยเว็บเดิม ↗", destination: P100Theme.dashboardURL).frame(minHeight: 44)
-        }.navigationTitle("ตัวอย่าง Session").navigationBarTitleDisplayMode(.inline)
     }
 }
