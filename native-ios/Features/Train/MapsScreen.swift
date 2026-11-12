@@ -35,7 +35,9 @@ struct MapsScreen: View {
                     Image(systemName: "scope").font(.system(size: 20, weight: .semibold))
                         .frame(width: 48, height: 48).background(.regularMaterial, in: Circle())
                 }.buttonStyle(.plain).accessibilityLabel("กลับไปที่เส้นทาง").accessibilityIdentifier("map-recenter")
-            }.padding(.bottom, 28)
+            // This non-scrolling layout does not receive the floating capsule's inset; clear it
+            // explicitly (capsule ≈ 82pt) so the banner and recenter control stay visible.
+            }.padding(.bottom, 96)
         }
         .padding(12)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
