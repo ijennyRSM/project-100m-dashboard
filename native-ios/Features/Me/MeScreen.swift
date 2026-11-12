@@ -1,4 +1,5 @@
 import SwiftUI
+import Charts
 
 struct MeScreen: View {
     @EnvironmentObject private var account: AccountModel
@@ -7,60 +8,29 @@ struct MeScreen: View {
     @State private var confirmSignOut = false
     @State private var confirmImport = false
 
-    private var completedCount: Int { training.history.filter { $0.attempt.status == .completed }.count }
-    private var liveCount: Int { training.history.filter { $0.attempt.mode == "live" }.count }
+    private var attempts: [SessionAttempt] { training.history.map(\.attempt) }
 
     var body: some View {
-        P100Screen {
-            identity
-            StatStrip(items: [StatItem(label: "ฝึกครบ", value: "\(completedCount)"),
-                              StatItem(label: "บันทึกทั้งหมด", value: "\(training.history.count)"),
-                              StatItem(label: "Live Workout", value: "\(liveCount)")])
-            if account.phase == .signedIn && training.guestImportAvailable {
-                P100Card {
-                    Label("พบข้อมูลฝึกโหมด Guest ในเครื่องนี้", systemImage: "tray.and.arrow.down").font(.headline)
-                    Text("บัญชีนี้ยังไม่มีแผนในเครื่อง คัดลอกแผนและประวัติจากโหมด Guest เข้าบัญชีนี้ได้ ข้อมูล Guest เดิมยังอยู่ และไม่มีการส่งขึ้นคลาวด์")
-                        .font(.subheadline).foregroundStyle(.secondary)
-                    Button("คัดลอกเข้าบัญชีนี้…") { confirmImport = true }.buttonStyle(SecondaryAction())
-                        .accessibilityIdentifier("import-guest")
-                }
-            }
-            ChipPicker(labels: ["Progress", "Activities", "Gallery", "More"], selection: $section, id: "profile-section")
-            Group {
-                switch section {
-                case "Activities":
-                    if training.history.isEmpty {
-                        Text("ยังไม่มีกิจกรรมที่บันทึกในเครื่องนี้").foregroundStyle(.secondary)
-                            .accessibilityIdentifier("profile-activities-empty")
-                    } else {
-                        ForEach(training.history.prefix(20)) { HistoryRow(entry: $0) }
-                    }
-                case "Gallery":
+        P100Screen(horizontalPadding: 0, spacing: 18) {
+            VStack(alignment: .leading, spacing: 16) {
+                identity
+                actions
+                if account.phase == .signedIn && training.guestImportAvailable { guestImport }
+            }.padding(.horizontal, P100Space.page)
+            UnderlineTabs(labels: ["Progress", "Activities", "Gallery", "More"],
+                          symbols: ["chart.bar.doc.horizontal", "waveform.path.ecg", "square.grid.3x3", "line.3.horizontal"],
+                          selection: $section, id: "profile-section")
+            switch section {
+            case "Activities": activities
+            case "Gallery":
+                VStack(alignment: .leading, spacing: 12) {
                     SampleBanner()
-                    P100Card {
-                        RouteIllustration().frame(height: 210)
-                        Text("Gallery ตัวอย่าง").font(P100Type.section)
-                        Text("ภาพประกอบต้นฉบับเท่านั้น ยังไม่มีรูปส่วนตัวหรือการอัปโหลดภาพ").foregroundStyle(.secondary)
-                    }.accessibilityIdentifier("profile-gallery")
-                case "More": settings
-                default:
-                    P100Card {
-                        SectionHeading(title: "แผนปัจจุบัน", subtitle: training.activeTemplate?.name ?? "ยังไม่ได้เลือกแผน")
-                        if let overview = training.overview {
-                            ProgressView(value: Double(overview.completed + overview.skipped), total: Double(max(overview.total, 1)))
-                            Text("\(overview.percent)% · ฝึกครบ \(overview.completed) · ข้าม \(overview.skipped) · ทั้งหมด \(overview.total)")
-                                .font(.subheadline.bold())
-                        } else {
-                            NavigationLink("เลือกแผนฝึก") { TrainingLibraryScreen() }.frame(minHeight: 44)
-                        }
-                    }.accessibilityIdentifier("profile-progress")
-                    P100Card {
-                        Label("ทีละก้าว ก็ไปได้ไกล", systemImage: "flag.checkered").font(.headline)
-                        Text("Personal Records และ Achievements ยังไม่คำนวณ จะไม่แสดงตัวเลขที่ไม่ได้มาจากการบันทึกจริง").foregroundStyle(.secondary)
-                    }
-                }
+                    RouteIllustration().frame(height: 220).clipShape(RoundedRectangle(cornerRadius: 16))
+                    Text("ภาพประกอบต้นฉบับเท่านั้น ยังไม่มีรูปส่วนตัวหรือการอัปโหลดภาพ").foregroundStyle(.secondary)
+                }.padding(.horizontal, P100Space.page)
+            case "More": more
+            default: progress
             }
-            Link("เปิดประวัติเดิมบนเว็บ ↗", destination: P100Theme.dashboardURL).frame(minHeight: 44)
         }.navigationTitle("Me").navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -82,46 +52,158 @@ struct MeScreen: View {
             }
     }
 
-    @ViewBuilder private var identity: some View {
-        HStack(alignment: .top, spacing: 16) {
+    // MARK: Header
+
+    private var identity: some View {
+        HStack(alignment: .center, spacing: 16) {
             ProfileAvatar(initial: String(account.displayName.prefix(1)).uppercased(), size: 76)
             VStack(alignment: .leading, spacing: 4) {
                 if account.phase == .signedIn {
-                    Text(account.displayName).font(P100Type.hero).accessibilityIdentifier("screen-me")
-                    Text(account.user?.email ?? "").font(.subheadline).foregroundStyle(.secondary)
-                    Text(account.isOffline ? "บัญชี PROJECT 100M · ออฟไลน์ (ใช้ Session ที่บันทึกไว้)" : "บัญชี PROJECT 100M")
-                        .font(.caption).foregroundStyle(.secondary)
+                    Text(account.displayName).font(.title.bold()).accessibilityIdentifier("screen-me")
                 } else {
-                    Text(account.phase == .restoring ? "กำลังตรวจสอบบัญชี…" : "ยังไม่ได้เข้าสู่ระบบ").font(P100Type.section)
+                    Text(account.phase == .restoring ? "กำลังตรวจสอบบัญชี…" : "ยังไม่ได้เข้าสู่ระบบ").font(.title2.bold())
                         .accessibilityIdentifier("screen-me")
-                    Text("ข้อมูลฝึกตอนนี้อยู่ในโหมด Guest บนเครื่องนี้").font(.caption).foregroundStyle(.secondary)
-                    NavigationLink { SignInScreen() } label: { Label("เข้าสู่ระบบ", systemImage: "person.badge.key") }
-                        .buttonStyle(SecondaryAction()).accessibilityIdentifier("me-sign-in")
+                }
+                Text("\(training.history.count) บันทึก").font(.title3)
+                Text(account.phase == .signedIn
+                     ? (account.isOffline ? "บัญชี PROJECT 100M · ออฟไลน์" : account.user?.email ?? "บัญชี PROJECT 100M")
+                     : "โหมด Guest บนเครื่องนี้")
+                    .font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
+            }
+        }
+    }
+
+    private var actions: some View {
+        HStack(spacing: 12) {
+            if account.phase == .signedIn {
+                NavigationLink { SignInScreen() } label: { Text("บัญชี") }
+                    .buttonStyle(OutlineAction()).accessibilityIdentifier("me-account")
+            } else {
+                NavigationLink { SignInScreen() } label: { Text("เข้าสู่ระบบ") }
+                    .buttonStyle(OutlineAction(accent: true)).accessibilityIdentifier("me-sign-in")
+            }
+            NavigationLink { PrivacyScreen() } label: { Text("ความเป็นส่วนตัว") }
+                .buttonStyle(OutlineAction())
+        }
+    }
+
+    private var guestImport: some View {
+        P100Card {
+            Label("พบข้อมูลฝึกโหมด Guest ในเครื่องนี้", systemImage: "tray.and.arrow.down").font(.headline)
+            Text("บัญชีนี้ยังไม่มีแผนในเครื่อง คัดลอกแผนและประวัติจากโหมด Guest เข้าบัญชีนี้ได้ ข้อมูล Guest เดิมยังอยู่ และไม่มีการส่งขึ้นคลาวด์")
+                .font(.subheadline).foregroundStyle(.secondary)
+            Button("คัดลอกเข้าบัญชีนี้…") { confirmImport = true }.buttonStyle(SecondaryAction())
+                .accessibilityIdentifier("import-guest")
+        }
+    }
+
+    // MARK: Progress (real recorded attempts only)
+
+    private var progress: some View {
+        let weeks = TrainingStats.weekly(attempts, count: 12)
+        let current = weeks.last
+        let streak = TrainingStats.weekStreak(attempts)
+        return VStack(alignment: .leading, spacing: 16) {
+            P100Card {
+                Text("สัปดาห์นี้").font(.title2.bold())
+                StatStrip(items: [StatItem(label: "ครั้ง", value: "\(current?.sessions ?? 0)"),
+                                  StatItem(label: "เวลา", value: "\(current?.minutes ?? 0) นาที"),
+                                  StatItem(label: "Live Workout", value: "\(attempts.filter { $0.mode == "live" }.count)")])
+                Text("12 สัปดาห์ที่ผ่านมา · นาทีที่บันทึก").font(.subheadline).foregroundStyle(.secondary)
+                WeeklyChart(weeks: weeks)
+            }
+            P100Card {
+                HStack {
+                    Text("Streak").font(.title3.bold())
+                    Spacer()
+                    Text("สัปดาห์ติดต่อกัน").font(.subheadline).foregroundStyle(.secondary)
+                }
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Image(systemName: "flame.fill").font(.largeTitle).foregroundStyle(P100Theme.accent).accessibilityHidden(true)
+                    Text("\(streak)").font(.system(size: 44, weight: .bold, design: .rounded)).monospacedDigit()
+                    Text("สัปดาห์").font(.title3).foregroundStyle(.secondary)
+                }.accessibilityElement(children: .combine)
+                HStack(spacing: 8) {
+                    ForEach(weeks.suffix(8)) { week in
+                        Circle().fill(week.sessions > 0 ? P100Theme.accent : Color.primary.opacity(0.15)).frame(width: 14, height: 14)
+                    }
+                }.accessibilityHidden(true)
+                Text("นับสัปดาห์ที่มีการฝึกครบหรือบางส่วนอย่างน้อยหนึ่งครั้ง ไม่ใช่เงื่อนไขของแผน").font(.caption).foregroundStyle(.secondary)
+            }
+            P100Card {
+                SectionHeading(title: "แผนปัจจุบัน", subtitle: training.activeTemplate?.name ?? "ยังไม่ได้เลือกแผน")
+                if let overview = training.overview {
+                    ProgressView(value: Double(overview.completed + overview.skipped), total: Double(max(overview.total, 1)))
+                    Text("\(overview.percent)% · ฝึกครบ \(overview.completed) · ข้าม \(overview.skipped) · ทั้งหมด \(overview.total)")
+                        .font(.subheadline.bold())
+                } else {
+                    NavigationLink("เลือกแผนฝึก") { TrainingLibraryScreen() }.frame(minHeight: 44)
+                }
+            }
+        }.padding(.horizontal, P100Space.page)
+    }
+
+    // MARK: Activities
+
+    @ViewBuilder private var activities: some View {
+        if training.history.isEmpty {
+            Text("ยังไม่มีกิจกรรมที่บันทึกในเครื่องนี้").foregroundStyle(.secondary)
+                .padding(.horizontal, P100Space.page).accessibilityIdentifier("profile-activities-empty")
+        } else {
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(training.history.prefix(20)) { entry in
+                    ActivityPost(
+                        header: ActivityHeader(initial: String(account.displayName.prefix(1)).uppercased(), name: account.displayName,
+                                               meta: entry.attempt.at.formatted(date: .abbreviated, time: .shortened),
+                                               context: "\(entry.templateName) · \(entry.attempt.status.label)",
+                                               symbol: entry.attempt.status.symbol),
+                        title: entry.sessionTitle, description: entry.attempt.notes,
+                        stats: Self.stats(entry.attempt),
+                        footnote: entry.attempt.mode == "live" ? "Live Workout · ส่วนตัว" : "บันทึกแบบย่อ · ส่วนตัว")
+                    SectionBand()
                 }
             }
         }
     }
 
-    private var settings: some View {
-        P100Card {
-            SectionHeading(title: "การตั้งค่าบนอุปกรณ์นี้")
+    static func stats(_ attempt: SessionAttempt) -> [StatItem] {
+        var items: [StatItem] = []
+        if let minutes = attempt.duration { items.append(StatItem(label: "เวลา", value: "\(minutes) นาที")) }
+        if let rpe = attempt.rpe { items.append(StatItem(label: "RPE", value: "\(rpe)")) }
+        if let reps = attempt.repsDone { items.append(StatItem(label: "Sprint", value: "\(reps) เที่ยว")) }
+        return items
+    }
+
+    // MARK: More
+
+    private var more: some View {
+        VStack(alignment: .leading, spacing: 0) {
             NavigationLink { HealthConnectionScreen() } label: {
-                Label("Apple Health และอุปกรณ์", systemImage: "applewatch").frame(minHeight: 44)
-            }
+                ListRowLabel(symbol: "applewatch", title: "Apple Health และอุปกรณ์", value: "อ่านในเครื่องเท่านั้น")
+            }.buttonStyle(.plain).accessibilityLabel("Apple Health และอุปกรณ์")
+            Divider().padding(.leading, 64)
+            NavigationLink { HistoryScreen() } label: {
+                ListRowLabel(symbol: "list.bullet.rectangle", title: "ประวัติการฝึก", value: "\(training.history.count) รายการ")
+            }.buttonStyle(.plain)
+            Divider().padding(.leading, 64)
             NavigationLink { PrivacyScreen() } label: {
-                Label("ความเป็นส่วนตัวและการแชร์", systemImage: "lock.shield").frame(minHeight: 44)
-            }
+                ListRowLabel(symbol: "lock.shield", title: "ความเป็นส่วนตัวและการแชร์", value: "ส่วนตัวเป็นค่าเริ่มต้น")
+            }.buttonStyle(.plain)
+            Divider().padding(.leading, 64)
             if account.phase == .signedIn {
-                Button(role: .destructive) { confirmSignOut = true } label: {
-                    Label("ออกจากระบบ", systemImage: "rectangle.portrait.and.arrow.right").frame(minHeight: 44)
-                }.accessibilityIdentifier("me-sign-out")
+                Button { confirmSignOut = true } label: {
+                    ListRowLabel(symbol: "rectangle.portrait.and.arrow.right", title: "ออกจากระบบ", value: account.user?.email)
+                }.buttonStyle(.plain).foregroundStyle(.red).accessibilityIdentifier("me-sign-out")
             } else {
                 NavigationLink { SignInScreen() } label: {
-                    Label("เข้าสู่ระบบ", systemImage: "person.badge.key").frame(minHeight: 44)
-                }
+                    ListRowLabel(symbol: "person.badge.key", title: "เข้าสู่ระบบ", value: "บัญชีเดียวกับเว็บไซต์")
+                }.buttonStyle(.plain)
             }
-            Text("การแก้ไขโปรไฟล์สาธารณะยังไม่เปิดใช้งาน").font(.caption).foregroundStyle(.secondary)
-        }.accessibilityIdentifier("profile-settings")
+            SectionBand().padding(.vertical, 12)
+            Link(destination: P100Theme.dashboardURL) {
+                ListRowLabel(symbol: "safari", title: "เปิดประวัติเดิมบนเว็บ", value: "ยังไม่ซิงก์กับแอป")
+            }.buttonStyle(.plain)
+        }
     }
 
     private func signOut(removeData: Bool) async {
@@ -131,49 +213,26 @@ struct MeScreen: View {
     }
 }
 
-struct HealthConnectionScreen: View {
-    @EnvironmentObject private var health: HealthKitService
+/// 12-week line chart of recorded minutes (zeros when nothing was logged).
+struct WeeklyChart: View {
+    let weeks: [WeekSummary]
     var body: some View {
-        Form {
-            Section("Apple Health · สถานะจริงบนเครื่องนี้") {
-                LabeledContent("การเชื่อมต่อ", value: health.connection.title)
-                Text("การขอสิทธิ์สำเร็จไม่ได้ยืนยันว่าอ่านได้ทุกประเภท หากข้อมูลไม่มี แอปจะเว้นค่าไว้").font(.caption).foregroundStyle(.secondary)
-                if let date = health.snapshot.lastRead {
-                    LabeledContent("อ่านล่าสุด", value: date.formatted(date: .abbreviated, time: .shortened))
-                }
-                if health.isLoading { ProgressView("กำลังอ่านข้อมูล…") }
-                if health.connection == .unavailable {
-                    Text("HealthKit ไม่พร้อมใช้งานบนอุปกรณ์นี้")
-                } else {
-                    Button(health.hasRequestedAccess ? "ขอสิทธิ์อ่าน Apple Health อีกครั้ง" : "อนุญาตการอ่าน Apple Health") {
-                        Task { await health.connect() }
-                    }.disabled(health.isLoading)
-                    Button("อ่านข้อมูลใหม่") { Task { await health.refreshIfEnabled() } }
-                        .disabled(!health.hasRequestedAccess || health.isLoading)
-                }
-                if let message = health.message { Text(message).foregroundStyle(.red) }
-            }
-            Section("ข้อมูลและอุปกรณ์") {
-                Text("Apple Watch ส่งข้อมูลเข้า Apple Health ผ่านระบบของ Apple แอปอ่านเฉพาะข้อมูลที่คุณอนุญาต")
-                Text("อ่านในเครื่องเท่านั้น ยังไม่มี Cloud Health Sync หรือการส่งให้ AI")
-                Text("จัดการสิทธิ์ในแอป Health หรือ Settings ของ iPhone แอปไม่สามารถเปิดสิทธิ์ที่คุณปฏิเสธให้เองได้")
-            }
-        }.navigationTitle("Apple Health").navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-struct PrivacyScreen: View {
-    var body: some View {
-        Form {
-            Section("ส่วนตัวเป็นค่าเริ่มต้น") {
-                Text("Workout ใหม่ต้องเป็นส่วนตัว การเผยแพร่ต้องเป็นการเลือกของคุณเอง")
-                Text("ข้อมูลนอน HRV และ Resting HR ไม่ถูกเผยแพร่เป็นโพสต์หรือส่งไป AI โดยอัตโนมัติ")
-            }
-            Section("บัญชีและข้อมูลในเครื่อง") {
-                Text("เข้าสู่ระบบด้วยบัญชี PROJECT 100M เดิม Session เก็บใน Keychain และลบเมื่อออกจากระบบ")
-                Text("แผนและ Workout ที่บันทึกในแอปเก็บในเครื่องนี้ แยกตามบัญชี ยังไม่ซิงก์ขึ้นคลาวด์ และไม่เขียนทับประวัติบนเว็บ")
-                Text("ยังไม่มีการสร้างโพสต์หรือแชร์ Workout สู่สาธารณะ")
-            }
-        }.navigationTitle("ความเป็นส่วนตัว").navigationBarTitleDisplayMode(.inline)
+        Chart(weeks) { week in
+            AreaMark(x: .value("สัปดาห์", week.weekStart), y: .value("นาที", week.minutes))
+                .foregroundStyle(LinearGradient(colors: [P100Theme.accent.opacity(0.35), P100Theme.accent.opacity(0.02)],
+                                                startPoint: .top, endPoint: .bottom))
+            LineMark(x: .value("สัปดาห์", week.weekStart), y: .value("นาที", week.minutes))
+                .foregroundStyle(P100Theme.accent).lineStyle(StrokeStyle(lineWidth: 2.5))
+            PointMark(x: .value("สัปดาห์", week.weekStart), y: .value("นาที", week.minutes))
+                .foregroundStyle(P100Theme.accent).symbolSize(28)
+        }
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .month)) { _ in AxisValueLabel(format: .dateTime.month(.abbreviated)) }
+        }
+        .chartYAxis { AxisMarks(position: .trailing) }
+        .frame(height: 170)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("กราฟเวลาฝึก 12 สัปดาห์ สัปดาห์นี้ \(weeks.last?.minutes ?? 0) นาที")
+        .accessibilityIdentifier("profile-progress")
     }
 }

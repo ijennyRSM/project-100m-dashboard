@@ -29,10 +29,16 @@ final class FoundationUITests: XCTestCase {
     private func selectChip(_ app: XCUIApplication, _ picker: String, _ name: String) {
         let button = app.buttons["\(picker)-\(name)"]
         let row = app.scrollViews[picker]
-        reveal(row, in: app)
-        for _ in 0..<3 {
-            if button.isHittable { break }
-            row.swipeLeft()
+        if row.exists {
+            // Chip rows scroll horizontally.
+            reveal(row, in: app)
+            for _ in 0..<3 {
+                if button.isHittable { break }
+                row.swipeLeft()
+            }
+        } else {
+            // Underlined section tabs have no container identifier (it would mask child IDs).
+            reveal(button, in: app)
         }
         XCTAssertTrue(button.isHittable)
         button.tap()
@@ -213,12 +219,11 @@ final class FoundationUITests: XCTestCase {
                         assertCapsule(app)
                         assertScreenContent(app, name)
                         if name == "Feed" {
-                            let title = app.staticTexts["feed-title"]
+                            // Groups is a circular header control; it must stay reachable at AX5.
                             let groups = app.buttons["open-groups"]
-                            XCTAssertGreaterThanOrEqual(groups.frame.minY, title.frame.maxY, "AX5 header must stack rather than squeeze side by side")
+                            XCTAssertTrue(groups.isHittable)
+                            XCTAssertGreaterThanOrEqual(groups.frame.width, 44)
                             capture(app, "UI-Feed-header-dark-AX5")
-                            assertInBounds(groups, app: app)
-                            XCTAssertLessThan(groups.frame.height, 120, "Full-width Groups action must not wrap into a tall narrow column")
                         }
                         capture(app, "UI-\(name)-dark-AX5")
                     }

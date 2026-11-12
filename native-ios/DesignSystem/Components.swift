@@ -18,11 +18,14 @@ enum P100Theme {
 }
 
 struct P100Screen<Content: View>: View {
+    /// 0 for flat full-bleed layouts (feed posts, media); sections then pad themselves.
+    var horizontalPadding: CGFloat = P100Space.page
+    var spacing: CGFloat = P100Space.section
     @ViewBuilder let content: Content
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: P100Space.section) { content }
-                .padding(.horizontal, P100Space.page).padding(.vertical, 12)
+            VStack(alignment: .leading, spacing: spacing) { content }
+                .padding(.horizontal, horizontalPadding).padding(.vertical, 12)
                 .frame(maxWidth: 620).frame(maxWidth: .infinity)
         }.background(P100Theme.canvas)
     }
@@ -103,25 +106,15 @@ struct MetricTile: View {
 struct ActivityCard: View {
     let activity: SampleActivity
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack(alignment: .top, spacing: 12) {
-                ProfileAvatar(initial: String(activity.name.prefix(1)), size: 44)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("\(activity.name) · ตัวอย่าง").font(.headline)
-                    Text(activity.time).font(.caption).foregroundStyle(.secondary)
-                    Label("กิจกรรมสาธารณะสมมติ", systemImage: activity.symbol).font(.caption).foregroundStyle(.secondary)
-                }
-            }
-            Text(activity.title).font(P100Type.section)
-            Text(activity.description)
-            StatStrip(items: activity.stats)
+        ActivityPost(
+            header: ActivityHeader(initial: String(activity.name.prefix(1)), name: "\(activity.name) · ตัวอย่าง",
+                                   meta: activity.time, context: "กิจกรรมสาธารณะสมมติ", symbol: activity.symbol),
+            title: activity.title, description: activity.description, stats: activity.stats,
+            footnote: "ตัวอย่างเท่านั้น · ยังไม่มี Like หรือ Comment") {
             if activity.id == "run" {
-                RouteIllustration().frame(height: 190).clipShape(RoundedRectangle(cornerRadius: 16))
+                RouteIllustration().frame(height: 260)
                     .accessibilityLabel("ภาพเส้นทางสมมติ ไม่มีพิกัดจริง")
             }
-            Label("ตัวอย่างเท่านั้น · ยังไม่มี Like หรือ Comment", systemImage: "bubble.left.and.bubble.right")
-                .font(.caption).foregroundStyle(.secondary)
-            Divider().padding(.top, 4)
         }
     }
 }

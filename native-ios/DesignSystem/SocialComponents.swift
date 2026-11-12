@@ -9,7 +9,7 @@ enum P100Space {
 enum P100Type {
     static let hero = Font.largeTitle.weight(.bold)
     static let section = Font.title2.weight(.bold)
-    static let number = Font.title2.weight(.semibold)
+    static let number = Font.title2.weight(.bold)
 }
 
 struct ProfileAvatar: View {

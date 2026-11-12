@@ -165,6 +165,43 @@ final class LiveWorkoutTests: XCTestCase {
     }
 }
 
+final class StatsTests: XCTestCase {
+    var calendar: Calendar = {
+        var c = Calendar(identifier: .gregorian)
+        c.timeZone = TimeZone(identifier: "Asia/Bangkok")!
+        c.firstWeekday = 2
+        return c
+    }()
+    // Wednesday 2026-11-11 14:00 Bangkok
+    let now = Date(timeIntervalSince1970: 1_794_380_400)
+
+    func attempt(_ daysAgo: Double, _ status: AttemptStatus, minutes: Int?) -> SessionAttempt {
+        SessionAttempt(id: UUID().uuidString, key: "w1-1", at: now.addingTimeInterval(-daysAgo * 86_400), status: status,
+                       mode: "quick", date: "", duration: minutes, rpe: nil, repsDone: nil, sets: "", notes: "",
+                       source: "self-reported", components: nil, skipConfirmedAt: nil)
+    }
+
+    func testWeeklyBucketsAreZeroFilledAndIgnoreSkips() {
+        let rows = [attempt(0, .completed, minutes: 30), attempt(1, .partial, minutes: 10),
+                    attempt(1, .skipped, minutes: 99), attempt(15, .completed, minutes: 40)]
+        let weeks = TrainingStats.weekly(rows, now: now, count: 12, calendar: calendar)
+        XCTAssertEqual(weeks.count, 12)
+        XCTAssertEqual(weeks.last?.sessions, 2)
+        XCTAssertEqual(weeks.last?.minutes, 40)
+        XCTAssertEqual(weeks[weeks.count - 3].minutes, 40)
+        XCTAssertEqual(weeks.reduce(0) { $0 + $1.sessions }, 3)
+    }
+
+    func testWeekStreak() {
+        XCTAssertEqual(TrainingStats.weekStreak([], now: now, calendar: calendar), 0)
+        let alive = [attempt(8, .completed, minutes: 20), attempt(15, .partial, minutes: 20)]
+        XCTAssertEqual(TrainingStats.weekStreak(alive, now: now, calendar: calendar), 2, "Streak survives an empty current week")
+        let broken = [attempt(0, .completed, minutes: 20), attempt(15, .completed, minutes: 20)]
+        XCTAssertEqual(TrainingStats.weekStreak(broken, now: now, calendar: calendar), 1)
+        XCTAssertEqual(TrainingStats.weekStreak([attempt(0, .skipped, minutes: nil)], now: now, calendar: calendar), 0)
+    }
+}
+
 final class RepositoryTests: XCTestCase {
     var root: URL!
 
