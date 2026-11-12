@@ -175,6 +175,17 @@ On the Me tab choose sign in, enter your email, and then either:
 
 Your session is stored in the iPhone **Keychain**, restored after restarting the app and
 removed when you sign out. Training data on the phone is kept separately per account.
+If you trained in Guest mode before signing in, *Me* offers an explicit **copy into this
+account** action; nothing is merged automatically and nothing is uploaded.
+
+Optional Supabase dashboard settings (owner decision; no database change, none applied by agents):
+
+- *Authentication → Email Templates → Magic Link*: adding `{{ .Token }}` to the template makes
+  emails include the 6-digit code, which is the easiest way to sign in on the phone.
+- *Authentication → URL Configuration → Redirect URLs*: adding `project100m://auth-callback`
+  lets tapping the email link open the app directly. Without it the link opens the website.
+
+Native training is **not synced** to Supabase yet and never overwrites the website's history.
 
 ## 15. Known reasons installation can fail
 

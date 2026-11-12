@@ -1,5 +1,216 @@
 [
   {
+    "id": "P100-DEV-001",
+    "milestone": "M7",
+    "owner": "Claude",
+    "status": "READY_FOR_REVIEW",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ef09ba0342b22c42ba7df141def13e7c1ddcd688",
+    "requirements": [
+      "QA-01",
+      "HK-01"
+    ],
+    "implemented_changes": [
+      "Separate workflow builds Release arm64 iphoneos app with signing disabled and packages PROJECT100M-unsigned.ipa",
+      "Ad-hoc pseudo-signature embeds declared HealthKit entitlement; no Apple identity or credentials in GitHub",
+      "Portable IPA verifier (ZIP, Info.plist, Mach-O arch/platform/minOS, signature state, entitlement) plus lipo/vtool/codesign cross-checks, SHA256 and provenance",
+      "Windows Sideloadly installation guide with HealthKit/free-provisioning limits and error collection"
+    ],
+    "modified_files": [
+      ".github/workflows/ios-device-ipa.yml",
+      "native-ios/scripts/verify_ipa.py",
+      "scripts/tests/test_verify_ipa.py",
+      "docs/IOS_INSTALLATION_WINDOWS.md",
+      "native-ios/project.yml"
+    ],
+    "test_results": [
+      "PASS run 43152462029: device build, verifier 16/16, IPA SHA256 5510dfc393deed90265938d51f3e6757def2b834b5a3c97c2ef8db15057c07f3",
+      "PASS run 43146948447 (cf47dc6) artifact downloaded and re-verified locally on Windows",
+      "PASS local scripts/tests/test_verify_ipa.py 5 tests",
+      "Not run: physical iPhone install/launch, Sideloadly signing, device HealthKit"
+    ],
+    "known_issues": [
+      "Free personal-team HealthKit provisioning unverified and possibly unsupported",
+      "No app icon asset",
+      "Free signing expires after 7 days"
+    ],
+    "reviewer_findings": [
+      "No review requested by owner; owner device test pending"
+    ],
+    "next_actions": [
+      "Owner installs via docs/IOS_INSTALLATION_WINDOWS.md and reports UI, sign-in, training and HealthKit results separately",
+      "Add original app icon"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Successful arm64 iphoneos build and verified unsigned IPA artifact with checksum/provenance",
+        "passed": true,
+        "evidence": "Run 43152462029 at ef09ba0; verification.json PASS"
+      },
+      {
+        "description": "Complete Windows installation guide",
+        "passed": true,
+        "evidence": "docs/IOS_INSTALLATION_WINDOWS.md"
+      },
+      {
+        "description": "Owner installs and launches on a physical iPhone",
+        "passed": false,
+        "evidence": "Not yet performed"
+      },
+      {
+        "description": "HealthKit permission works on the device signing route",
+        "passed": false,
+        "evidence": "Not yet performed; free-team support uncertain"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-AUTH-001",
+    "milestone": "M1",
+    "owner": "Claude",
+    "status": "READY_FOR_REVIEW",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ef09ba0342b22c42ba7df141def13e7c1ddcd688",
+    "requirements": [
+      "DATA-01",
+      "ME-01",
+      "PRIV-01"
+    ],
+    "implemented_changes": [
+      "Minimal Supabase GoTrue client: email sign-in for existing accounts (create_user false), code or pasted-link verify, refresh, local-scope logout",
+      "AuthSessionController restore/offline/invalidation rules; Keychain store (device-only, cleared on reinstall)",
+      "Sign-in screen, Me account state, sign-out with optional local data removal, project100m:// callback, explicit Guest-to-account copy",
+      "Account-partitioned local storage opened only after session restore; no training_states access"
+    ],
+    "modified_files": [
+      "native-ios/Core/Auth/SupabaseAuth.swift",
+      "native-ios/Services/AuthPlatform.swift",
+      "native-ios/Services/AccountModel.swift",
+      "native-ios/Features/Me/SignInScreen.swift",
+      "native-ios/Features/Me/MeScreen.swift",
+      "native-ios/App/PROJECT100MApp.swift"
+    ],
+    "test_results": [
+      "PASS core AuthTests (mock transport) on Linux and macOS, run 43152467633",
+      "PASS simulator UI 5/5 both devices run 43152462066 (offline transport)",
+      "Not run: sign-in against live Supabase auth; device Keychain"
+    ],
+    "known_issues": [
+      "6-digit code needs the Token variable in the Supabase Magic Link template (owner dashboard choice)",
+      "Offline-restored session not re-refreshed until next launch"
+    ],
+    "reviewer_findings": [
+      "No review requested by owner"
+    ],
+    "next_actions": [
+      "Owner signs in on device with existing account",
+      "Retry refresh on foreground after offline restore"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Sign-in, restore, refresh, invalidation and sign-out logic unit tested",
+        "passed": true,
+        "evidence": "Run 43152467633 AuthTests"
+      },
+      {
+        "description": "Real sign-in with an existing account on a device",
+        "passed": false,
+        "evidence": "Not yet performed"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
+    "id": "P100-TRAIN-001",
+    "milestone": "M3",
+    "owner": "Claude",
+    "status": "READY_FOR_REVIEW",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "ef09ba0342b22c42ba7df141def13e7c1ddcd688",
+    "requirements": [
+      "TRAIN-01",
+      "TRAIN-02",
+      "LIVE-01",
+      "TODAY-01"
+    ],
+    "implemented_changes": [
+      "Catalog ported from web v2 (100M/5K/Strength/Wellness); 10K unavailable pending reviewed prescription",
+      "Progression engine: Completed advances, Partial stays with component progress, Skip needs confirmation, no date-driven progression",
+      "Live Workout engine and screen: warm-up checklist, sprint reps, strength sets, rest/elapsed timers, pause/resume, RPE, notes, Completed/Partial, cancel, draft recovery",
+      "Per-account JSON repository with atomic protected writes and quarantine of corrupt/newer data",
+      "Today/Train/Me connected to real local plan, progress and history; samples remain labeled in Feed/Groups/Maps/Gallery"
+    ],
+    "modified_files": [
+      "native-ios/Core/Training/TrainingCatalog.swift",
+      "native-ios/Core/Training/TrainingEngine.swift",
+      "native-ios/Core/Training/LiveWorkout.swift",
+      "native-ios/Core/Persistence/TrainingRepository.swift",
+      "native-ios/Services/TrainingModel.swift",
+      "native-ios/Features/Train/TrainingViews.swift",
+      "native-ios/Features/Train/LiveWorkoutScreen.swift",
+      "native-ios/Features/Today/TodayScreen.swift",
+      "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/UITests/FoundationUITests.swift"
+    ],
+    "test_results": [
+      "PASS core Catalog/Engine/LiveWorkout/Repository tests run 43152467633",
+      "PASS testTrainingFlowPersistsDraftAndPartial on iPhone 16 and SE run 43152462066",
+      "Earlier FAIL run 43149842661 (identifier masking) fixed in ef09ba0",
+      "Not run: physical device"
+    ],
+    "known_issues": [
+      "No cloud sync or import of web history yet (SEC-001, reviewed adapter required)",
+      "Running/GPS recording not implemented"
+    ],
+    "reviewer_findings": [
+      "No review requested by owner"
+    ],
+    "next_actions": [
+      "Owner-approved read-only web plan import adapter after SEC-001 decision",
+      "Sync design with revision conflict handling"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Web progression rules reproduced and unit tested",
+        "passed": true,
+        "evidence": "Run 43152467633"
+      },
+      {
+        "description": "Offline draft survives termination and Partial keeps session (simulator)",
+        "passed": true,
+        "evidence": "Run 43152462066 both devices"
+      },
+      {
+        "description": "Physical device training flow",
+        "passed": false,
+        "evidence": "Not yet performed"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
     "id": "P100-UI-001",
     "milestone": "M0",
     "owner": "Codex",
