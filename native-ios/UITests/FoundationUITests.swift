@@ -44,7 +44,12 @@ final class FoundationUITests: XCTestCase {
         app.launchArguments = ["--ui-testing", "--ui-reset", "--ui-health-state=\(state)", "--ui-theme=\(theme)", "--ui-text-size=\(size)"]
         if let width { app.launchArguments.append("--ui-content-width=\(width)") }
         app.launch()
-        XCTAssertTrue(tab(app, "Today").waitForExistence(timeout: 15))
+        let found = tab(app, "Today").waitForExistence(timeout: 15)
+        if !found {
+            capture(app, "UI-launch-navigation-failure")
+            print("NAVIGATION FAILURE TREE:\n\(app.debugDescription)")
+        }
+        XCTAssertTrue(found)
         return app
     }
 

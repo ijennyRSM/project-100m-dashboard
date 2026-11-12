@@ -85,17 +85,24 @@ struct IconLink<Destination: View>: View {
     let title: String
     let symbol: String
     @ViewBuilder let destination: Destination
+    @Environment(\.accessibilityReduceTransparency) private var opaque
     var body: some View {
         NavigationLink { destination } label: {
             Image(systemName: symbol).font(.system(size: 20, weight: .semibold))
-                .frame(width: 44, height: 44).background(P100Theme.surface, in: Circle())
+                .frame(width: 44, height: 44)
+                .background {
+                    if opaque { Circle().fill(P100Theme.surface) }
+                    else { Circle().fill(.thinMaterial) }
+                }
                 .overlay(Circle().strokeBorder(.primary.opacity(0.1)))
         }.buttonStyle(.plain).accessibilityLabel(title)
+            .accessibilityShowsLargeContentViewer { Label(title, systemImage: symbol) }
     }
 }
 
 /// Original coordinate-free illustration. Never a tile map, location, GPS trace or copied route.
 struct RouteIllustration: View {
+    var showsCaption = true
     var body: some View {
         Canvas { context, size in
             let rect = CGRect(origin: .zero, size: size)
@@ -123,8 +130,10 @@ struct RouteIllustration: View {
             context.stroke(trail, with: .color(P100Theme.accent), style: StrokeStyle(lineWidth: 5, lineCap: .round))
         }
         .overlay(alignment: .bottomLeading) {
-            Text("เส้นทางสมมติ · ไม่มีพิกัด").font(.caption2.bold())
-                .padding(8).background(.regularMaterial, in: Capsule()).padding(12)
+            if showsCaption {
+                Text("เส้นทางสมมติ · ไม่มีพิกัด").font(.caption2.bold())
+                    .padding(8).background(.regularMaterial, in: Capsule()).padding(12)
+            }
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("ภาพเส้นทางสมมติ ไม่มีพิกัดจริง")

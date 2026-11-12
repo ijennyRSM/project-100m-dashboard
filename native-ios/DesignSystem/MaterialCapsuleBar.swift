@@ -24,6 +24,7 @@ struct MaterialCapsuleBar: View {
                     .accessibilityValue(selection == tab ? "selected" : "unselected")
                     .accessibilityAddTraits(selection == tab ? [.isSelected] : [])
                     .accessibilityIdentifier("tab-\(tab.rawValue)")
+                    .accessibilityShowsLargeContentViewer { Label(tab.title, systemImage: tab.symbol) }
             }
         }
         .padding(6)
@@ -33,7 +34,6 @@ struct MaterialCapsuleBar: View {
         }
         .overlay(Capsule().strokeBorder(.primary.opacity(0.14), lineWidth: 0.7))
         .shadow(color: .black.opacity(0.12), radius: 16, y: 5)
-        .accessibilityIdentifier("primary-navigation")
         .padding(.horizontal, 12).padding(.top, 8).padding(.bottom, 8)
     }
 }
