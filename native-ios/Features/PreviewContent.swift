@@ -11,14 +11,14 @@ struct SampleActivity: Identifiable {
     let summary: String
     var stats: [StatItem] {
         switch id {
-        case "run": return [StatItem(label: "ระยะทาง", value: "3.2 km"), StatItem(label: "Pace", value: "7:30 /km"), StatItem(label: "เวลา", value: "24 นาที")]
-        case "walk": return [StatItem(label: "ระยะทาง", value: "2.1 km"), StatItem(label: "เวลา", value: "30 นาที")]
+        case "run": return [StatItem(label: "ระยะทาง", value: "2.5 km"), StatItem(label: "Pace", value: "7:30 /km"), StatItem(label: "เวลา", value: "19 นาที")]
+        case "walk": return [StatItem(label: "ระยะทาง", value: "1.6 km"), StatItem(label: "เวลา", value: "22 นาที")]
         default: return [StatItem(label: "ท่าฝึก", value: "4 ท่า"), StatItem(label: "เวลา", value: "35 นาที")]
         }
     }
     static let examples = [
-        SampleActivity(id: "run", name: "เมย์", time: "วันนี้ 07:20 · เวลาสมมติ", title: "Morning Easy Run", symbol: "figure.run", description: "กลับมาวิ่งเบา ๆ ทีละก้าว วันนี้อากาศดี", summary: "3.2 km · 24 นาที"),
-        SampleActivity(id: "walk", name: "ต้น", time: "เมื่อวาน 18:10 · เวลาสมมติ", title: "Evening Walk", symbol: "figure.walk", description: "ปิดวันด้วยการเดินสบาย ๆ", summary: "2.1 km · 30 นาที"),
+        SampleActivity(id: "run", name: "เมย์", time: "วันนี้ 07:20 · เวลาสมมติ", title: "Morning Easy Run", symbol: "figure.run", description: "กลับมาวิ่งเบา ๆ ทีละก้าว วันนี้อากาศดี", summary: "2.5 km · 19 นาที"),
+        SampleActivity(id: "walk", name: "ต้น", time: "เมื่อวาน 18:10 · เวลาสมมติ", title: "Evening Walk", symbol: "figure.walk", description: "ปิดวันด้วยการเดินสบาย ๆ", summary: "1.6 km · 22 นาที"),
         SampleActivity(id: "strength", name: "พลอย", time: "เมื่อวาน 16:00 · เวลาสมมติ", title: "Strength Foundation", symbol: "dumbbell", description: "ค่อย ๆ สร้างความแข็งแรง เน้นท่าที่ควบคุมได้", summary: "4 ท่า · 35 นาที")
     ]
 }

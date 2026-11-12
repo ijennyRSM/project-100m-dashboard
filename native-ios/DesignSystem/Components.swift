@@ -111,9 +111,12 @@ struct ActivityCard: View {
                                    meta: activity.time, context: "กิจกรรมสาธารณะสมมติ", symbol: activity.symbol),
             title: activity.title, description: activity.description, stats: activity.stats,
             footnote: "ตัวอย่างเท่านั้น · ยังไม่มี Like หรือ Comment") {
-            if activity.id == "run" {
-                RouteIllustration().frame(height: 260)
-                    .accessibilityLabel("ภาพเส้นทางสมมติ ไม่มีพิกัดจริง")
+            if let route = activity.id == "run" ? SampleRoute.easyLoop : activity.id == "walk" ? SampleRoute.shortLoop : nil {
+                RouteMapView(route: route).frame(height: 260)
+                    .overlay(alignment: .bottomLeading) {
+                        Text("เส้นทางตัวอย่าง · ไม่ใช่ตำแหน่งของใคร").font(.caption2.bold())
+                            .padding(8).background(.regularMaterial, in: Capsule()).padding(12)
+                    }
             }
         }
     }
