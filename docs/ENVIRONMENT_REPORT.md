@@ -20,7 +20,9 @@ Installed a portable Node **24.22.3 / npm 11.19.1**, verified against official S
 
 REA npm version **6.8.0**, bundled skill version 49 / advertised 229 tools. Official `npx.cmd -y rea-agents@latest setup --client codex` and Claude Code dry-run plans were executed. REA was also invoked directly with the verified portable Node so the proposed MCP command uses that compatible runtime. Plans preserve unrelated configuration and create `.rea.backup` recovery files, add Codex/Claude Code registrations, and install the respective bundled skill copies. No Hopper/Ghidra/IDA installation is needed for this task.
 
-**Configuration approval pending:** the user was shown the exact target/backup/skill paths before applying setup. Before-setup doctor reports missing registrations/skills; no active REA tool call has succeeded. REA MCP acceptance in Codex and Claude Code therefore remains **unverified**, not working. After approval, apply the matching direct-runtime setup plan, run both doctors, restart/reconnect clients and execute a real REA tool in each. This active desktop chat does not currently expose REA tools. Setup/doctor alone cannot satisfy tool-call acceptance. Local diagnostics are ignored under the retained root's `.local-evidence`, outside commits.
+**Configuration approval pending:** the user was shown the exact target/backup/skill paths before applying setup. Before-setup doctor reports missing registrations/skills. REA MCP acceptance in the Codex and Claude Code clients remains **unverified**. After approval, apply the matching direct-runtime setup plan, run both doctors, restart/reconnect clients and execute a real REA tool in each. This active desktop chat does not currently expose REA tools. Setup/doctor alone cannot satisfy client acceptance. Local diagnostics are ignored under the retained root's `.local-evidence`, outside commits.
+
+**Actual REA server calls succeeded** through a direct stdio MCP test harness using the compatible Node: `listTools` returned 229 tools; `list_browser_targets` found the local app after Playwright navigated to Plans, and `inspect_web_page` captured 426 DOM nodes and accessibility text. Inspection evidence ID: `ev_0567c6a64489abb096da9886ce0e8f1dc4d1b8a8f4431d7dc1e8c97d88ea8de6`. The temporary browser was closed. This proves the REA server/browser provider works; it does not establish registration in either agent. An earlier launch-mode scenario failed before initial capture; switching to passive inspection of an explicitly launched temporary CDP browser succeeded. REA did not perform the Plans click. No storage values or personal data were captured.
 
 ## Web verification
 
@@ -45,11 +47,15 @@ Verified Pages API: legacy branch publishing, **main, root `/`**, HTTPS enforced
 
 Added a feature push / PR Web browser-test workflow with read-only repository permissions. Process: local implementation → tests → feature push → draft PR → Claude review → owner/reviewer acceptance → merge to main → existing Pages branch deployment. Do not merge this proposal before review. Branch protection endpoint returned 404, so enforced protection is not established by this evidence; no repository policy was changed.
 
+Implementation `874371971d6b9f4f6058372c4d8a6e3f6c4e3a58` was committed and pushed. [Draft PR #2](https://github.com/ijennyRSM/project-100m-dashboard/pull/2) targets main and awaits Claude review. Initial [CI run 43162831947](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43162831947) failed at browser dependency installation because ubuntu-latest selected unsupported Ubuntu 26.04; no tests ran. Fix `7d8564073f86854400ad1aa8105d7bd5bf257b50` pins Ubuntu 24.04. [PR CI run 43166339488](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43166339488) completed **success**: Chromium installed, 6 tests passed, 2 live-network cases intentionally skipped. This demonstrates feature push, draft PR and automated CI; merge/deployment remains a review gate.
+
 ## Native CI preservation
 
 Native tree `138872f694e9b1866740d28ecec210a9e72fdcf4`; existing .github tree `4e79dfe6bef0e26520d22ed33234fe0554f4daa7` in the iOS checkout. Windows performed no Xcode build and changed no native file/workflow.
 
 Latest observed [simulator build/UI run 43155346462](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43155346462) at the native handover SHA: completed/success. [Native core tests 43155346348](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43155346348): completed/success. Existing handover separately records successful unsigned arm64 [device IPA run 43152462029](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43152462029). These are existing CI evidence, not new physical-device acceptance. Signing, installation, real HealthKit and live native auth remain separately unverified.
+
+During setup, another process advanced the original native branch to `61da354` and left `docs/product/DESIGN_SYSTEM.md` modified in the retained root checkout. Those changes were preserved and were not included in Web commits. The isolated iOS worktree remains clean at its recorded starting SHA; explicitly coordinate the active native owner's work before updating it.
 
 ## Remaining work and recommendation
 
