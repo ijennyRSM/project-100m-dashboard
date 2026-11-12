@@ -1,0 +1,15 @@
+{
+  "head": "f379701309dd2893620724fab86de2dab6e6a631",
+  "tested_merge": "9ab2a9ce226222b7e5003568eb46a6a31cdc03ed",
+  "run_id": 43133236478,
+  "conclusion": "failure",
+  "se3_job": 130902217523,
+  "se3_result": "Build PASS;4/4 UI zero failures; suite424.161s",
+  "se3_artifact_id": 13906392956,
+  "se3_artifact_zip_sha256": "698d282aeca276279414533d5a179b811d4c0818f5d55feaadc88a284cea9e74",
+  "iphone16_job": 130902217865,
+  "iphone16_artifact_id": 13907043280,
+  "iphone16_result": "Build PASS; layout case PASS326.890s;15min UI step timed out during second case; no4/4 result",
+  "observed_preparation": "UI step started01:18:52 UTC; first case started01:27:43 UTC; native test preparation consumed nearly9min",
+  "fix": "370addedb5637cf984aff957878ed848f4de4b00 increases UI step25min/job40min; each test stays bounded420s; native code unchanged"
+}

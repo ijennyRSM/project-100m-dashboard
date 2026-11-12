@@ -1,0 +1,10 @@
+{
+  "run_id": 43129292963,
+  "job_id": 130889145571,
+  "artifact_id": 13905241210,
+  "artifact_zip_sha256": "5d3fc75cff89a4dc16c0460205166838e7450fc7fd35c1f6498b8eb435b448fb",
+  "head_sha": "30bebd2881788ebd28fb6b9c31122589a9ccc3fa",
+  "tested_sha": "b43d720b11c0f91de71bb814fe3d9aa775269a12",
+  "result": "Build PASS, SE3 UI0/4; launch helper cannot find individual tab identifiers; runtime tree confirms overwritten parent identifier",
+  "correction": "6158ec90fba4ff94489d846c5a2fce0a13ad1bbd removes parent id; new-source runtime pending"
+}

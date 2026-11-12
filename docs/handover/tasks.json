@@ -3,9 +3,9 @@
     "id": "P100-UI-001",
     "milestone": "M0",
     "owner": "Codex",
-    "status": "IN_PROGRESS",
+    "status": "READY_FOR_REVIEW",
     "branch": "codex/m0-foundation-handover",
-    "commit": "694c23a5b3aafcdf99f0da31bdefa1759d371585",
+    "commit": "5ecb4f212932418d4257dd8c2b6cda390f196d9d",
     "requirements": [
       "UI-01",
       "NAV-01",
@@ -15,50 +15,95 @@
       "QA-01"
     ],
     "implemented_changes": [
-      "Inspected eight local owner references; documented hierarchy, original visual direction and five-tab mapping before implementation"
+      "Committed screenshot hierarchy/design alignment before implementation; eight dark owner references inspected, kept local/ignored and unchanged",
+      "Original adaptive light/dark tokens, typography/spacing, flat activity sections, avatar/stat strips, chips, circular material controls and capsule actions",
+      "Floating Material capsule over native TabView; five independent stacks/restored selection, selected traits,44pt targets, opaque fallback and enlarged-content labels",
+      "Feed filter, Train/Workout previews, Maps sample selector and Groups sections; Me Progress/Activities/Gallery/More; all synthetic content labeled",
+      "Dedicated Health with first rings/no Me rings and existing real read-only Health service/states/sample dates retained",
+      "Fixed inherited accessibility ID, width-driven AX5 Feed header, intrinsic stat height and capture settling; documented measured cold-preparation CI budget without removing assertions",
+      "Preserved52 original current-source screenshots, attachment maps, artifact digests, exact head/merge trees and prior failure/visual-finding evidence"
     ],
     "modified_files": [
+      ".github/workflows/ios-native-compile.yml",
+      ".gitignore",
+      "docs/architecture/DECISIONS.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md",
+      "docs/handover/CURRENT.md",
+      "docs/handover/REVIEW.md",
+      "docs/handover/evidence/UI-redesign/30bebd2-failure-provenance.json",
+      "docs/handover/evidence/UI-redesign/370adde-capture-finding.json",
+      "docs/handover/evidence/UI-redesign/6158ec9-visual-finding.json",
+      "docs/handover/evidence/UI-redesign/README.md",
+      "docs/handover/evidence/UI-redesign/f379701-timeout-provenance.json",
+      "docs/handover/evidence/UI-redesign/provenance.json",
+      "docs/handover/tasks.json",
       "docs/product/DESIGN_ALIGNMENT.md",
       "docs/product/DESIGN_REFERENCES.json",
       "docs/product/DESIGN_SYSTEM.md",
       "docs/product/FEATURE_REQUIREMENTS.md",
-      "docs/architecture/DECISIONS.md"
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "native-ios/DesignSystem/Components.swift",
+      "native-ios/DesignSystem/MaterialCapsuleBar.swift",
+      "native-ios/DesignSystem/SocialComponents.swift",
+      "native-ios/Features/Feed/FeedScreen.swift",
+      "native-ios/Features/Feed/GroupsScreen.swift",
+      "native-ios/Features/Health/HealthScreen.swift",
+      "native-ios/Features/Me/MeScreen.swift",
+      "native-ios/Features/PreviewContent.swift",
+      "native-ios/Features/RootView.swift",
+      "native-ios/Features/Today/TodayScreen.swift",
+      "native-ios/Features/Train/MapsScreen.swift",
+      "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/README.md",
+      "native-ios/UITests/FoundationUITests.swift"
     ],
     "test_results": [
-      "Not run: redesign implementation/CI has not started; prior M0 evidence applies only to prior trees"
+      "PASS:5ecb4f2 run43141777432 SUCCESS; unsigned builds and4/4 UI zero failures each on iPhone16/SE3 iOS18.5 (368.545s /402.776s); merge79c26b3 matches native32941871/.github3a8c647. Artifacts13909953454/13910042452 ZIP SHA256 verified;52 original PNGs/provenance retained",
+      "PASS:15 local Windows handover/grant unit tests;11-record ledger validation/status/prepare; grant lint, diff/source checks; eight reference files preserved/ignored",
+      "PASS: Windows/Linux handover43141777372; unchanged PG16/17 security43141777481; no live database connection or privilege change",
+      "Historical30bebd2: builds PASS/UI0/4 both because parent ID overwrote children; runtime tree proves cause.6158ec9 corrected it, both builds/UI4/4 PASS but visual AX5 squeeze prompted stronger header assertions",
+      "Historicalf379701: SE4/4 PASS,16 first case PASS then15min step timeout;370adde budget correction then4/4 both PASS. Partial capture concerns prompted current5ecb4f2; no previous-source proof substituted for current",
+      "VISUAL: representative current Feed light/dark, both-device AX5 heading/action, Me light, Health dark, Maps light, Train dark and Workout light inspected; complete gallery remains for Claude review",
+      "NOT RUN: OS VoiceOver/Reduce Transparency/enlarged-content-viewer interaction, iOS17 runtime/real Display Zoom, SDK26 glassEffect, signing or physical iPhone/Watch/GPS/background acceptance"
     ],
     "known_issues": [
-      "Parent M0 CHANGES_REQUESTED; SEC-001 live remediation still outstanding and M1 blocked",
-      "Actual SDK26 Liquid Glass and real-device acceptance not verified"
+      "Claude UI/architecture/privacy acceptance pending; parent M0 CHANGES_REQUESTED; no self-verification or M1",
+      "Maps/Groups/profile/feed/training data are fictional presentation with local selection only; no new backend, GPS, recording or uploads",
+      "Liquid Glass styling uses iOS17 Material; native SDK26 API and OS/manual accessibility/device checks unverified",
+      "Raw reference comparison requires owner local/private images; originals are not published in git",
+      "SEC-001 live Critical grants unchanged; prepared remediation still awaits review/staging/backup/owner approval; M1 blocked"
     ],
     "reviewer_findings": [
-      "Claude redesign review pending"
+      "Claude redesign review pending; original independent M0 findings preserved in REVIEW.md",
+      "Codex visual checks found AX5 squeeze despite passing6158ec9; fixed in f379701 with explicit vertical placement/size assertions",
+      "Current exact-source automated checks pass; no independent reviewer acceptance inferred from CI or representative visual inspection"
     ],
     "next_actions": [
-      "Implement original SwiftUI visual pass incrementally",
-      "Build/test on named simulators and preserve light/dark evidence with provenance",
-      "Submit to Claude; no self-verification or M1"
+      "Claude: review5ecb4f2 source, UI-01/design alignment, five-tab mapping, original assets and complete current gallery/provenance; return severity/requirement/file-line/evidence/disposition",
+      "Codex: resolve reviewer findings and resubmit; parent M0 stays CHANGES_REQUESTED until independent disposition and required evidence",
+      "Track OS/manual accessibility, iOS17/Display Zoom and physical device checks separately; no simulator release claim",
+      "Keep SEC-001 production approval gate and M1 BLOCKED; no merge or self-acceptance"
     ],
     "acceptance_criteria": [
       {
         "description": "Screenshot-led original design system and six screen compositions with clear sample labeling",
         "passed": false,
-        "evidence": "Pending implementation and independent review"
+        "evidence": "Source5ecb4f2 and current run43141777432 provide implementation/runtime evidence;52-image gallery/provenance available; Claude independent criterion/UX disposition pending."
       },
       {
         "description": "Exactly five primary tabs; Health first rings and no Me rings; Maps/Groups secondary",
         "passed": false,
-        "evidence": "Pending implementation and independent review"
+        "evidence": "Source5ecb4f2 and current run43141777432 provide implementation/runtime evidence;52-image gallery/provenance available; Claude independent criterion/UX disposition pending."
       },
       {
         "description": "Light/dark, narrow/AX5, selected accessibility and safe areas with runtime evidence",
         "passed": false,
-        "evidence": "Pending implementation and independent review"
+        "evidence": "Source5ecb4f2 and current run43141777432 provide implementation/runtime evidence;52-image gallery/provenance available; Claude independent criterion/UX disposition pending."
       },
       {
         "description": "Claude reviews requirements, source and screenshot provenance",
         "passed": false,
-        "evidence": "Pending implementation and independent review"
+        "evidence": "Source5ecb4f2 and current run43141777432 provide implementation/runtime evidence;52-image gallery/provenance available; Claude independent criterion/UX disposition pending."
       }
     ],
     "review": {
@@ -76,7 +121,7 @@
     "owner": "Codex",
     "status": "CHANGES_REQUESTED",
     "branch": "codex/m0-foundation-handover",
-    "commit": "713ead4126850b6a488943cfe5c511ee3983b3fa",
+    "commit": "5ecb4f212932418d4257dd8c2b6cda390f196d9d",
     "requirements": [
       "NAV-01",
       "UX-01",
@@ -94,7 +139,8 @@
       "Width-driven ring/tile layouts with scaled text; sample end dates retained for HRV/RHR",
       "Explicit notRequested/unavailable/failed/loading/requested-empty Health states; DEBUG fixtures construct no HKHealthStore",
       "Four tests expanded to named iPhone16/SE3 iOS18.5: actual theme/type, bounds/hittability, hosted320 xLarge and explicit tab reset",
-      "Separated push/PR concurrency with no cancellation; measured SE runtime receives six-minute allowance only for layout test"
+      "Separated push/PR concurrency with no cancellation; measured SE runtime receives six-minute allowance only for layout test",
+      "Owner-approved screenshot-led redesign and current exact-source evidence tracked in P100-UI-001; replaces older visual source"
     ],
     "modified_files": [
       ".github/workflows/handover.yml",
@@ -116,8 +162,18 @@
       "docs/handover/evidence/M0-9399655/M0-Train-light.png",
       "docs/handover/evidence/M0-9399655/README.md",
       "docs/handover/evidence/M0-9399655/provenance.json",
+      "docs/handover/evidence/M0-review-fix/README.md",
+      "docs/handover/evidence/M0-review-fix/provenance.json",
+      "docs/handover/evidence/UI-redesign/30bebd2-failure-provenance.json",
+      "docs/handover/evidence/UI-redesign/370adde-capture-finding.json",
+      "docs/handover/evidence/UI-redesign/6158ec9-visual-finding.json",
+      "docs/handover/evidence/UI-redesign/README.md",
+      "docs/handover/evidence/UI-redesign/f379701-timeout-provenance.json",
+      "docs/handover/evidence/UI-redesign/provenance.json",
       "docs/handover/history/README.md",
       "docs/handover/tasks.json",
+      "docs/product/DESIGN_ALIGNMENT.md",
+      "docs/product/DESIGN_REFERENCES.json",
       "docs/product/DESIGN_SYSTEM.md",
       "docs/product/FEATURE_REQUIREMENTS.md",
       "docs/product/PRODUCT_BLUEPRINT.md",
@@ -125,12 +181,16 @@
       "native-ios/App/UITestConfiguration.swift",
       "native-ios/DesignSystem/Components.swift",
       "native-ios/DesignSystem/HealthRing.swift",
+      "native-ios/DesignSystem/MaterialCapsuleBar.swift",
+      "native-ios/DesignSystem/SocialComponents.swift",
       "native-ios/Features/Feed/FeedScreen.swift",
+      "native-ios/Features/Feed/GroupsScreen.swift",
       "native-ios/Features/Health/HealthScreen.swift",
       "native-ios/Features/Me/MeScreen.swift",
       "native-ios/Features/PreviewContent.swift",
       "native-ios/Features/RootView.swift",
       "native-ios/Features/Today/TodayScreen.swift",
+      "native-ios/Features/Train/MapsScreen.swift",
       "native-ios/Features/Train/TrainingScreen.swift",
       "native-ios/Health/HealthKitService.swift",
       "native-ios/Health/HealthModels.swift",
@@ -139,16 +199,15 @@
       "native-ios/UITests/FoundationUITests.swift",
       "native-ios/project.yml",
       "scripts/handover.py",
-      "scripts/tests/test_handover.py",
-      "docs/handover/evidence/M0-review-fix/README.md",
-      "docs/handover/evidence/M0-review-fix/provenance.json"
+      "scripts/tests/test_handover.py"
     ],
     "test_results": [
       "PASS: 15 local Windows unit tests (9 handover + 6 grant lint); SQL grant lint; diff/source checks",
       "PASS: Windows/Linux handover CI https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43107212967",
       "6437d8d recovered: BUILD SUCCEEDED, boot timed out after5min before UI; matching head/merge trees recorded",
       "3e86451 run43105037599: both builds PASS; iPhone16 4/4 PASS; SE3 layout exceeded default4min (273s), other3 PASS. Budget corrected in713ead4; prior run overall FAILURE",
-      "PASS:713ead4 PR run43107213059 completed SUCCESS; iPhone16 and SE3 each unsigned build PASS, 4/4 UI zero failures. Merge e6b0b764 matches native54462fa2/.github65567a9; artifacts13894209678/13894484095 digest-verified;38 original PNGs/provenance in evidence/M0-review-fix"
+      "PASS:713ead4 PR run43107213059 completed SUCCESS; iPhone16 and SE3 each unsigned build PASS, 4/4 UI zero failures. Merge e6b0b764 matches native54462fa2/.github65567a9; artifacts13894209678/13894484095 digest-verified;38 original PNGs/provenance in evidence/M0-review-fix",
+      "PASS:5ecb4f2 run43141777432 SUCCESS; unsigned builds and4/4 UI zero failures each on iPhone16/SE3 iOS18.5 (368.545s /402.776s); merge79c26b3 matches native32941871/.github3a8c647. Artifacts13909953454/13910042452 ZIP SHA256 verified;52 original PNGs/provenance retained"
     ],
     "known_issues": [
       "Claude second review pending; M0 CHANGES_REQUESTED per owner; no milestone self-accepted/verified",
@@ -173,30 +232,28 @@
       "Codex response at713ead4: H2/M1/M2/M3/M4/L1 addressed in source; H1 recovered; actual runtime evidence in CURRENT.md. Original Claude disposition preserved."
     ],
     "next_actions": [
-      "Claude: re-review713ead4, exact-tree CI/screenshots and responses in CURRENT.md/REVIEW.md",
-      "Claude: independently review security ed7b525 and global-default proposal; no production apply authorized",
-      "Codex: resolve second-review findings; retain M0 CHANGES_REQUESTED pending reviewer disposition and evidence; no M1 or merge"
+      "Claude: review current5ecb4f2 source and P100-UI-001 gallery/design direction with preserved original findings; return disposition; do not self-accept, merge or start M1"
     ],
     "acceptance_criteria": [
       {
         "description": "Five tabs in required order; independent stacks and restored selection",
         "passed": false,
-        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
       },
       {
         "description": "Reusable adaptive components and clearly labeled fixture screens",
         "passed": false,
-        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
       },
       {
         "description": "Three interactive Health-only rings; no invented scores",
         "passed": false,
-        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
       },
       {
         "description": "Windows handover tests/validation and exact-source macOS simulator build/UI pass",
         "passed": false,
-        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
       },
       {
         "description": "Claude reviews documented criteria and UX evidence",
@@ -219,7 +276,7 @@
     "owner": "Codex",
     "status": "CHANGES_REQUESTED",
     "branch": "codex/m0-foundation-handover",
-    "commit": "713ead4126850b6a488943cfe5c511ee3983b3fa",
+    "commit": "5ecb4f212932418d4257dd8c2b6cda390f196d9d",
     "requirements": [
       "QA-01",
       "UX-01"
@@ -227,21 +284,51 @@
     "implemented_changes": [
       "Recovered old boot-timeout artifact and matching head/merge trees; distinguished later Actions outage",
       "Pinned Xcode16.4/iOS18.5 iPhone16/SE3; environment probes and screenshot/commit/tree provenance",
-      "Preserved push and PR runs independently; measured expanded layout-test budget without dropping scenarios"
+      "Preserved push and PR runs independently; measured expanded layout-test budget without dropping scenarios",
+      "Owner-approved screenshot-led redesign and current exact-source evidence tracked in P100-UI-001; replaces older visual source"
     ],
     "modified_files": [
       ".github/workflows/ios-native-compile.yml",
-      "native-ios/UITests/FoundationUITests.swift",
+      ".gitignore",
+      "docs/architecture/DECISIONS.md",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md",
       "docs/handover/CURRENT.md",
-      "docs/handover/tasks.json",
+      "docs/handover/REVIEW.md",
       "docs/handover/evidence/M0-review-fix/README.md",
-      "docs/handover/evidence/M0-review-fix/provenance.json"
+      "docs/handover/evidence/M0-review-fix/provenance.json",
+      "docs/handover/evidence/UI-redesign/30bebd2-failure-provenance.json",
+      "docs/handover/evidence/UI-redesign/370adde-capture-finding.json",
+      "docs/handover/evidence/UI-redesign/6158ec9-visual-finding.json",
+      "docs/handover/evidence/UI-redesign/README.md",
+      "docs/handover/evidence/UI-redesign/f379701-timeout-provenance.json",
+      "docs/handover/evidence/UI-redesign/provenance.json",
+      "docs/handover/tasks.json",
+      "docs/product/DESIGN_ALIGNMENT.md",
+      "docs/product/DESIGN_REFERENCES.json",
+      "docs/product/DESIGN_SYSTEM.md",
+      "docs/product/FEATURE_REQUIREMENTS.md",
+      "docs/product/PRODUCT_BLUEPRINT.md",
+      "native-ios/DesignSystem/Components.swift",
+      "native-ios/DesignSystem/MaterialCapsuleBar.swift",
+      "native-ios/DesignSystem/SocialComponents.swift",
+      "native-ios/Features/Feed/FeedScreen.swift",
+      "native-ios/Features/Feed/GroupsScreen.swift",
+      "native-ios/Features/Health/HealthScreen.swift",
+      "native-ios/Features/Me/MeScreen.swift",
+      "native-ios/Features/PreviewContent.swift",
+      "native-ios/Features/RootView.swift",
+      "native-ios/Features/Today/TodayScreen.swift",
+      "native-ios/Features/Train/MapsScreen.swift",
+      "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/README.md",
+      "native-ios/UITests/FoundationUITests.swift"
     ],
     "test_results": [
       "PASS: Windows/Linux handover CI https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43107212967",
       "6437d8d recovered: BUILD SUCCEEDED, boot timed out after5min before UI; matching head/merge trees recorded",
       "3e86451 run43105037599: both builds PASS; iPhone16 4/4 PASS; SE3 layout exceeded default4min (273s), other3 PASS. Budget corrected in713ead4; prior run overall FAILURE",
-      "PASS:713ead4 PR run43107213059 completed SUCCESS; iPhone16 and SE3 each unsigned build PASS, 4/4 UI zero failures. Merge e6b0b764 matches native54462fa2/.github65567a9; artifacts13894209678/13894484095 digest-verified;38 original PNGs/provenance in evidence/M0-review-fix"
+      "PASS:713ead4 PR run43107213059 completed SUCCESS; iPhone16 and SE3 each unsigned build PASS, 4/4 UI zero failures. Merge e6b0b764 matches native54462fa2/.github65567a9; artifacts13894209678/13894484095 digest-verified;38 original PNGs/provenance in evidence/M0-review-fix",
+      "PASS:5ecb4f2 run43141777432 SUCCESS; unsigned builds and4/4 UI zero failures each on iPhone16/SE3 iOS18.5 (368.545s /402.776s); merge79c26b3 matches native32941871/.github3a8c647. Artifacts13909953454/13910042452 ZIP SHA256 verified;52 original PNGs/provenance retained"
     ],
     "known_issues": [
       "Claude second-review disposition pending; no self-verification",
@@ -255,18 +342,18 @@
       "Codex: execution resumed; prior diagnostics recovered; exact-source results/provenance in CURRENT.md."
     ],
     "next_actions": [
-      "Claude: inspect run and screenshot provenance; separate build from UI4/4 on each device; return re-review findings"
+      "Claude: review current5ecb4f2 source and P100-UI-001 gallery/design direction with preserved original findings; return disposition; do not self-accept, merge or start M1"
     ],
     "acceptance_criteria": [
       {
         "description": "Diagnose actual failure logs; final exact-source unsigned simulator build and all four UI tests pass",
         "passed": false,
-        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
       },
       {
         "description": "Inspect current light/dark/AX5 screenshots and record provenance",
         "passed": false,
-        "evidence": "Runtime checks PASS on both named devices at713ead4/run43107213059; current screenshots and provenance preserved; Claude re-review of criteria pending. Criterion is not self-accepted."
+        "evidence": "Current5ecb4f2 build/UI4/4 each PASS at43141777432; new gallery/provenance in P100-UI-001; awaiting Claude acceptance of current source."
       }
     ],
     "review": {

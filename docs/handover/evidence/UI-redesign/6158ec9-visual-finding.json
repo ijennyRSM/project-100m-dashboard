@@ -1,0 +1,14 @@
+{
+  "head": "6158ec90fba4ff94489d846c5a2fce0a13ad1bbd",
+  "tested_merge": "45783e4aee9c99ee7e272f13987ebe063e132477",
+  "run_id": 43130713599,
+  "artifact_id": 13905906636,
+  "artifact_zip_sha256": "de96eabf9cf2c7c18cbd9e86bd55e3c7af71a0fab8bccaddc57e33e9ffeb71fb",
+  "device": "iPhone SE (3rd generation)",
+  "runtime": "iOS18.5",
+  "automated_result": "Both app builds and UI4/4 on each device PASS; visual acceptance withheld",
+  "finding": "AX5 Feed heading and Groups action squeeze into narrow columns; missing width-driven header assertion",
+  "screenshot": "6158ec9-se3-Feed-AX5-before.png",
+  "screenshot_sha256": "036c5dc42519ae5e3cd5e7a83416f25f41875bdf7a56db040a835167c00a66fd",
+  "fix": "f379701309dd2893620724fab86de2dab6e6a631 adds width-driven header and AX5 vertical placement/action bounds assertions; latest runtime pending"
+}

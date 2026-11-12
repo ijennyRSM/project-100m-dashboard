@@ -1,0 +1,14 @@
+{
+  "head_sha": "5ecb4f212932418d4257dd8c2b6cda390f196d9d",
+  "tested_sha": "79c26b3b2401f20855fc7053d2183f116a9bf128",
+  "native_tree": "32941871117b0fd1a74c66db854780d08ad526ac",
+  "github_tree": "3a8c647eb5c6842617ea45141b175610840bde3f",
+  "head_native_tree": "32941871117b0fd1a74c66db854780d08ad526ac",
+  "head_github_tree": "3a8c647eb5c6842617ea45141b175610840bde3f",
+  "device": "iPhone 16",
+  "simulator_id": "341D689A-78F6-4171-9723-8609B5394AD8",
+  "runtime": "iOS 18.5",
+  "run_id": "43141777432",
+  "event": "pull_request",
+  "xcode": "Xcode 16.4\nBuild version 16F6\n"
+}

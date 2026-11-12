@@ -1,0 +1,4 @@
+2026-11-12T01:27:43.9224860Z Test Case '-[PROJECT100MUITests.FoundationUITests testDarkModeAndAccessibilityText]' started.
+2026-11-12T01:33:10.4124420Z Test Case '-[PROJECT100MUITests.FoundationUITests testDarkModeAndAccessibilityText]' passed (326.890 seconds).
+2026-11-12T01:33:10.4132740Z Test Case '-[PROJECT100MUITests.FoundationUITests testFiveTabsAndLabeledExamples]' started.
+2026-11-12T01:33:52.9486540Z ##[error]The action 'Run simulator UI acceptance checks and capture screenshots' has timed out after 15 minutes.
