@@ -39,6 +39,7 @@ def info(**overrides):
         "CFBundleShortVersionString": "1.0", "CFBundleVersion": "1", "MinimumOSVersion": "17.0",
         "NSHealthShareUsageDescription": "reads", "UIRequiredDeviceCapabilities": ["arm64"],
         "CFBundleSupportedPlatforms": ["iPhoneOS"], "DTPlatformName": "iphoneos", "DTSDKName": "iphoneos18.5",
+        "CFBundleIcons": {"CFBundlePrimaryIcon": {"CFBundleIconName": "AppIcon"}},
     }
     base.update(overrides)
     return plistlib.dumps(base, fmt=plistlib.FMT_BINARY)

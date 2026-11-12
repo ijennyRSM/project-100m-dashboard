@@ -135,6 +135,9 @@ def verify(path: str, expect_entitlement: str | None = "com.apple.developer.heal
     check("minimum-os", info.get("MinimumOSVersion") == EXPECTED_MIN_OS, info.get("MinimumOSVersion"))
     check("supported-platform", info.get("CFBundleSupportedPlatforms") == ["iPhoneOS"], info.get("CFBundleSupportedPlatforms"))
     check("dt-platform", info.get("DTPlatformName") == "iphoneos", info.get("DTPlatformName"))
+    primary = (info.get("CFBundleIcons") or {}).get("CFBundlePrimaryIcon") or {}
+    check("app-icon", bool(primary.get("CFBundleIconName") or primary.get("CFBundleIconFiles")),
+          primary.get("CFBundleIconName") or primary.get("CFBundleIconFiles"))
     check("not-simulator-sdk", "simulator" not in str(info.get("DTSDKName", "")).lower(), info.get("DTSDKName"))
     report["info"] = {k: info.get(k) for k in (
         "CFBundleIdentifier", "CFBundleDisplayName", "CFBundleShortVersionString", "CFBundleVersion",
