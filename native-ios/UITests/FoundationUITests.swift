@@ -189,9 +189,9 @@ final class FoundationUITests: XCTestCase {
     }
 
     func testDarkModeAndAccessibilityText() {
-        // Seven cold launches plus AX5 scrolling/captures measured ~273s on the SE runner.
-        // Keep every assertion; give this matrix test six minutes, other tests stay bounded.
-        executionTimeAllowance = 360
+        // Expanded matrix measured335s on SE before responsive Feed scrolling assertions.
+        // Keep all scenarios; seven minutes stays inside the existing CLI maximum.
+        executionTimeAllowance = 420
         let device = ProcessInfo.processInfo.environment["SIMULATOR_DEVICE_NAME"] ?? ""
         let expectedWidth: CGFloat = device.contains("iPhone SE (3rd generation)") ? 375 : 393
         XCTAssertTrue(device.contains("iPhone SE (3rd generation)") || device.contains("iPhone 16"), "Unexpected simulator: \(device)")
@@ -206,6 +206,14 @@ final class FoundationUITests: XCTestCase {
                         tab(app, name).tap()
                         assertCapsule(app)
                         XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "sample-banner").firstMatch.exists)
+                        if name == "Feed" {
+                            let title = app.staticTexts["feed-title"]
+                            let groups = app.buttons["open-groups"]
+                            XCTAssertGreaterThanOrEqual(groups.frame.minY, title.frame.maxY, "AX5 header must stack rather than squeeze side by side")
+                            capture(app, "UI-Feed-header-dark-AX5")
+                            assertInBounds(groups, app: app)
+                            XCTAssertLessThan(groups.frame.height, 120, "Full-width Groups action must not wrap into a tall narrow column")
+                        }
                         capture(app, "UI-\(name)-dark-AX5")
                     }
                 }
