@@ -10,6 +10,8 @@ settings:
     SWIFT_VERSION: "5.0"
     CODE_SIGN_STYLE: Automatic
     TARGETED_DEVICE_FAMILY: "1"
+    MARKETING_VERSION: "0.2.0"
+    CURRENT_PROJECT_VERSION: "1"
 
 targets:
   PROJECT100M:
@@ -24,6 +26,8 @@ targets:
       path: App/Info.plist
       properties:
         CFBundleDisplayName: PROJECT 100M
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         UILaunchScreen: {}
         NSHealthShareUsageDescription: PROJECT 100M reads your approved Apple Health sleep, heart and workouts to show your training and recovery. Data stays on this iPhone in this initial build.
         UIRequiredDeviceCapabilities: [arm64]
