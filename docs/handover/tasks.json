@@ -1,5 +1,73 @@
 [
   {
+    "id": "P100-UI-002",
+    "milestone": "M0",
+    "owner": "Claude",
+    "status": "READY_FOR_REVIEW",
+    "branch": "codex/m0-foundation-handover",
+    "commit": "61da35470465fd64efb97f11ec64931a00ae16e6",
+    "requirements": [
+      "UI-01",
+      "UX-01",
+      "TRAIN-01",
+      "ME-01"
+    ],
+    "implemented_changes": [
+      "Owner feedback after first device install: keep green palette, follow reference activity-app structure more closely",
+      "New ActivityStyle components: SectionBand, ActivityHeader/ActivityPost, UnderlineTabs, SessionStartCard, ProgramTile, ListRowLabel, OutlineAction; full-bleed P100Screen option",
+      "Feed flat posts + real weekly summary; Train start card + program carousel; Me profile header, icon underline tabs, 12-week Swift Charts chart and week streak from real logs; Groups underlined tabs and event card; Maps full-bleed overlays",
+      "Core TrainingStats (weekly buckets, streak) for display only"
+    ],
+    "modified_files": [
+      "native-ios/DesignSystem/ActivityStyle.swift",
+      "native-ios/Core/Training/TrainingStats.swift",
+      "native-ios/Features/Feed/FeedScreen.swift",
+      "native-ios/Features/Train/TrainingScreen.swift",
+      "native-ios/Features/Me/MeScreen.swift",
+      "native-ios/Features/Feed/GroupsScreen.swift",
+      "native-ios/Features/Train/MapsScreen.swift",
+      "native-ios/UITests/FoundationUITests.swift",
+      "docs/product/DESIGN_SYSTEM.md"
+    ],
+    "test_results": [
+      "PASS simulator UI 5/5 on iPhone 16 and SE, run 43165820018",
+      "PASS core tests incl. StatsTests on Linux/macOS, run 43165820031",
+      "PASS device IPA build and verifier, run 43165820141, SHA256 5e337fe73f602049b4e2b5d473012af2cb8e5d1cbe6b6d87d62ec7d9979ac563",
+      "Not run: owner visual review on device; Mobbin comparison (Mobbin MCP requires a paid plan)"
+    ],
+    "known_issues": [
+      "Today and Health not restyled in this pass",
+      "Feed/Groups/Maps content remains labeled samples"
+    ],
+    "reviewer_findings": [
+      "Owner review on device pending"
+    ],
+    "next_actions": [
+      "Owner installs the new IPA and reviews look and feel",
+      "Optional Mobbin reference pass if owner enables a paid Mobbin plan"
+    ],
+    "acceptance_criteria": [
+      {
+        "description": "Restyled screens compile and keep existing UI behaviour",
+        "passed": true,
+        "evidence": "Runs 43165820018 and 43165820141"
+      },
+      {
+        "description": "Owner accepts the visual direction on a physical iPhone",
+        "passed": false,
+        "evidence": "Not yet reviewed"
+      }
+    ],
+    "review": {
+      "reviewer": "",
+      "commit": "",
+      "decision": "PENDING",
+      "evidence": ""
+    },
+    "blocker": "",
+    "unblock_condition": ""
+  },
+  {
     "id": "P100-DEV-001",
     "milestone": "M7",
     "owner": "Claude",

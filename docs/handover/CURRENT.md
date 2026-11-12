@@ -53,6 +53,13 @@ Implementation commit **`ef09ba0342b22c42ba7df141def13e7c1ddcd688`** (native tre
 
 **Not run / not evidence:** physical iPhone install or launch, Sideloadly signing, HealthKit on device, sign-in against the live Supabase auth service (UI tests run offline by design), iOS 17 runtime, VoiceOver.
 
+## Owner device feedback and visual pass (P100-UI-002)
+
+- Owner installed an IPA on their iPhone with Sideloadly (Apple-side anisette error -80046 first; owner resolved it on their side). Owner reported install success; launch/function results not yet reported.
+- Owner asked for a closer reference-app look with the same green tone. Commit `61da35470465fd64efb97f11ec64931a00ae16e6`: flat full-width Feed posts with real weekly summary, Train start card + program carousel, Me profile header with underline icon tabs, real 12-week chart and streak, Groups/Maps restyle (see DESIGN_SYSTEM v2.1).
+- Evidence: [simulator UI 43165820018](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43165820018) 5/5 on iPhone 16 and SE; [core 43165820031](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43165820031) PASS; [device IPA 43165820141](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43165820141) PASS, SHA256 `5e337fe73f602049b4e2b5d473012af2cb8e5d1cbe6b6d87d62ec7d9979ac563` (install this one for the new look).
+- Mobbin connector was connected by the owner but returned "requires a paid plan"; no Mobbin references were used.
+
 ## Security gate
 
 **P100-SEC-001 unchanged and unresolved in production** (authenticated TRUNCATE etc. on `public.training_states`). Migration A/proposal B remain READY_FOR_REVIEW; requires owner approval, backup confirmation and disposable/staging proof before any production SQL. Native code does not touch that table.
