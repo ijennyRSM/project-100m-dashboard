@@ -8,7 +8,7 @@ This is the **new SwiftUI iPhone app** started alongside the existing PROJECT 10
 
 The approved [Product Blueprint](../docs/product/PRODUCT_BLUEPRINT.md) and [requirements](../docs/product/FEATURE_REQUIREMENTS.md) supersede the old milestone numbering. M7 separately tracks physical-device acceptance.
 
-- Exactly Feed / Today / Train / Health / Me using native TabView, independent stacks and restored selected tab.
+- Exactly Feed / Today / Train / Health / Me using native TabView, independent stacks and restored selected tab. The M0 redesign presents a custom floating Material capsule over the hidden stock bar, with selected accessibility traits and ≥44pt targets; iOS17 minimum retained.
 - Adaptive shared design tokens/cards/banners/activity previews; Thai-first copy and Dynamic Type. Health begins with interactive Sleep/Recovery/Strain rings showing no invented scores; Me has none.
 - User explicitly taps **อนุญาตการอ่านข้อมูล** to request read-only HealthKit access.
 - Read the last 21 days of permitted resting heart rate, HRV (SDNN), sleep stages and workouts from Apple Health, including samples already synced from the paired Apple Watch.
@@ -19,6 +19,8 @@ The approved [Product Blueprint](../docs/product/PRODUCT_BLUEPRINT.md) and [requ
 - The existing 100M training plan remains available by linking to the current website; native migration follows.
 
 ## Building
+
+The screenshot-led redesign is a visual foundation: Feed filters, Groups sections, Maps sample selection and Me sections switch local fictional content. It does not add social mutations, enrollment, workout recording, GPS, photo upload or account editing. Raw owner reference images stay local/ignored. `DESIGN_ALIGNMENT.md` documents why Maps is under Train, Groups under Feed and Health remains dedicated. Light/dark use shared semantic tokens; the capsule uses iOS17 Material, not a verified SDK26 Liquid Glass API.
 
 Requirements:
 1. A Mac with Xcode or a supported hosted macOS build runner. **Xcode cannot build or sign an iOS/watchOS app natively on Windows**.

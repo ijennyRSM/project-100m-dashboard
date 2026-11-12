@@ -1,32 +1,68 @@
 import SwiftUI
 
 struct MeScreen: View {
+    @State private var section = "Progress"
     var body: some View {
         P100Screen {
             SampleBanner()
-            P100Card {
-                Image(systemName: "person.crop.circle.fill").font(.system(size: 60)).foregroundStyle(P100Theme.accent).accessibilityHidden(true)
-                Text("เมย์ · ตัวอย่างโปรไฟล์").font(.title2.bold())
-                Text("@may_example").foregroundStyle(.secondary)
-                Text("กลับมาขยับในจังหวะของตัวเอง 🌱")
-                Text("ยังไม่ได้เข้าสู่ระบบ").font(.caption).foregroundStyle(.secondary)
-            }
-            P100Card {
-                SectionHeading(title: "เส้นทางและความทรงจำ")
-                Text("โพสต์สาธารณะ · ประวัติ Workout\nPersonal Records · Achievements")
-                Text("รายการเหล่านี้ยังไม่เชื่อมข้อมูลจริง ดูประวัติเดิมบนเว็บได้").font(.caption).foregroundStyle(.secondary)
-                Link("เปิดประวัติบนเว็บ ↗", destination: P100Theme.dashboardURL).frame(minHeight: 44)
-            }
-            P100Card {
-                SectionHeading(title: "การตั้งค่าบนอุปกรณ์นี้")
-                NavigationLink { HealthConnectionScreen() } label: {
-                    Label("Apple Health และอุปกรณ์", systemImage: "applewatch").frame(minHeight: 44)
-                }
-                NavigationLink { PrivacyScreen() } label: {
-                    Label("ความเป็นส่วนตัวและการแชร์", systemImage: "lock.shield").frame(minHeight: 44)
+            HStack(alignment: .top, spacing: 16) {
+                ProfileAvatar(initial: "ม", size: 76)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("เมย์").font(P100Type.hero)
+                    Text("@may_example").font(.subheadline).foregroundStyle(.secondary)
+                    Text("ตัวอย่างโปรไฟล์ · ยังไม่ได้เข้าสู่ระบบ").font(.caption).foregroundStyle(.secondary)
                 }
             }
-        }.navigationTitle("Me")
+            Text("กลับมาขยับในจังหวะของตัวเอง 🌱")
+            StatStrip(items: [StatItem(label: "กิจกรรมสมมติ", value: "12"), StatItem(label: "PR สมมติ", value: "2"), StatItem(label: "สัปดาห์สมมติ", value: "4")])
+            ChipPicker(labels: ["Progress", "Activities", "Gallery", "More"], selection: $section, id: "profile-section")
+            Group {
+                switch section {
+                case "Activities":
+                    ForEach(SampleActivity.examples) { ActivityCard(activity: $0) }
+                case "Gallery":
+                    P100Card {
+                        RouteIllustration().frame(height: 210)
+                        Text("Gallery ตัวอย่าง").font(P100Type.section)
+                        Text("ภาพประกอบต้นฉบับเท่านั้น ยังไม่มีรูปส่วนตัวหรือการอัปโหลดภาพ").foregroundStyle(.secondary)
+                    }.accessibilityIdentifier("profile-gallery")
+                case "More": settings
+                default:
+                    P100Card {
+                        SectionHeading(title: "This week", subtitle: "ความคืบหน้าสมมติ ไม่ใช่ประวัติของคุณ")
+                        StatStrip(items: [StatItem(label: "ระยะทาง", value: "3.2 km"), StatItem(label: "เวลา", value: "24 นาที")])
+                        HStack(alignment: .bottom, spacing: 10) {
+                            ForEach(Array([0.25, 0.42, 0.32, 0.75, 0.58, 0.9, 0.65].enumerated()), id: \.offset) { _, value in
+                                Capsule().fill(P100Theme.accent.opacity(0.6)).frame(maxWidth: .infinity).frame(height: 100 * value)
+                            }
+                        }.frame(height: 108).accessibilityHidden(true)
+                        Text("ภาพความเคลื่อนไหวสมมติ 7 สัปดาห์").font(.caption).foregroundStyle(.secondary)
+                    }.accessibilityIdentifier("profile-progress")
+                    P100Card {
+                        Label("ทีละก้าว ก็ไปได้ไกล", systemImage: "flag.checkered").font(.headline)
+                        Text("พื้นที่สำหรับ Personal Records และ Achievements — ยังไม่คำนวณหรือมอบรางวัลจริง").foregroundStyle(.secondary)
+                    }
+                }
+            }
+            Link("เปิดประวัติจริงบนเว็บ ↗", destination: P100Theme.dashboardURL).frame(minHeight: 44)
+        }.navigationTitle("Me").navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    IconLink(title: "ความเป็นส่วนตัวและการแชร์", symbol: "gearshape") { PrivacyScreen() }
+                }
+            }
+    }
+    private var settings: some View {
+        P100Card {
+            SectionHeading(title: "การตั้งค่าบนอุปกรณ์นี้")
+            NavigationLink { HealthConnectionScreen() } label: {
+                Label("Apple Health และอุปกรณ์", systemImage: "applewatch").frame(minHeight: 44)
+            }
+            NavigationLink { PrivacyScreen() } label: {
+                Label("ความเป็นส่วนตัวและการแชร์", systemImage: "lock.shield").frame(minHeight: 44)
+            }
+            Text("บัญชีและการแก้ไขโปรไฟล์ยังไม่เปิดใช้งาน").font(.caption).foregroundStyle(.secondary)
+        }.accessibilityIdentifier("profile-settings")
     }
 }
 

@@ -3,12 +3,48 @@ import XCTest
 final class FoundationUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
+    private func tab(_ app: XCUIApplication, _ name: String) -> XCUIElement {
+        app.buttons["tab-\(name.lowercased())"]
+    }
+
+    private func assertCapsule(_ app: XCUIApplication) {
+        let names = ["Feed", "Today", "Train", "Health", "Me"]
+        XCTAssertFalse(app.tabBars.firstMatch.isHittable, "Stock tab bar must not duplicate the capsule")
+        XCTAssertEqual(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "tab-")).count, 5)
+        let window = app.windows.firstMatch.frame
+        var last: CGFloat = -1
+        for name in names {
+            let button = tab(app, name)
+            XCTAssertTrue(button.isHittable)
+            XCTAssertGreaterThanOrEqual(button.frame.width, 44)
+            XCTAssertGreaterThanOrEqual(button.frame.height, 44)
+            XCTAssertGreaterThan(button.frame.minX, last)
+            XCTAssertGreaterThanOrEqual(button.frame.minX, window.minX)
+            XCTAssertLessThanOrEqual(button.frame.maxX, window.maxX)
+            XCTAssertLessThanOrEqual(button.frame.maxY, window.maxY)
+            last = button.frame.maxX
+        }
+    }
+
+    private func selectChip(_ app: XCUIApplication, _ picker: String, _ name: String) {
+        let button = app.buttons["\(picker)-\(name)"]
+        let row = app.scrollViews[picker]
+        reveal(row, in: app)
+        for _ in 0..<3 {
+            if button.isHittable { break }
+            row.swipeLeft()
+        }
+        XCTAssertTrue(button.isHittable)
+        button.tap()
+        XCTAssertTrue(button.isSelected)
+    }
+
     private func launch(state: String = "missing", theme: String = "light", size: String = "large", width: Int? = nil) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing", "--ui-reset", "--ui-health-state=\(state)", "--ui-theme=\(theme)", "--ui-text-size=\(size)"]
         if let width { app.launchArguments.append("--ui-content-width=\(width)") }
         app.launch()
-        XCTAssertTrue(app.tabBars.buttons["Today"].waitForExistence(timeout: 15))
+        XCTAssertTrue(tab(app, "Today").waitForExistence(timeout: 15))
         return app
     }
 
@@ -23,7 +59,7 @@ final class FoundationUITests: XCTestCase {
         let scroll = app.scrollViews.firstMatch
         for _ in 0..<24 {
             let top = app.navigationBars.firstMatch.frame.maxY + 12
-            let bottom = app.tabBars.firstMatch.frame.minY - 12
+            let bottom = tab(app, "Feed").frame.minY - 12
             if element.exists && element.isHittable && element.frame.midY > top && element.frame.midY < bottom { return }
             let movingUp = !element.exists || element.frame.midY > bottom
             let start = scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: movingUp ? 0.65 : 0.35))
@@ -43,27 +79,64 @@ final class FoundationUITests: XCTestCase {
     }
 
     func testFiveTabsAndLabeledExamples() {
-        let app = launch()
-        let names = ["Feed", "Today", "Train", "Health", "Me"]
-        XCTAssertEqual(app.tabBars.buttons.count, 5)
-        var lastX: CGFloat = -1
-        for name in names {
-            let button = app.tabBars.buttons[name]
-            XCTAssertGreaterThan(button.frame.midX, lastX)
-            lastX = button.frame.midX
-            button.tap()
-            XCTAssertTrue(app.navigationBars[name].waitForExistence(timeout: 5))
-            if name != "Health" {
-                XCTAssertTrue(app.otherElements["sample-banner"].exists || app.staticTexts["sample-banner"].exists)
+        for theme in ["light", "dark"] {
+            let app = launch(theme: theme)
+            assertCapsule(app)
+            for name in ["Feed", "Today", "Train", "Health", "Me"] {
+                let button = tab(app, name)
+                button.tap()
+                XCTAssertTrue(button.isSelected)
+                XCTAssertEqual(button.value as? String, "selected")
+                XCTAssertTrue(app.navigationBars[name].waitForExistence(timeout: 5))
+                if name != "Health" {
+                    XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "sample-banner").firstMatch.exists)
+                    XCTAssertFalse(app.buttons["ring-sleep"].exists)
+                }
+                capture(app, "UI-\(name)-\(theme)")
             }
-            capture(app, "M0-\(name)-light")
+            tab(app, "Feed").tap()
+            app.buttons["open-groups"].tap()
+            XCTAssertTrue(app.navigationBars["Groups"].waitForExistence(timeout: 5))
+            capture(app, "UI-Groups-Events-\(theme)")
+            selectChip(app, "groups-section", "Clubs")
+            XCTAssertTrue(app.staticTexts["The Comeback Club"].exists)
+            capture(app, "UI-Groups-Clubs-\(theme)")
+            app.navigationBars.buttons.element(boundBy: 0).tap()
+            selectChip(app, "feed-filter", "Strength")
+            XCTAssertFalse(app.staticTexts["Morning Easy Run"].exists)
+            XCTAssertTrue(app.staticTexts["Strength Foundation"].exists)
+
+            tab(app, "Train").tap()
+            app.navigationBars.buttons["Maps"].tap()
+            XCTAssertTrue(app.navigationBars["Maps"].waitForExistence(timeout: 5))
+            capture(app, "UI-Maps-\(theme)")
+            selectChip(app, "route-filter", "Short Loop")
+            XCTAssertTrue(app.staticTexts["1.6 km"].exists)
+
+            tab(app, "Today").tap()
+            let next = app.buttons["next-workout-example"]
+            reveal(next, in: app)
+            next.tap()
+            XCTAssertTrue(app.navigationBars["ตัวอย่าง Session"].waitForExistence(timeout: 5))
+            capture(app, "UI-Workout-\(theme)")
+
+            tab(app, "Me").tap()
+            selectChip(app, "profile-section", "Activities")
+            XCTAssertTrue(app.staticTexts["Morning Easy Run"].exists)
+            capture(app, "UI-Profile-Activities-\(theme)")
+            selectChip(app, "profile-section", "Gallery")
+            capture(app, "UI-Profile-Gallery-\(theme)")
+            selectChip(app, "profile-section", "More")
+            XCTAssertTrue(app.buttons["Apple Health และอุปกรณ์"].exists)
+            capture(app, "UI-Profile-More-\(theme)")
+            app.terminate()
         }
     }
 
     func testHealthDetailsAndNoRingsInMe() {
         for state in ["notRequested", "unavailable", "failed", "missing", "loading"] {
             let fixture = launch(state: state)
-            fixture.tabBars.buttons["Health"].tap()
+            tab(fixture, "Health").tap()
             let stateView = fixture.descendants(matching: .any).matching(identifier: "health-state-\(state)").firstMatch
             reveal(stateView, in: fixture)
             XCTAssertTrue(stateView.exists)
@@ -72,7 +145,7 @@ final class FoundationUITests: XCTestCase {
             fixture.terminate()
         }
         let app = launch()
-        app.tabBars.buttons["Health"].tap()
+        tab(app, "Health").tap()
         for (id, title) in [("sleep", "Sleep"), ("recovery", "Recovery"), ("strain", "Strain")] {
             let ring = app.buttons["ring-\(id)"]
             XCTAssertTrue(ring.waitForExistence(timeout: 5))
@@ -83,7 +156,7 @@ final class FoundationUITests: XCTestCase {
             capture(app, "M0-\(title)-detail-missing")
             app.navigationBars.buttons.element(boundBy: 0).tap()
         }
-        app.tabBars.buttons["Me"].tap()
+        tab(app, "Me").tap()
         XCTAssertFalse(app.buttons["ring-sleep"].exists)
         XCTAssertFalse(app.buttons["ring-recovery"].exists)
         XCTAssertFalse(app.buttons["ring-strain"].exists)
@@ -91,23 +164,23 @@ final class FoundationUITests: XCTestCase {
 
     func testIndependentStacksAndRestoredTab() {
         let app = launch()
-        app.tabBars.buttons["Today"].tap()
+        tab(app, "Today").tap()
         let next = app.buttons["next-workout-example"]
         reveal(next, in: app)
         next.tap()
         XCTAssertTrue(app.navigationBars["ตัวอย่าง Session"].waitForExistence(timeout: 5))
-        app.tabBars.buttons["Health"].tap()
+        tab(app, "Health").tap()
         app.buttons["ring-sleep"].tap()
-        app.tabBars.buttons["Today"].tap()
+        tab(app, "Today").tap()
         XCTAssertTrue(app.navigationBars["ตัวอย่าง Session"].exists)
-        app.tabBars.buttons["Health"].tap()
+        tab(app, "Health").tap()
         XCTAssertTrue(app.navigationBars["Sleep"].exists)
-        app.tabBars.buttons["Me"].tap()
+        tab(app, "Me").tap()
         app.launchArguments.removeAll { $0 == "--ui-reset" }
         app.terminate()
         app.launch()
-        XCTAssertTrue(app.tabBars.buttons["Me"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.tabBars.buttons["Me"].isSelected)
+        XCTAssertTrue(tab(app, "Me").waitForExistence(timeout: 10))
+        XCTAssertTrue(tab(app, "Me").isSelected)
     }
 
     func testDarkModeAndAccessibilityText() {
@@ -120,8 +193,17 @@ final class FoundationUITests: XCTestCase {
         for theme in ["light", "dark"] {
             for size in ["large", "xLarge", "AX5"] {
                 let app = launch(state: "stale", theme: theme, size: size)
+                assertCapsule(app)
                 XCTAssertEqual(app.windows.firstMatch.frame.width, expectedWidth, accuracy: 1)
                 verifyHealthLayout(app, theme: theme, size: size, name: "\(device)-\(theme)-\(size)")
+                if size == "AX5" && theme == "dark" {
+                    for name in ["Feed", "Today", "Train", "Me"] {
+                        tab(app, name).tap()
+                        assertCapsule(app)
+                        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "sample-banner").firstMatch.exists)
+                        capture(app, "UI-\(name)-dark-AX5")
+                    }
+                }
                 app.terminate()
             }
         }
@@ -132,7 +214,7 @@ final class FoundationUITests: XCTestCase {
     }
 
     private func verifyHealthLayout(_ app: XCUIApplication, theme: String, size: String, name: String) {
-        app.tabBars.buttons["Health"].tap()
+        tab(app, "Health").tap()
         let probe = app.descendants(matching: .any).matching(identifier: "health-presentation").firstMatch
         reveal(probe, in: app)
         XCTAssertEqual(probe.value as? String, "\(theme)|\(size)", "Actual SwiftUI color scheme and Dynamic Type must match")

@@ -5,7 +5,7 @@ enum AppTab: String, CaseIterable {
     var title: String { rawValue.capitalized }
     var symbol: String {
         switch self {
-        case .feed: return "rectangle.stack"
+        case .feed: return "house"
         case .today: return "sun.max"
         case .train: return "figure.run"
         case .health: return "heart.text.square"
@@ -27,16 +27,24 @@ struct RootView: View {
     var body: some View {
         TabView(selection: selection) {
             NavigationStack(path: $feedPath) { FeedScreen() }
+                .toolbar(.hidden, for: .tabBar)
                 .tabItem { Label(AppTab.feed.title, systemImage: AppTab.feed.symbol) }.tag(AppTab.feed)
             NavigationStack(path: $todayPath) { TodayScreen() }
+                .toolbar(.hidden, for: .tabBar)
                 .tabItem { Label(AppTab.today.title, systemImage: AppTab.today.symbol) }.tag(AppTab.today)
             NavigationStack(path: $trainPath) { TrainingScreen() }
+                .toolbar(.hidden, for: .tabBar)
                 .tabItem { Label(AppTab.train.title, systemImage: AppTab.train.symbol) }.tag(AppTab.train)
             NavigationStack(path: $healthPath) { HealthScreen() }
+                .toolbar(.hidden, for: .tabBar)
                 .tabItem { Label(AppTab.health.title, systemImage: AppTab.health.symbol) }.tag(AppTab.health)
             NavigationStack(path: $mePath) { MeScreen() }
+                .toolbar(.hidden, for: .tabBar)
                 .tabItem { Label(AppTab.me.title, systemImage: AppTab.me.symbol) }.tag(AppTab.me)
-        }.tint(P100Theme.accent)
+        }
+        .toolbar(.hidden, for: .tabBar)
+        .safeAreaInset(edge: .bottom, spacing: 0) { MaterialCapsuleBar(selection: selection) }
+        .tint(P100Theme.accent)
     }
 }
 

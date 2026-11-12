@@ -6,7 +6,7 @@ struct TodayScreen: View {
             SampleBanner()
             VStack(alignment: .leading, spacing: 8) {
                 Text("MOVE AT YOUR PACE").font(.caption.bold()).tracking(1.5).foregroundStyle(P100Theme.accent)
-                Text("สวัสดี, เมย์ ☀︎").font(.largeTitle.weight(.bold))
+                Text("สวัสดี, เมย์").font(P100Type.hero)
                 Text("กลับมาเมื่อพร้อม แล้วไปต่อได้เลย").foregroundStyle(.secondary)
             }
             P100Card {
@@ -15,7 +15,7 @@ struct TodayScreen: View {
                 Text("Block 1 · Session 1\nSprint 4 × 20m · 60–70% · เวทขา").foregroundStyle(.secondary)
                 NavigationLink { WorkoutExampleScreen() } label: {
                     Label("ดูตัวอย่าง Session", systemImage: "arrow.right").frame(maxWidth: .infinity, minHeight: 44)
-                }.buttonStyle(.borderedProminent).accessibilityIdentifier("next-workout-example")
+                }.buttonStyle(PrimaryAction()).accessibilityIdentifier("next-workout-example")
                 Text("Session ไม่หมดอายุ แม้หยุดพักหลายวัน").font(.caption).foregroundStyle(.secondary)
             }
             P100Card {
@@ -36,7 +36,7 @@ struct TodayScreen: View {
                 Link("เปิดแผนและประวัติเดิมบนเว็บ ↗", destination: P100Theme.dashboardURL).frame(minHeight: 44)
                 Text("Native ยังไม่อ่านหรือแก้ไขประวัติเดิม").font(.caption).foregroundStyle(.secondary)
             }
-        }.navigationTitle("Today")
+        }.navigationTitle("Today").navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -44,6 +44,9 @@ struct WorkoutExampleScreen: View {
     var body: some View {
         P100Screen {
             SampleBanner()
+            Label("WORKOUT PREVIEW", systemImage: "figure.run").font(.caption.bold()).foregroundStyle(P100Theme.accent)
+            Text("Sprint A\n+ Strength A").font(P100Type.hero)
+            StatStrip(items: [StatItem(label: "Sprint", value: "4 × 20m"), StatItem(label: "ความหนัก", value: "60–70%")])
             P100Card {
                 SectionHeading(title: "Sprint A + Strength A", subtitle: "ตัวอย่างจาก Session แรกของแผนบนเว็บ")
                 Text("Warm-up · 15–20 นาที\nSprint · 4 × 20m ที่ 60–70%\nพักเต็ม · 2–3 นาทีต่อเที่ยว")

@@ -37,7 +37,12 @@ struct HealthScreen: View {
         .frame(width: UITestConfiguration.healthWidth)
         .frame(maxWidth: .infinity)
         .background(P100Theme.canvas)
-        .navigationTitle("Health")
+        .navigationTitle("Health").navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                IconLink(title: "Apple Health", symbol: "heart.text.square") { HealthConnectionScreen() }
+            }
+        }
     }
     @ViewBuilder private var connectionContent: some View {
         switch health.connection {

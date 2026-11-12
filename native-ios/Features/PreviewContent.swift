@@ -9,6 +9,13 @@ struct SampleActivity: Identifiable {
     let symbol: String
     let description: String
     let summary: String
+    var stats: [StatItem] {
+        switch id {
+        case "run": return [StatItem(label: "ระยะทาง", value: "3.2 km"), StatItem(label: "Pace", value: "7:30 /km"), StatItem(label: "เวลา", value: "24 นาที")]
+        case "walk": return [StatItem(label: "ระยะทาง", value: "2.1 km"), StatItem(label: "เวลา", value: "30 นาที")]
+        default: return [StatItem(label: "ท่าฝึก", value: "4 ท่า"), StatItem(label: "เวลา", value: "35 นาที")]
+        }
+    }
     static let examples = [
         SampleActivity(id: "run", name: "เมย์", time: "วันนี้ 07:20 · เวลาสมมติ", title: "Morning Easy Run", symbol: "figure.run", description: "กลับมาวิ่งเบา ๆ ทีละก้าว วันนี้อากาศดี", summary: "3.2 km · 24 นาที"),
         SampleActivity(id: "walk", name: "ต้น", time: "เมื่อวาน 18:10 · เวลาสมมติ", title: "Evening Walk", symbol: "figure.walk", description: "ปิดวันด้วยการเดินสบาย ๆ", summary: "2.1 km · 30 นาที"),
