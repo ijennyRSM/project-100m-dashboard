@@ -60,6 +60,13 @@ Implementation commit **`ef09ba0342b22c42ba7df141def13e7c1ddcd688`** (native tre
 - Evidence: [simulator UI 43165820018](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43165820018) 5/5 on iPhone 16 and SE; [core 43165820031](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43165820031) PASS; [device IPA 43165820141](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43165820141) PASS, SHA256 `5e337fe73f602049b4e2b5d473012af2cb8e5d1cbe6b6d87d62ec7d9979ac563` (install this one for the new look).
 - Mobbin connector was connected by the owner but returned "requires a paid plan"; no Mobbin references were used.
 
+## Real map basemap (ADR-018)
+
+- Owner asked for a real map like Google Maps. Commit `c05ea20ed8c964b23f3bee68a0489b20a3314365` uses Apple MapKit (no API key, no location permission): full-bleed maps in Feed run/walk sample posts; full-screen interactive Maps with route chips, route card, recenter and visible Apple legal label. Routes are labeled fictional samples around Lumphini Park.
+- Evidence: [simulator UI 43253641663](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43253641663) 5/5 on iPhone 16 and SE; [device IPA 43253631746](https://github.com/ijennyRSM/project-100m-dashboard/actions/runs/43253631746) PASS, SHA256 `702ada0794125da5609b4f409e44660b139743c00a7b324260601a601bc28d6b` (latest installable build).
+- Visual review caught overlays under the floating tab bar twice; the non-scrolling Maps layout does not receive the capsule inset, so it pads explicitly. Local preview gallery: `.local-evidence/preview-c05ea20.html` (ignored, not committed).
+- CI infrastructure: one macOS job was never acquired (capacity) and re-ran green; security pgTAP jobs currently fail while installing packages from apt.postgresql.org. No database files changed; re-run later.
+
 ## Security gate
 
 **P100-SEC-001 unchanged and unresolved in production** (authenticated TRUNCATE etc. on `public.training_states`). Migration A/proposal B remain READY_FOR_REVIEW; requires owner approval, backup confirmation and disposable/staging proof before any production SQL. Native code does not touch that table.

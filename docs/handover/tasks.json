@@ -5,7 +5,7 @@
     "owner": "Claude",
     "status": "READY_FOR_REVIEW",
     "branch": "codex/m0-foundation-handover",
-    "commit": "61da35470465fd64efb97f11ec64931a00ae16e6",
+    "commit": "c05ea20ed8c964b23f3bee68a0489b20a3314365",
     "requirements": [
       "UI-01",
       "UX-01",
@@ -16,7 +16,8 @@
       "Owner feedback after first device install: keep green palette, follow reference activity-app structure more closely",
       "New ActivityStyle components: SectionBand, ActivityHeader/ActivityPost, UnderlineTabs, SessionStartCard, ProgramTile, ListRowLabel, OutlineAction; full-bleed P100Screen option",
       "Feed flat posts + real weekly summary; Train start card + program carousel; Me profile header, icon underline tabs, 12-week Swift Charts chart and week streak from real logs; Groups underlined tabs and event card; Maps full-bleed overlays",
-      "Core TrainingStats (weekly buckets, streak) for display only"
+      "Core TrainingStats (weekly buckets, streak) for display only",
+      "Owner asked for a real Google-Maps-like basemap: Apple MapKit route maps in Feed run/walk sample posts and a full-screen interactive Maps screen with recenter; fictional sample routes around a public park, no location permission (ADR-018)"
     ],
     "modified_files": [
       "native-ios/DesignSystem/ActivityStyle.swift",
@@ -27,13 +28,18 @@
       "native-ios/Features/Feed/GroupsScreen.swift",
       "native-ios/Features/Train/MapsScreen.swift",
       "native-ios/UITests/FoundationUITests.swift",
-      "docs/product/DESIGN_SYSTEM.md"
+      "docs/product/DESIGN_SYSTEM.md",
+      "native-ios/DesignSystem/RouteMap.swift",
+      "native-ios/DesignSystem/SocialComponents.swift",
+      "native-ios/Features/PreviewContent.swift",
+      "native-ios/Features/Me/SettingsScreens.swift"
     ],
     "test_results": [
-      "PASS simulator UI 5/5 on iPhone 16 and SE, run 43165820018",
-      "PASS core tests incl. StatsTests on Linux/macOS, run 43165820031",
-      "PASS device IPA build and verifier, run 43165820141, SHA256 5e337fe73f602049b4e2b5d473012af2cb8e5d1cbe6b6d87d62ec7d9979ac563",
-      "Not run: owner visual review on device; Mobbin comparison (Mobbin MCP requires a paid plan)"
+      "PASS simulator UI 5/5 on iPhone 16 and SE, run 43253641663 (map layout fixed after visual review of runs 43246245076/43250499763)",
+      "PASS device IPA build and verifier, run 43253631746, SHA256 702ada0794125da5609b4f409e44660b139743c00a7b324260601a601bc28d6b",
+      "PASS core tests incl. StatsTests, run 43165820031",
+      "Infra only: run 43246237521 cancelled (no macOS runner capacity), re-run PASS; security pgTAP runs failed installing packages from apt.postgresql.org (mirror sync/broken packages), no database files changed",
+      "Not run: owner visual review on device"
     ],
     "known_issues": [
       "Today and Health not restyled in this pass",
@@ -50,7 +56,7 @@
       {
         "description": "Restyled screens compile and keep existing UI behaviour",
         "passed": true,
-        "evidence": "Runs 43165820018 and 43165820141"
+        "evidence": "Runs 43253641663 and 43253631746"
       },
       {
         "description": "Owner accepts the visual direction on a physical iPhone",
