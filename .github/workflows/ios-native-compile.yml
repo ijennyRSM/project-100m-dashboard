@@ -28,7 +28,7 @@ jobs:
       matrix:
         device: ['iPhone 16', 'iPhone SE (3rd generation)']
     runs-on: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 40
     env:
       DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
       SIMULATOR_DEVICE: ${{ matrix.device }}
@@ -90,7 +90,9 @@ jobs:
         timeout-minutes: 5
         run: xcrun simctl bootstatus "$SIMULATOR_ID" -b
       - name: Run simulator UI acceptance checks and capture screenshots
-        timeout-minutes: 15
+        # Cold simulator/test preparation took ~9min before the first case on a measured run.
+        # Individual tests remain bounded by the existing420s maximum; retain every scenario.
+        timeout-minutes: 25
         working-directory: native-ios
         run: |
           set -o pipefail
