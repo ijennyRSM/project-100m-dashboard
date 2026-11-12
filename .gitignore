@@ -9,3 +9,5 @@ docs/handover/prepared/
 .local-evidence/
 supabase/.temp/
 /iOS Strava ss/
+native-ios/.build/
+native-ios/.swiftpm/

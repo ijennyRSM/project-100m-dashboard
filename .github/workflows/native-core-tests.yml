@@ -1,0 +1,46 @@
+name: Native core unit tests
+
+# Fast feedback for the Foundation-only domain (training engine, Live Workout, per-account
+# repository, Supabase auth client). The same sources are compiled into the iOS app.
+on:
+  push:
+    branches:
+      - feat/ios-native-foundation
+      - 'codex/**'
+      - 'claude/**'
+    paths:
+      - native-ios/Core/**
+      - native-ios/CoreTests/**
+      - native-ios/Package.swift
+      - .github/workflows/native-core-tests.yml
+  pull_request:
+    paths:
+      - native-ios/Core/**
+      - native-ios/CoreTests/**
+      - native-ios/Package.swift
+      - .github/workflows/native-core-tests.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    container: swift:6.0-jammy
+    steps:
+      - uses: actions/checkout@v4
+      - name: swift test (Linux)
+        working-directory: native-ios
+        run: swift test --parallel 2>&1 | tee core-tests.log
+  macos:
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v4
+      - name: swift test (macOS, Xcode 16.4)
+        working-directory: native-ios
+        run: swift test 2>&1 | tee core-tests.log
